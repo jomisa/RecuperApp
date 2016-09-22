@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">RecuperApp</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_usuario">Usuario</string>
+    <string name="prompt_contrasena">Contrsaeña </string>
+    <string name="action_sign_in">Ingresar</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_email_invalido">Ingrese un correo valido</string>
+    <string name="error_contrasena_incorrecta">Contraseña erronea</string>
+    <string name="error_contrasenas_diferentes">Contraseñas deben ser iguales</string>
+    <string name="error_campo_requirido">Por favor diligencie este campo</string>
+    <string name="telefono">5946161 ext 2905 - 2900</string>
+    <string name="direccion">Carrera 7 # 40 - 61</string>
+    <string name="recuperapp">RecuperApp</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login_label">Login</string>
+</resources>

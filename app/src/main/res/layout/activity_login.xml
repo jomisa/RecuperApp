@@ -1,0 +1,314 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="husi.recuperapp.Login"
+    android:background="@drawable/background">
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@mipmap/ic_launcher"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"
+        app:layout_constraintRight_toLeftOf="@+id/guideline9"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline8" />
+
+    <TextView
+        android:text="@string/recuperapp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#212121"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:id="@+id/recuperapp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline4"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="429dp"
+        app:layout_constraintGuide_percent="0.75661373" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline3"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="142dp"
+        app:layout_constraintGuide_percent="0.25044093" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/login_form"
+        android:layout_width="0dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="32dp"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:background="#212121">
+
+        <TextView
+            android:id="@+id/login"
+            android:textSize="20sp"
+            android:text="@string/login_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@string/login_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp" />
+
+        <EditText
+            android:id="@+id/usuario_texto"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:hint="@string/prompt_usuario"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="32dp"
+            app:layout_constraintLeft_toRightOf="@+id/usuario_image"
+            app:layout_constraintHorizontal_bias="0.2"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/login"
+            android:textColor="#fafafa"
+            android:textSize="15sp"
+            android:background="@drawable/estilo_texto"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:hint="@string/prompt_contrasena"
+            android:imeActionId="100"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            tools:layout_constraintRight_creator="1"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/candado_image"
+            android:background="@drawable/estilo_texto"
+            android:textColor="#fafafa"
+            android:textSize="15sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/usuario_texto"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
+
+        <Button
+            android:id="@+id/email_sign_in_button"
+            android:layout_width="wrap_content"
+            android:text="@string/action_sign_in"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:background="@drawable/estilo_boton_rojo"
+            android:textColor="#fafafa"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            android:onClick="presionoBotonIngresar"
+            android:layout_height="40dp" />
+
+        <ImageView
+            android:id="@+id/usuario_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_image_portrait"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/usuario_texto" />
+
+        <ImageView
+            android:id="@+id/candado_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:background="@drawable/ic_action_lock_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/password" />
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline2"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="243dp"
+            app:layout_constraintGuide_percent="0.8465116" />
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guideline"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintGuide_percent="0.12544803"
+            tools:layout_editor_absoluteY="36dp" />
+
+        <Button
+            android:id="@+id/crear_usuario_button"
+            android:text="Crear Usuario"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_sign_in_button"
+            android:layout_marginTop="8dp"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/telefono_imagen"
+        android:background="@drawable/ic_communication_call"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/direccion_imagen"
+        android:layout_marginStart="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp"
+        android:background="@drawable/ic_communication_location_on"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/telefono_texto"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:text="@string/telefono"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/telefono_texto"
+        android:textColor="#212121"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/telefono_imagen"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/telefono_imagen" />
+
+    <TextView
+        android:text="@string/direccion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/direccion_texto"
+        android:textColor="#212121"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="32dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/direccion_imagen"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintBottom_toBottomOf="@+id/direccion_imagen" />
+
+    <ImageView
+        android:id="@+id/husi_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/logohusi"
+        android:layout_height="0dp"
+        android:layout_width="150dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline5"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="502dp"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintGuide_percent="0.88536155" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline6"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="12dp"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintGuide_percent="0.02116402" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline7"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="104dp"
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintGuide_percent="0.18342152" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline8"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="139dp"
+        app:layout_constraintGuide_percent="0.3861111" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline9"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="226dp"
+        app:layout_constraintGuide_percent="0.62777776" />
+
+
+</android.support.constraint.ConstraintLayout>
