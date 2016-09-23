@@ -67,16 +67,6 @@ public class Login extends Activity{
         });
     }
 
-    private void presionoBotonCrearUsuario(){
-        if(comprobarUsuarioExistente()) {
-            Toast.makeText(this, "Ya hay un usuario creado", Toast.LENGTH_LONG).show();
-        }
-        else {
-            activarCrearUsuario = new Intent(Login.this, CrearUsuario.class);
-            startActivityForResult(activarCrearUsuario,REQUEST_CODE);
-        }
-    }
-
     private void intentarIngresar() {
 
         // Resetear Errores
@@ -115,7 +105,7 @@ public class Login extends Activity{
         } else {
 
             if(validarUsuario(usuario, contrsena)==true){
-                activarMenu = new Intent(this, CrearUsuario.class);
+                activarMenu = new Intent(this, MenuPrincipal.class);
                 startActivity(activarMenu);
             }
             else{
@@ -130,10 +120,6 @@ public class Login extends Activity{
         return false;
     }
 
-    private boolean comprobarUsuarioExistente(){
-        return paciente.existeEnBd();
-    }
-
     //crear usuario retorna nombre del usuario, y se autoingresa en el campo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent respuesta){
@@ -141,6 +127,20 @@ public class Login extends Activity{
             if (resultCode == RESULT_OK)
                 mUsuarioView.setText(respuesta.getStringExtra("usuario"));
         }
+    }
+
+    private void presionoBotonCrearUsuario(){
+        if(comprobarUsuarioExistente()) {
+            Toast.makeText(this, "Ya hay un usuario creado", Toast.LENGTH_LONG).show();
+        }
+        else {
+            activarCrearUsuario = new Intent(Login.this, CrearUsuario.class);
+            startActivityForResult(activarCrearUsuario,REQUEST_CODE);
+        }
+    }
+
+    private boolean comprobarUsuarioExistente(){
+        return paciente.existeEnBd();
     }
 }
 

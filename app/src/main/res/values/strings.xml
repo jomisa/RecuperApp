@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RecuperApp</string>
 
-    <!-- Strings related to login -->
+    <!-- Login & CrearUsuario -->
     <string name="prompt_email">Email</string>
     <string name="prompt_usuario">Usuario</string>
     <string name="prompt_contrasena">Contrsaeña </string>
@@ -18,4 +18,9 @@
         completions."
     </string>
     <string name="login_label">Login</string>
+
+    <!-- Menu -->
+    <string name="funcionalidad">Funcionalidad</string>
+    <string name="descripcion">Descripción</string>
+
 </resources>
