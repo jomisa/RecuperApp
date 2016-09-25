@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,8 +8,6 @@
 
     <ImageView
         android:id="@+id/icono_funcionalidad"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
@@ -17,10 +16,12 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintHorizontal_bias="0.05" />
+        android:layout_marginLeft="4dp"
+        app:layout_constraintHorizontal_bias="0.05"
+        android:layout_height="120dp"
+        android:layout_width="120dp" />
 
     <TextView
         android:id="@+id/funcionalidad_texto"
@@ -30,15 +31,14 @@
         android:textStyle="bold"
         android:textColor="@color/rojoClaro"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginEnd="16dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.37"
+        android:layout_marginRight="10dp"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/icono_funcionalidad"
         android:layout_marginLeft="8dp"
-        app:layout_constraintTop_toTopOf="@+id/icono_funcionalidad"
-        android:layout_height="60dp" />
+        app:layout_constraintTop_toTopOf="@+id/icono_funcionalidad" />
 
     <TextView
         android:id="@+id/descripcion_texto"
@@ -48,9 +48,9 @@
         android:textSize="17sp"
         android:textStyle="bold"
         android:textColor="@color/grisOscuro"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="10dp"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/icono_funcionalidad"
         android:layout_marginLeft="8dp"
@@ -58,7 +58,18 @@
         app:layout_constraintTop_toBottomOf="@+id/funcionalidad_texto"
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        app:layout_constraintHorizontal_bias="0.33"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:id="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/degradado"
+        android:layout_height="13dp" />
 
 
 </android.support.constraint.ConstraintLayout>

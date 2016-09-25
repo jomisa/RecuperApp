@@ -35,10 +35,10 @@ public class Login extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        paciente=(Paciente)getApplicationContext();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        paciente=(Paciente)getApplicationContext();
 
         //Asigna fuente personalizada al logo de RecuperApp(está en la carpeta assets)
         TextView mRecuperappText = (TextView) findViewById(R.id.recuperapp);

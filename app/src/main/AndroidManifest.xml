@@ -30,8 +30,13 @@
             android:name=".CrearUsuario"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"></activity>
-        <activity android:name=".MenuPrincipal"></activity>
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
+        </activity>
+        <activity
+            android:name=".MenuPrincipal"
+            android:theme="@style/CustomActionBarTheme">
+        </activity>
+
     </application>
 
 </manifest>

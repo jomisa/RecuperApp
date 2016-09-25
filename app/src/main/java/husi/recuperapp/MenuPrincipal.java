@@ -12,6 +12,8 @@ import java.util.List;
 
 public class MenuPrincipal extends AppCompatActivity {
 
+    Paciente paciente;
+
     private List<Funcionalidad> funcionalidades = new ArrayList<>();
     private RecyclerView recicledView;
     private ControladorRecicledView controladorRV;
@@ -20,7 +22,13 @@ public class MenuPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        paciente=(Paciente)getApplicationContext();
+
         setContentView(R.layout.activity_menu_principal);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
+        getSupportActionBar().setTitle("  "+paciente.getUsuario());
 
         recicledView=(RecyclerView)findViewById(R.id.recycler_view);
 
@@ -36,21 +44,21 @@ public class MenuPrincipal extends AppCompatActivity {
     }
     private void crearListaFunciones() {
 
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_image_portrait, "Realizar Actividad Física",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Actividad Física",
                 "Registrar caminata u oficios varios"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_action_lock_outline, "Plan de Alimentación",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Plan de Alimentación",
                 "Consultar comidas recomendadas"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_communication_call, "Agenda de Tareas Diarias",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_content_content_paste, "Agenda de Tareas Diarias",
                 "Anotar actividades y definir cuales son primordiales"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_communication_email, "Programar Cita Médica",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Programar Cita Médica",
                 "Programar y Recordar mis citas médicas"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_image_portrait, "Medicamentos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_action_alarm, "Medicamentos",
                 "Medicamentos, dosis y alarma de medicamentos"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_action_lock_outline, "Ingresar Datos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_image_edit, "Ingresar Datos",
                 "Ingresar síntomas, mediciones y realizar encuesta"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_communication_call, "Consultar Datos Ingresados",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_social_poll, "Consultar Datos Ingresados",
                 "Consultar Histórico de síntomas y mediciones"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_communication_email, "Mapa del Hospital San Ignacio",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_map, "Mapa del Hospital San Ignacio",
                 "Consultar mapa interno del hospital"));
 
         controladorRV.notifyDataSetChanged();
