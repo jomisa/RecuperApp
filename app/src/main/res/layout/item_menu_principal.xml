@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_constraintLayout">
 
     <ImageView
         android:id="@+id/icono_funcionalidad"
@@ -27,12 +28,12 @@
         android:text="@string/funcionalidad"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="#f44336"
+        android:textColor="@color/rojoClaro"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.37"
         android:layout_marginStart="8dp"
         app:layout_constraintLeft_toRightOf="@+id/icono_funcionalidad"
         android:layout_marginLeft="8dp"
@@ -46,7 +47,7 @@
         android:text="@string/descripcion"
         android:textSize="17sp"
         android:textStyle="bold"
-        android:textColor="#616161"
+        android:textColor="@color/grisOscuro"
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
@@ -55,7 +56,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         app:layout_constraintTop_toBottomOf="@+id/funcionalidad_texto"
-        android:layout_height="60dp" />
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>

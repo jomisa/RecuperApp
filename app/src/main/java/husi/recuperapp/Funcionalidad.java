@@ -9,9 +9,6 @@ public class Funcionalidad {
     private String funcionalidad;
     private String descripcion;
 
-    public Funcionalidad(){
-    }
-
     public Funcionalidad(int iconID, String funcionalidad,  String descripcion) {
         super();
         this.iconID = iconID;
@@ -27,14 +24,5 @@ public class Funcionalidad {
     }
     public String getDescripcion() {
         return this.descripcion;
-    }
-    public void setIconID(int iconID) {
-        this.iconID = iconID;
-    }
-    public void setFuncionalidad(String funcionalidad) {
-        this.funcionalidad = funcionalidad;
-    }
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 }
