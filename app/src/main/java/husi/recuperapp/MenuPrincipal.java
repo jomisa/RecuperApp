@@ -1,11 +1,17 @@
 package husi.recuperapp;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +20,10 @@ public class MenuPrincipal extends AppCompatActivity {
 
     Paciente paciente;
 
-    private List<Funcionalidad> funcionalidades = new ArrayList<>();
-    private RecyclerView recicledView;
-    private ControladorRecicledView controladorRV;
+    Intent iniciarActivity;
+
+    private List<Funcionalidad> funcionalidades;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +37,23 @@ public class MenuPrincipal extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
         getSupportActionBar().setTitle("  "+paciente.getUsuario());
 
-        recicledView=(RecyclerView)findViewById(R.id.recycler_view);
-
-        controladorRV = new ControladorRecicledView(funcionalidades);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recicledView.setLayoutManager(llm);
-        recicledView.setHasFixedSize(true);
-        recicledView.setItemAnimator(new DefaultItemAnimator());
-        recicledView.setAdapter(controladorRV);
+        this.listView = (ListView) findViewById(R.id.listViewFunciones);
 
         crearListaFunciones();
 
+        //En caso de activar un elemento de la lista
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
+                activarActivity(posicion);
+                //TextView texto = (TextView) view.findViewById(R.id.descripcion_texto);
+            }
+        });
+
     }
     private void crearListaFunciones() {
+
+        funcionalidades = new ArrayList<>();
 
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Actividad Física",
                 "Registrar caminata u oficios varios"));
@@ -61,6 +72,49 @@ public class MenuPrincipal extends AppCompatActivity {
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_map, "Mapa del Hospital San Ignacio",
                 "Consultar mapa interno del hospital"));
 
-        controladorRV.notifyDataSetChanged();
+        this.listView.setAdapter(new AdaptadorListView(this, funcionalidades));
+    }
+
+    private void activarActivity(int posicion){
+
+        switch(posicion){
+
+            case 0:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+
+            case 1:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+            case 2:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+
+            case 3:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+            case 4:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+            case 5:
+                iniciarActivity = new Intent(this, RegistrarFisiologicos.class);
+                this.startActivity(iniciarActivity);
+                break;
+            case 6:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+
+            case 7:
+                iniciarActivity = new Intent(this, Login.class);
+                this.startActivity(iniciarActivity);
+                break;
+        }
+
     }
 }

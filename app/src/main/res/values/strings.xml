@@ -23,4 +23,10 @@
     <string name="funcionalidad">Funcionalidad</string>
     <string name="descripcion">Descripción</string>
 
+    <!-- Fisiologico -->
+    <string name="medicion">Medicion</string>
+    <string name="unidades">Unidades</string>
+    <string name="ingresar">Ingresar</string>
+
+
 </resources>

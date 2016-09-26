@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/icono_fisiologico"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:maxHeight="80dp"
+        android:maxWidth="80dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="4dp"
+        app:layout_constraintHorizontal_bias="0.05"
+        android:layout_height="120dp"
+        android:layout_width="120dp" />
+
+    <TextView
+        android:id="@+id/medicion_texto"
+        android:layout_width="0dp"
+        android:text="@string/medicion"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:textColor="@color/rojoClaro"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/icono_fisiologico"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintTop_toTopOf="@+id/icono_fisiologico"
+        app:layout_constraintHorizontal_bias="0.44"
+        android:layout_height="60dp" />
+
+    <TextView
+        android:id="@+id/unidades_texto"
+        android:layout_alignParentRight="true"
+        android:text="@string/unidades"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        android:textColor="@color/grisOscuro"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/dato_medicion"
+        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_marginBottom="4dp" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:id="@+id/degradado_fisiologico"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/degradado"
+        android:layout_height="13dp" />
+
+    <EditText
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/dato_medicion"
+        android:textSize="60sp"
+        android:layout_width="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/medicion_texto"
+        app:layout_constraintRight_toLeftOf="@+id/unidades_texto"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintLeft_toRightOf="@+id/icono_fisiologico"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_height="85dp" />
+
+    <Button
+        android:id="@+id/boton_ingresar_fisiologico"
+        android:text="@string/ingresar"
+        android:background="@drawable/estilo_boton_rojo"
+        android:textColor="#fafafa"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/dato_medicion"
+        android:layout_marginTop="16dp" />
+
+</android.support.constraint.ConstraintLayout>
