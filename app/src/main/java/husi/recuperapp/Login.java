@@ -106,6 +106,7 @@ public class Login extends Activity{
 
             if(validarUsuario(usuario, contrsena)==true){
                 activarMenu = new Intent(this, MenuPrincipal.class);
+                activarMenu.putExtra("usuario", paciente.getUsuario());
                 startActivity(activarMenu);
             }
             else{

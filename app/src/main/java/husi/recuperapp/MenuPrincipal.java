@@ -27,15 +27,27 @@ public class MenuPrincipal extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        paciente=(Paciente)getApplicationContext();
+        //Obtiene dato nombre usuario del intent
+        String usuario;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                usuario= null;
+            } else {
+                usuario= extras.getString("usuario");
+            }
+        } else {
+            usuario= (String) savedInstanceState.getSerializable("usuario");
+        }
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu_principal);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getUsuario());
+        getSupportActionBar().setTitle("  "+usuario);
 
         this.listView = (ListView) findViewById(R.id.listViewFunciones);
 
@@ -51,6 +63,7 @@ public class MenuPrincipal extends AppCompatActivity {
         });
 
     }
+
     private void crearListaFunciones() {
 
         funcionalidades = new ArrayList<>();
