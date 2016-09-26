@@ -21,18 +21,22 @@ public class Paciente extends Application{
     private String contrasena;
     private boolean existeEnBd;
 
+    public static Paciente getInstance(){
+        return singleton;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         this.existeEnBd=false;
 
-        crearObjetoDesdeBD();
+        dbHelper = new DataBaseHelper(this);
+        crearObjetoDesdeBD(dbHelper);
         singleton = this;
     }
 
-    public boolean crearObjetoDesdeBD() {
+    public boolean crearObjetoDesdeBD(DataBaseHelper dbHelper) {
         if (this.existeEnBd == false){
-            dbHelper = new DataBaseHelper(this);
 
             ArrayList<String> paciente = new ArrayList<String>();
             paciente = dbHelper.obtenerPaciente();
@@ -47,14 +51,19 @@ public class Paciente extends Application{
             this.contrasena = paciente.get(2);
             this.email = paciente.get(3);
             this.existeEnBd = true;
+
             return existeEnBd;
         }
         return existeEnBd;
     }
 
-
-    public static Paciente getInstance(){
-        return singleton;
+    public boolean crearPaciente(String usuario,String contrasena1,String email){
+        this.existeEnBd=false;
+        dbHelper = new DataBaseHelper(this);
+        if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)){
+            crearObjetoDesdeBD(dbHelper);
+        }
+        return existeEnBd;
     }
 
     public String getNombres() {

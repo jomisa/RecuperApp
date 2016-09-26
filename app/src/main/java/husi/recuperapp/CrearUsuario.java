@@ -81,21 +81,18 @@ public class CrearUsuario extends Activity {
             //focusView.requestFocus();
         } else {
             //Ingresa los datos del paciente en la BD
-            if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)) {
-                //actualiza los datos del paciente en el objeto paciente
-                if(paciente.crearObjetoDesdeBD()==true) {
-                    Toast.makeText(this, "Se creó el usuario: " + paciente.getUsuario().toString(), Toast.LENGTH_LONG).show();
-                    //Crea un intent
-                    activarLogin = new Intent(this, Login.class);
-                    //retorna al objeto paciente en el intent a la actividad LoginUI
-                    activarLogin.putExtra("usuario", paciente.getUsuario());
+            if(paciente.crearPaciente(usuario, contrasena1, email)==true) {
+                Toast.makeText(this, "Se creó el usuario: " + paciente.getUsuario().toString(),
+                        Toast.LENGTH_LONG).show();
+                //Crea un intent
+                activarLogin = new Intent(this, Login.class);
+                //retorna al objeto paciente en el intent a la actividad LoginUI
+                activarLogin.putExtra("usuario", paciente.getUsuario());
 
-                    //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
-                    setResult(Activity.RESULT_OK, activarLogin);
-                    //ejecuta el metodo onDestry() de esta actividad
-                    this.finish();
-                }else
-                    Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario", Toast.LENGTH_LONG).show();
+                //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
+                setResult(Activity.RESULT_OK, activarLogin);
+                //ejecuta el metodo onDestry() de esta actividad
+                this.finish();
             }else
                 Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario", Toast.LENGTH_LONG).show();
         }
