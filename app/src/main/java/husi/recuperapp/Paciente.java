@@ -37,10 +37,15 @@ public class Paciente extends Application{
 
     public boolean crearObjetoDesdeBD(DataBaseHelper dbHelper) {
         if (this.existeEnBd == false){
-
             ArrayList<String> paciente = new ArrayList<String>();
-            paciente = dbHelper.obtenerPaciente();
 
+            if(dbHelper.existeLaTabla("tabla_paciente")==false){
+
+            }
+            else {
+
+                paciente = dbHelper.obtenerPaciente();
+            }
             //no hay datos de paciente en la tabla
             if (paciente == null) {
                 return existeEnBd;

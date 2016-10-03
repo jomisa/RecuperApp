@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
 
@@ -16,10 +15,23 @@ import java.util.ArrayList;
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String NOMBRE_BD = "RecuperapDP.db";
     public static final String TABLA_PACIENTE = "tabla_paciente";
-    public static final String COL_1 = "ID";
-    public static final String COL_2 = "USUARIO";
-    public static final String COL_3 = "CONTRASENA";
-    public static final String COL_4 = "EMAIL";
+    public static final String COL_1_PACIENTE = "ID";
+    public static final String COL_2_PACIENTE = "USUARIO";
+    public static final String COL_3_PACIENTE = "CONTRASENA";
+    public static final String COL_4_PACIENTE = "EMAIL";
+
+    public static final String TABLA_FISIOLOGICOS = "tabla_fisiologicos";
+    public static final String COL_1_FISIOLOGICOS = "ID";
+    public static final String COL_2_FISIOLOGICOS = "FECHA";
+    public static final String COL_3_FISIOLOGICOS = "MEDICION";
+    public static final String COL_4_FISIOLOGICOS = "VALOR";
+
+    public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
+            "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_PACIENTE +
+            " TEXT," + COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " INTEGER)";
+    public static final String CREAR_TABLA_FISIOLOGICOS = "create table " + TABLA_FISIOLOGICOS + " " +
+            "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
+            " TEXT," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " INTEGER)";
 
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
@@ -27,13 +39,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLA_PACIENTE + " ("+COL_1+" INTEGER PRIMARY KEY " +
-                "AUTOINCREMENT," + COL_2 + " TEXT," + COL_3 + " TEXT," + COL_4 + " INTEGER)");
+        db.execSQL(CREAR_TABLA_PACIENTE);
+        db.execSQL(CREAR_TABLA_FISIOLOGICOS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_PACIENTE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_FISIOLOGICOS);
         onCreate(db);
     }
 
@@ -63,12 +76,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //Paciente
+
     public boolean insertarUnPaciente(String usuario, String contrasena, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, usuario);
-        contentValues.put(COL_3, contrasena);
-        contentValues.put(COL_4, email);
+        contentValues.put(COL_2_PACIENTE, usuario);
+        contentValues.put(COL_3_PACIENTE, contrasena);
+        contentValues.put(COL_4_PACIENTE, email);
         long result = db.insert(TABLA_PACIENTE, null, contentValues);
         if (result == -1)
             return false;
@@ -98,10 +113,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean actualizarUnPaciente(String id, String usuario, String contrasena, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, id);
-        contentValues.put(COL_2, usuario);
-        contentValues.put(COL_3, contrasena);
-        contentValues.put(COL_4, email);
+        contentValues.put(COL_1_PACIENTE, id);
+        contentValues.put(COL_2_PACIENTE, usuario);
+        contentValues.put(COL_3_PACIENTE, contrasena);
+        contentValues.put(COL_4_PACIENTE, email);
         db.update(TABLA_PACIENTE, contentValues, "ID = ?", new String[]{id});
         return true;
     }
@@ -113,5 +128,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         if(filasBorradas > 0)
             return true;
         return false;
+    }
+
+    //Fisiológicos
+
+    public boolean insertarUnFisiologico(String fecha, String medicion, String valor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_FISIOLOGICOS, fecha);
+        contentValues.put(COL_3_FISIOLOGICOS, medicion);
+        contentValues.put(COL_4_FISIOLOGICOS, valor);
+        long result = db.insert(TABLA_FISIOLOGICOS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public ArrayList<String> obtenerFisiologico() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> fisiologico = new ArrayList<String>();
+        Cursor resultado = db.rawQuery("select * from " + TABLA_FISIOLOGICOS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (resultado.moveToNext()) {
+            fisiologico.add(resultado.getString(0));
+            fisiologico.add(resultado.getString(1));
+            fisiologico.add(resultado.getString(2));
+            fisiologico.add(resultado.getString(3));
+        }
+        return fisiologico;
     }
 }

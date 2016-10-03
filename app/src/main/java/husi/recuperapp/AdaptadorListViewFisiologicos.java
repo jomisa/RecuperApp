@@ -2,6 +2,7 @@ package husi.recuperapp;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by jmss1 on 25/09/2016.
  */
 
-public class AdaptadorListViewFisiologicos extends BaseAdapter {
+public class AdaptadorListViewFisiologicos extends BaseAdapter{
     private Context context;
     private List<Fisiologico> fisiologicos;
-    private View.OnClickListener clickListener;
+    private static DataBaseHelper dbHelper;
 
     public AdaptadorListViewFisiologicos(Context context, List<Fisiologico> fisiologicos) {
         this.context = context;
@@ -85,11 +88,25 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter {
                 ViewHolder viewHolder = (ViewHolder) v.getTag();
                 if(viewHolder==null)
                     Log.i("Tag: ", "Es null");
-                else
-                    Log.i("Tag: ", viewHolder.dato.getText().toString());//obtener el editText del ViewHolder
+                else {
+                    String medicion = viewHolder.medicion.getText().toString();
 
-                //fisiologicos.remove(posicion);
-                //notifyDataSetChanged();
+                    String valor = viewHolder.dato.getText().toString();
+
+                    SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String fechaTexto = fecha.format(new Date(System.currentTimeMillis()));
+
+                    Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
+                    Log.i("Tag: ", valor);//obtener el editText del ViewHolder
+                    Log.i("Tag: ", fechaTexto);//obtener el editText del ViewHolder
+
+                    dbHelper = new DataBaseHelper(context.getApplicationContext());
+
+                    dbHelper.insertarUnFisiologico(fechaTexto, medicion, valor);
+
+                    //fisiologicos.remove(posicion);
+                    //notifyDataSetChanged();
+                }
             }
         });
 
