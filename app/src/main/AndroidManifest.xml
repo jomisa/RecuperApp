@@ -36,7 +36,8 @@
             android:theme="@style/CustomActionBarTheme"></activity>
         <activity
             android:name=".RegistrarFisiologicos"
-            android:theme="@style/CustomActionBarTheme"></activity>
+            android:theme="@style/CustomActionBarTheme"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

@@ -18,8 +18,6 @@ import java.util.List;
 
 public class MenuPrincipal extends AppCompatActivity {
 
-    Paciente paciente;
-
     Intent iniciarActivity;
 
     private List<Funcionalidad> funcionalidades;

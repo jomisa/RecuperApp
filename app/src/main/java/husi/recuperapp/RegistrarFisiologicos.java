@@ -3,12 +3,7 @@ package husi.recuperapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +32,9 @@ public class RegistrarFisiologicos extends AppCompatActivity {
         this.listView = (ListView) findViewById(R.id.listViewFisiologicos);
 
         crearListaFisiologicos();
-/*
-        //En caso de activar un elemento de la lista
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                //activarActivity(posicion);
-
-            }
-        });
-*/
 
     }
+
     private void crearListaFisiologicos() {
 
         fisiologicos = new ArrayList<>();

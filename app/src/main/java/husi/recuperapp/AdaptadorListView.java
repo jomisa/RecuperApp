@@ -43,75 +43,97 @@ public class AdaptadorListView extends BaseAdapter{
     public View getView(int posicion, View convertView, ViewGroup parent) {
 
         View vistaFila = convertView;
+        ViewHolder holder;
 
         if (convertView == null) {
+            holder = new ViewHolder();
+
             //Crear una nueva vista en la lista
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vistaFila = inflater.inflate(R.layout.item_menu_principal, parent, false);
+
+            holder.imagen = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
+            holder.funcion = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);
+            holder.descripcion = (TextView) vistaFila.findViewById(R.id.descripcion_texto);
+            holder.funcionalidad = funcionalidades.get(posicion);
+
+            //asocio el holder a la vista
+            vistaFila.setTag(holder);
+
+            llenarDatosHolder(vistaFila, holder, posicion);
+        }
+        else{
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        //Para que empiece la lista desde 1
+        return vistaFila;
+    }
+
+    private void llenarDatosHolder(View vistaFila, ViewHolder holder, int posicion) {
+
+        holder.funcion.setText(holder.funcionalidad.getFuncionalidad());
+        holder.descripcion.setText(holder.funcionalidad.getDescripcion());
+        holder.imagen.setImageResource(holder.funcionalidad.getIconID());
+
+        //Para que empiece la lista desde 1 y poder hacer los cálculos de posicion
         posicion++;
 
-        //Poner datos en la vista
-        ImageView imagen = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
-        TextView funcion = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);
-        TextView descripcion = (TextView) vistaFila.findViewById(R.id.descripcion_texto);
-
-        Funcionalidad funcionalidad = this.funcionalidades.get(posicion-1);//La lista empieza en 0
-        funcion.setText(funcionalidad.getFuncionalidad());
-        descripcion.setText(funcionalidad.getDescripcion());
-        imagen.setImageResource(funcionalidad.getIconID());
+        //Según el número de la fila se decora el contenido
 
         if (posicion % 3 == 0) {//detecta la tercera posicion
             //Cambia el color de toda la posicion
             vistaFila.setBackgroundColor(Color.parseColor("#fafafa"));
 
             //Cambia el color del titulo de la posicion
-            TextView funcio = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);
-            funcio.setTextColor(Color.parseColor("#f44336"));
+            holder.funcion.setTextColor(Color.parseColor("#f44336"));
 
             //cambia el color de la descripcion de la posicion
-            TextView descrip = (TextView) vistaFila.findViewById(R.id.descripcion_texto);
-            descrip.setTextColor(Color.parseColor("#9e9e9e"));
+            holder.descripcion.setTextColor(Color.parseColor("#9e9e9e"));
 
-            //cambia el color de la imagen (todas las imagenes deben ser PNG para ctenr transparencia de fondo y de color blanco)
-            ImageView imagenFuncionalidad = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
-            imagenFuncionalidad.setColorFilter(Color.rgb(0, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
+            //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
+            holder.imagen.setColorFilter(Color.rgb(0, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
         } else if (posicion % 3 == 2) {//detecta la seguna posicion
             //Cambia el color de toda la posicion
             vistaFila.setBackgroundColor(Color.parseColor("#9e9e9e"));
 
-            //Cambia el color del titulo de la posicion
-            TextView funcio = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);
-            funcio.setTextColor(Color.parseColor("#424242"));
+            //Cambia el color del titulo de la posicion;
+            holder.funcion.setTextColor(Color.parseColor("#424242"));
 
             //cambia el color de la descripcion de la posicion
-            TextView descrip = (TextView) vistaFila.findViewById(R.id.descripcion_texto);
-            descrip.setTextColor(Color.parseColor("#f44336"));
+            holder.descripcion.setTextColor(Color.parseColor("#f44336"));
 
-            //cambia el color de la imagen (todas las imagenes deben ser PNG para ctenr transparencia de fondo y de color blanco)
-            ImageView imagenFuncionalidad = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
-            imagenFuncionalidad.setColorFilter(Color.rgb(160, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
+            //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
+            holder.imagen.setColorFilter(Color.rgb(160, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
         } else {//Por descarte es la primera posicion
             //Cambia el color de toda la posicion
             vistaFila.setBackgroundColor(Color.parseColor("#424242"));
 
             //Cambia el color del titulo de la posicion
-            TextView funcio = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);
-            funcio.setTextColor(Color.parseColor("#f44336"));
+            holder.funcion.setTextColor(Color.parseColor("#f44336"));
 
             //cambia el color de la descripcion de la posicion
-            TextView descrip = (TextView) vistaFila.findViewById(R.id.descripcion_texto);
-            descrip.setTextColor(Color.parseColor("#9e9e9e"));
+            holder.descripcion.setTextColor(Color.parseColor("#9e9e9e"));
 
-            //Se deja la imagen blanca
-
-            //cambia el color de la imagen (todas las imagenes deben ser PNG para ctenr transparencia de fondo y de color blanco)
-            ImageView imagenFuncionalidad = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
-            imagenFuncionalidad.setColorFilter(Color.rgb(255, 255, 255), android.graphics.PorterDuff.Mode.MULTIPLY);
+            //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
+            holder.imagen.setColorFilter(Color.rgb(255, 255, 255), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
+    }
 
-        return vistaFila;
+
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    private static class ViewHolder {
+        TextView funcion;
+        TextView descripcion;
+        ImageView imagen;
+        Funcionalidad funcionalidad;
     }
 }
