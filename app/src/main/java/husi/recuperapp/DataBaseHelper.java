@@ -26,12 +26,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_3_FISIOLOGICOS = "MEDICION";
     public static final String COL_4_FISIOLOGICOS = "VALOR";
 
+    public static final String TABLA_MEDICAMENTOS = "tabla_medicamentos";
+    public static final String COL_1_MEDICAMENTOS = "ID";
+    public static final String COL_2_MEDICAMENTOS = "MEDICAMENTO";
+    public static final String COL_3_MEDICAMENTOS = "DOSIS";
+    public static final String COL_4_MEDICAMENTOS = "FRECUENCIA";
+    public static final String COL_5_MEDICAMENTOS = "HORA";
+    public static final String COL_6_MEDICAMENTOS = "ASIGNADO";
+
     public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
             "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_PACIENTE +
             " TEXT," + COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " INTEGER)";
     public static final String CREAR_TABLA_FISIOLOGICOS = "create table " + TABLA_FISIOLOGICOS + " " +
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
             " TEXT," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " INTEGER)";
+
+    public static final String CREAR_TABLA_MEDICAMENTOS = "create table " + TABLA_MEDICAMENTOS + " " +
+            "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_MEDICAMENTOS +
+            " TEXT," + COL_3_MEDICAMENTOS + " TEXT," + COL_4_MEDICAMENTOS + " TEXT," + COL_5_MEDICAMENTOS
+            + " TEXT," + COL_6_MEDICAMENTOS +" TEXT)";
 
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
@@ -41,12 +54,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREAR_TABLA_PACIENTE);
         db.execSQL(CREAR_TABLA_FISIOLOGICOS);
+        db.execSQL(CREAR_TABLA_MEDICAMENTOS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_PACIENTE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_FISIOLOGICOS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_MEDICAMENTOS);
         onCreate(db);
     }
 
@@ -162,5 +177,67 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             fisiologico.add(resultado.getString(3));
         }
         return fisiologico;
+    }
+
+    //Medicamentos
+
+    public boolean insertarUnMedicamento(String medicamento, String dosis, String frecuencia,
+                                         String hora, String asignado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_MEDICAMENTOS, medicamento);
+        contentValues.put(COL_3_MEDICAMENTOS, dosis);
+        contentValues.put(COL_4_MEDICAMENTOS, frecuencia);
+        contentValues.put(COL_5_MEDICAMENTOS, hora);
+        contentValues.put(COL_6_MEDICAMENTOS, asignado);
+        long result = db.insert(TABLA_MEDICAMENTOS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public ArrayList<String> obtenerUnMedicamento() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> medicamento = new ArrayList<String>();
+        Cursor resultado = db.rawQuery("select * from " + TABLA_MEDICAMENTOS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (resultado.moveToNext()) {
+            medicamento.add(resultado.getString(0));
+            medicamento.add(resultado.getString(1));
+            medicamento.add(resultado.getString(2));
+            medicamento.add(resultado.getString(3));
+            medicamento.add(resultado.getString(4));
+            medicamento.add(resultado.getString(5));
+        }
+        return medicamento;
+    }
+
+    public boolean actualizarUnMedicamento(String id, String medicamento, String dosis,
+                                           String frecuencia, String hora, String asignado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_MEDICAMENTOS, id);
+        contentValues.put(COL_2_MEDICAMENTOS, medicamento);
+        contentValues.put(COL_3_MEDICAMENTOS, dosis);
+        contentValues.put(COL_4_MEDICAMENTOS, frecuencia);
+        contentValues.put(COL_5_MEDICAMENTOS, hora);
+        contentValues.put(COL_6_MEDICAMENTOS, asignado);
+        db.update(TABLA_MEDICAMENTOS, contentValues, "ID = ?", new String[]{id});
+        return true;
+    }
+
+    public boolean borrarUnMedicamento(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer filasBorradas = db.delete(TABLA_MEDICAMENTOS, "ID = ?", new String[]{id});
+
+        if(filasBorradas > 0)
+            return true;
+        return false;
     }
 }

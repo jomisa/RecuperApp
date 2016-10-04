@@ -109,7 +109,7 @@ public class MenuPrincipal extends AppCompatActivity {
                 this.startActivity(iniciarActivity);
                 break;
             case 4:
-                iniciarActivity = new Intent(this, Login.class);
+                iniciarActivity = new Intent(this, Medicamentos.class);
                 this.startActivity(iniciarActivity);
                 break;
             case 5:

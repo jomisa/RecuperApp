@@ -1,6 +1,5 @@
 package husi.recuperapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -11,8 +10,6 @@ import java.util.List;
 public class RegistrarFisiologicos extends AppCompatActivity {
 
     Paciente paciente;
-
-    Intent iniciarActivity;
 
     private List<Fisiologico> fisiologicos;
     private ListView listView;

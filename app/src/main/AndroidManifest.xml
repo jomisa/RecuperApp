@@ -30,14 +30,17 @@
             android:name=".CrearUsuario"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"></activity>
+            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" />
         <activity
             android:name=".MenuPrincipal"
-            android:theme="@style/CustomActionBarTheme"></activity>
+            android:theme="@style/CustomActionBarTheme" />
         <activity
             android:name=".RegistrarFisiologicos"
             android:theme="@style/CustomActionBarTheme"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Medicamentos"
+            android:theme="@style/CustomActionBarTheme"/>
     </application>
 
 </manifest>
