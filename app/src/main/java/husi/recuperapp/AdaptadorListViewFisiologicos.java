@@ -2,7 +2,6 @@ package husi.recuperapp;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,7 +103,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
                     dbHelper.insertarUnFisiologico(fechaTexto, medicion, valor);
 
-                    //fisiologicos.remove(posicion);
+                    //fisiologicos.remove(viewHolder.fisiologico);
                     //notifyDataSetChanged();
                 }
             }

@@ -39,47 +39,18 @@ public class RegistrarFisiologicos extends AppCompatActivity {
 
         fisiologicos = new ArrayList<>();
 
-        fisiologicos.add(new Fisiologico(R.drawable.ic_maps_directions_walk, "Peso",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_balanza, "Peso",
                 "Kg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_maps_local_restaurant, "Frecuencia Cardíaca",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_corazon, "Frecuencia Cardíaca",
                 "bpm"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_content_content_paste, "Presión Sanguínea SYS",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_presion, "Presión Sanguínea SYS",
                 "mmHg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_editor_insert_invitation, "Presión Sanguínea DIA",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_presion, "Presión Sanguínea DIA",
                 "mmHg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_action_alarm, "Niveles de Glucosa",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_glucosa, "Niveles de Glucosa",
                 "mg"));
 
         this.listView.setAdapter(new AdaptadorListViewFisiologicos(this, fisiologicos));
     }
 
-    private void activarActivity(int posicion){
-
-        switch(posicion){
-
-            case 0:
-                iniciarActivity = new Intent(this, Login.class);
-                this.startActivity(iniciarActivity);
-                break;
-
-            case 1:
-                iniciarActivity = new Intent(this, Login.class);
-                this.startActivity(iniciarActivity);
-                break;
-            case 2:
-                iniciarActivity = new Intent(this, Login.class);
-                this.startActivity(iniciarActivity);
-                break;
-
-            case 3:
-                iniciarActivity = new Intent(this, Login.class);
-                this.startActivity(iniciarActivity);
-                break;
-            case 4:
-                iniciarActivity = new Intent(this, Login.class);
-                this.startActivity(iniciarActivity);
-                break;
-        }
-
-    }
 }
