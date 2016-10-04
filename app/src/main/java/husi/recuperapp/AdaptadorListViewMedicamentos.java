@@ -1,5 +1,6 @@
 package husi.recuperapp;
 
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -11,8 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -86,10 +90,19 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
                 if(viewHolder==null)
                     Log.i("Tag: ", "Es null");
                 else {
+                    Calendar mcurrentTime = Calendar.getInstance();
+                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                    int minute = mcurrentTime.get(Calendar.MINUTE);
+                    TimePickerDialog mTimePicker;
+                    mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                            Toast.makeText(context, "Seleccionó: " + selectedHour + ":" + selectedMinute,Toast.LENGTH_LONG).show();
+                        }
+                    }, hour, minute, true);//Yes 24 hour time
+                    mTimePicker.setTitle("Seleccione la hora");
+                    mTimePicker.show();
 
-
-                    //fisiologicos.remove(viewHolder.fisiologico);
-                    //notifyDataSetChanged();
                 }
             }
         });
