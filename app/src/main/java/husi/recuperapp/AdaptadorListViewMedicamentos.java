@@ -1,24 +1,23 @@
 package husi.recuperapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
 
 /**
  * Created by jmss1 on 4/10/2016.
@@ -27,6 +26,8 @@ import java.util.List;
 public class AdaptadorListViewMedicamentos extends BaseAdapter {
     private Context context;
     private List<Medicamento> medicamentos;
+    AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     public AdaptadorListViewMedicamentos(Context context, List<Medicamento> medicamentos) {
         this.context = context;
@@ -78,6 +79,8 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
             holder = (AdaptadorListViewMedicamentos.ViewHolder) convertView.getTag();
         }
 
+        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+
         //Obtener boton y manejar presionar el boton
         Button botonAsignar = (Button)vistaFila.findViewById(R.id.boton_asignar_medicamento);
 
@@ -97,6 +100,17 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
                     mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                            calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+                            Intent myIntent = new Intent(context, AlarmaMedicamentoReceiver.class);
+                            pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
+                            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
+                            Long t=calendar.getTimeInMillis();
+                            Log.i("Hora: ", ""+t);
+
                             Toast.makeText(context, "Seleccionó: " + selectedHour + ":" + selectedMinute,Toast.LENGTH_LONG).show();
                         }
                     }, hour, minute, true);//Yes 24 hour time

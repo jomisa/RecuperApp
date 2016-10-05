@@ -41,6 +41,8 @@
         <activity
             android:name=".Medicamentos"
             android:theme="@style/CustomActionBarTheme"/>
+        <receiver android:name=".AlarmaMedicamentoReceiver" >
+        </receiver>
     </application>
 
 </manifest>
