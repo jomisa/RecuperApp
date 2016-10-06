@@ -51,6 +51,8 @@ public class MenuPrincipal extends AppCompatActivity {
 
         crearListaFunciones();
 
+        this.listView.setAdapter(new AdaptadorListView(this, funcionalidades));
+
         //En caso de activar un elemento de la lista
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,8 +84,6 @@ public class MenuPrincipal extends AppCompatActivity {
                 "Consultar Histórico de síntomas y mediciones"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_map, "Mapa del Hospital San Ignacio",
                 "Consultar mapa interno del hospital"));
-
-        this.listView.setAdapter(new AdaptadorListView(this, funcionalidades));
     }
 
     private void activarActivity(int posicion){

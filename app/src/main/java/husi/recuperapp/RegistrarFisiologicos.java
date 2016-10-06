@@ -30,6 +30,8 @@ public class RegistrarFisiologicos extends AppCompatActivity {
 
         crearListaFisiologicos();
 
+        this.listView.setAdapter(new AdaptadorListViewFisiologicos(this, fisiologicos));
+
     }
 
     private void crearListaFisiologicos() {
@@ -47,7 +49,6 @@ public class RegistrarFisiologicos extends AppCompatActivity {
         fisiologicos.add(new Fisiologico(R.drawable.ic_glucosa, "Niveles de Glucosa",
                 "mg"));
 
-        this.listView.setAdapter(new AdaptadorListViewFisiologicos(this, fisiologicos));
     }
 
 }

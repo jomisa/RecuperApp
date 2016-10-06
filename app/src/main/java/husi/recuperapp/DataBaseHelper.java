@@ -197,7 +197,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<String> obtenerUnMedicamento() {
+    public ArrayList<String> obtenerMedicamentos() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ArrayList<String> medicamento = new ArrayList<String>();

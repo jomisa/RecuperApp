@@ -15,6 +15,9 @@ import static android.support.v4.content.WakefulBroadcastReceiver.startWakefulSe
  */
 
 public class AlarmaMedicamentoReceiver extends WakefulBroadcastReceiver {
+
+    Intent activarMedicamentos;
+
     @Override
     public void onReceive(final Context context, Intent intent) {
 
@@ -29,7 +32,9 @@ public class AlarmaMedicamentoReceiver extends WakefulBroadcastReceiver {
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
         ringtone.play();
         Log.i("Alarma: ","ring");
-
+        activarMedicamentos = new Intent(context.getApplicationContext(), Medicamentos.class);
+        activarMedicamentos.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(activarMedicamentos);
     }
 
 }

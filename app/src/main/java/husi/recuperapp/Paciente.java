@@ -43,7 +43,6 @@ public class Paciente extends Application{
 
             }
             else {
-
                 paciente = dbHelper.obtenerPaciente();
             }
             //no hay datos de paciente en la tabla
@@ -66,6 +65,15 @@ public class Paciente extends Application{
         this.existeEnBd=false;
         dbHelper = new DataBaseHelper(this);
         if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)){
+
+            //TODO: Crea medicamentos iniciales en BD, se debe borrar estas líneas al crear web service
+            dbHelper.insertarUnMedicamento("dolex", "10g", "12", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("dolex forte", "20g", "24", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("buscapina", "30g", "6", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("mareol", "15g", "8", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("advil", "20g", "48", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("dolex", "18g", "12", "Sin Asignar", "false") ;
+
             crearObjetoDesdeBD(dbHelper);
         }
         return existeEnBd;

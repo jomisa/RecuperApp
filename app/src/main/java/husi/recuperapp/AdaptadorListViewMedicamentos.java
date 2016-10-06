@@ -26,8 +26,6 @@ import static android.content.Context.ALARM_SERVICE;
 public class AdaptadorListViewMedicamentos extends BaseAdapter {
     private Context context;
     private List<Medicamento> medicamentos;
-    AlarmManager alarmManager;
-    private PendingIntent pendingIntent;
 
     public AdaptadorListViewMedicamentos(Context context, List<Medicamento> medicamentos) {
         this.context = context;
@@ -65,71 +63,24 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
             holder.hora = (TextView) vistaFila.findViewById(R.id.hora_medicamento_texto);
             holder.nombre = (TextView) vistaFila.findViewById(R.id.medicamento_medicamento_texto);
             holder.dosis = (TextView) vistaFila.findViewById(R.id.dosis_medicamento_texto);
-            holder.botonAsignar = (Button) vistaFila.findViewById(R.id.boton_asignar_medicamento);
+            holder.frecuencia = (TextView) vistaFila.findViewById(R.id.frecuencia_medicamento_texto);
             holder.medicamento = medicamentos.get(posicion);
 
             //asocio el holder a la vista
             vistaFila.setTag(holder);
 
-            //asocio el ViewHolder al boton (si presiona el boton puedo ontener el ViewHolder)
-            holder.botonAsignar.setTag(holder);
-
-            llenarDatosHolder(vistaFila, holder, posicion);
+            llenarDatosHolder(holder);
         } else{
             holder = (AdaptadorListViewMedicamentos.ViewHolder) convertView.getTag();
         }
-
-        alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-
-        //Obtener boton y manejar presionar el boton
-        Button botonAsignar = (Button)vistaFila.findViewById(R.id.boton_asignar_medicamento);
-
-        botonAsignar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-
-                //El boton tiene guardado el viewholder en su Tag
-                AdaptadorListViewMedicamentos.ViewHolder viewHolder = (AdaptadorListViewMedicamentos.ViewHolder) v.getTag();
-                if(viewHolder==null)
-                    Log.i("Tag: ", "Es null");
-                else {
-                    Calendar mcurrentTime = Calendar.getInstance();
-                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mcurrentTime.get(Calendar.MINUTE);
-                    TimePickerDialog mTimePicker;
-                    mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-                            calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-                            Intent myIntent = new Intent(context, AlarmaMedicamentoReceiver.class);
-                            pendingIntent = PendingIntent.getBroadcast(context, 0, myIntent, 0);
-                            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-
-                            Long t=calendar.getTimeInMillis();
-                            Log.i("Hora: ", ""+t);
-
-                            Toast.makeText(context, "Seleccionó: " + selectedHour + ":" + selectedMinute,Toast.LENGTH_LONG).show();
-                        }
-                    }, hour, minute, true);//Yes 24 hour time
-                    mTimePicker.setTitle("Seleccione la hora");
-                    mTimePicker.show();
-
-                }
-            }
-        });
-
         return vistaFila;
     }
 
-    private void llenarDatosHolder(View vistaFila, AdaptadorListViewMedicamentos.ViewHolder holder, int posicion) {
-
+    private void llenarDatosHolder(AdaptadorListViewMedicamentos.ViewHolder holder) {
         holder.hora.setText(holder.medicamento.getHora());
         holder.nombre.setText(holder.medicamento.getNombre());
         holder.dosis.setText(holder.medicamento.getDosis());
-
+        holder.frecuencia.setText(holder.medicamento.getFrecuencia());
     }
 
     @Override
@@ -146,7 +97,7 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
         TextView hora;
         TextView nombre;
         TextView dosis;
-        Button botonAsignar;
+        TextView frecuencia;
         Medicamento medicamento;
     }
 }

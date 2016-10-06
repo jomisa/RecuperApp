@@ -92,6 +92,7 @@ public class CrearUsuario extends Activity {
                 //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
                 setResult(Activity.RESULT_OK, activarLogin);
                 //ejecuta el metodo onDestry() de esta actividad
+
                 this.finish();
             }else
                 Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario", Toast.LENGTH_LONG).show();
