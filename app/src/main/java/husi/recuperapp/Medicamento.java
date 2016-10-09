@@ -23,6 +23,10 @@ public class Medicamento {
         this.hora = hora;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getHora() {
         return hora;
     }

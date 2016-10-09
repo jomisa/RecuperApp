@@ -1,23 +1,12 @@
 package husi.recuperapp;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-import java.util.Calendar;
 import java.util.List;
-
-import static android.content.Context.ALARM_SERVICE;
 
 /**
  * Created by jmss1 on 4/10/2016.

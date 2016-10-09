@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import husi.recuperapp.caminatas.Pedometer;
+
 public class MenuPrincipal extends AppCompatActivity {
 
     Intent iniciarActivity;
@@ -91,7 +93,7 @@ public class MenuPrincipal extends AppCompatActivity {
         switch(posicion){
 
             case 0:
-                iniciarActivity = new Intent(this, Login.class);
+                iniciarActivity = new Intent(this, Pedometer.class);
                 this.startActivity(iniciarActivity);
                 break;
 

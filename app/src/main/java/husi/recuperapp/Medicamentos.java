@@ -4,12 +4,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ public class Medicamentos extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private AdaptadorListViewMedicamentos adaptadorListViewMedicamentos;
     DataBaseHelper dbHelper;
+    Ringtone ringtone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +51,46 @@ public class Medicamentos extends AppCompatActivity {
         adaptadorListViewMedicamentos=new AdaptadorListViewMedicamentos(this, medicamentos);
         this.listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
 
+        //Obtiene el id del medicamento que ejecuto la alarma
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            String id = extras.getString("id_medicamento");
+            Log.i("id: ",id);
+            //TODO: Colorear fila según id medicamento
+
+            Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            if (alarmUri == null) {
+                alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            }
+
+            ringtone = RingtoneManager.getRingtone(this, alarmUri);
+            ringtone.play();
+            Log.i("Alarma: ","ring");
+        }
+
         //En caso de activar Asignar alarma a un medicamento
         this.listViewMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                cuadrarAlarmaMedicamento(posicion);
+                //TODO: Desactivar alarma al hacer click en el medicamento
+                if(ringtone!=null)
+                    ringtone.stop();
             }
+
+        });
+        //En caso de activar Asignar alarma a un medicamento
+        this.listViewMedicamentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicion, long arg) {
+                cuadrarAlarmaMedicamento(posicion);
+                return true;
+            }
+
         });
     }
 
     private void cuadrarAlarmaMedicamento(final int posicion){
-
-
         adaptadorListViewMedicamentos.notifyDataSetChanged();
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -74,9 +105,15 @@ public class Medicamentos extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+
                 Intent myIntent = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, 0);
-                alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+                myIntent.putExtra("id_medicamento",medicamentos.get(posicion).getId());
+
+                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, posicion);
+
+                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
+
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
 
                 Long t=calendar.getTimeInMillis();
                 Log.i("Hora: ", ""+t);

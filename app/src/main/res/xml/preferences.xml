@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+            android:title="@string/steps_settings_title">
+
+        <ListPreference
+                android:key="sensitivity"
+                android:title="@string/sensitivity_setting"
+                android:summary="@string/sensitivity_setting_details"
+                android:entries="@array/sensitivity_preference"
+                android:entryValues="@array/sensitivity_preference_values"
+                android:dialogTitle="@string/sensitivity_setting_title"
+                android:defaultValue="30" />
+
+        <ListPreference
+                android:key="operation_level"
+                android:title="@string/operation_level_setting"
+                android:summary="@string/operation_level_setting_details"
+                android:entries="@array/operation_level_preference"
+                android:entryValues="@array/operation_level_preference_values"
+                android:dialogTitle="@string/operation_level_setting_title"
+                android:defaultValue="30" />
+
+        <EditTextPreference
+                android:key="step_length"
+                android:title="@string/step_length_setting"
+                android:summary="@string/step_length_setting_details"
+                android:dialogTitle="@string/longitud_paso_setting_titulo"
+                android:inputType="number"
+                android:defaultValue="20" />
+
+    </PreferenceCategory>
+    
+</PreferenceScreen>
