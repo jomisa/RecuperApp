@@ -11,6 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import husi.recuperapp.Citas.CitasMedicas;
 import husi.recuperapp.caminatas.Pedometer;
 import husi.recuperapp.caminatas.Settings;
 
@@ -108,7 +109,7 @@ public class MenuPrincipal extends AppCompatActivity {
                 break;
 
             case 3:
-                iniciarActivity = new Intent(this, Login.class);
+                iniciarActivity = new Intent(this, CitasMedicas.class);
                 this.startActivity(iniciarActivity);
                 break;
             case 4:

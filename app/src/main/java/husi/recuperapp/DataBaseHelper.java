@@ -41,6 +41,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_4_CAMINATAS = "DISTANCIA";
     public static final String COL_5_CAMINATAS = "PASOS";
 
+    public static final String TABLA_CITAS = "tabla_citas";
+    public static final String COL_1_CITAS = "ID";
+    public static final String COL_2_CITAS = "FECHA";
+    public static final String COL_3_CITAS = "MEDICO";
+
     public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
             "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_PACIENTE +
             " TEXT," + COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " INTEGER)";
@@ -59,6 +64,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             " TEXT," + COL_3_CAMINATAS + " TEXT," + COL_4_CAMINATAS + " TEXT," + COL_5_CAMINATAS
             + " TEXT)";
 
+    public static final String CREAR_TABLA_CITAS = "create table " + TABLA_CITAS + " " +
+            "("+COL_1_CITAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CITAS +
+            " TEXT," + COL_3_CITAS + " TEXT)";
+
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
     }
@@ -69,6 +78,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREAR_TABLA_FISIOLOGICOS);
         db.execSQL(CREAR_TABLA_MEDICAMENTOS);
         db.execSQL(CREAR_TABLA_CAMINATAS);
+        db.execSQL(CREAR_TABLA_CITAS);
     }
 
     @Override
@@ -77,6 +87,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_FISIOLOGICOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_MEDICAMENTOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_CAMINATAS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_CITAS);
         onCreate(db);
     }
 
@@ -308,6 +319,57 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean borrarUnaCaminata(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Integer filasBorradas = db.delete(TABLA_CAMINATAS, "ID = ?", new String[]{id});
+
+        if(filasBorradas > 0)
+            return true;
+        return false;
+    }
+
+    //Citas
+
+    public boolean insertarUnaCita(String fecha, String medico) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_CITAS, fecha);
+        contentValues.put(COL_3_CITAS, medico);
+        long result = db.insert(TABLA_CITAS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public ArrayList<String> obtenerCitas() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> citas = new ArrayList<String>();
+        Cursor resultado = db.rawQuery("select * from " + TABLA_CITAS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (resultado.moveToNext()) {
+            citas.add(resultado.getString(0));
+            citas.add(resultado.getString(1));
+            citas.add(resultado.getString(2));
+        }
+        return citas;
+    }
+
+    public boolean actualizarUnaCita(String id, String fecha, String medico) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_CITAS, id);
+        contentValues.put(COL_2_CITAS, fecha);
+        contentValues.put(COL_3_CITAS, medico);
+        db.update(TABLA_CITAS, contentValues, "ID = ?", new String[]{id});
+        return true;
+    }
+
+    public boolean borrarUnaCita(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer filasBorradas = db.delete(TABLA_CITAS, "ID = ?", new String[]{id});
 
         if(filasBorradas > 0)
             return true;

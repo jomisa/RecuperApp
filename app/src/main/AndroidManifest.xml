@@ -23,6 +23,7 @@
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,26 +41,32 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Medicamentos"
-            android:theme="@style/CustomActionBarTheme"/>
-
-        <activity android:name=".caminatas.Pedometer"
-            android:label="@string/app_name"
-            android:configChanges="orientation">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".caminatas.Settings"
+            android:theme="@style/CustomActionBarTheme" />
+        <activity
+            android:name=".caminatas.Pedometer"
+            android:configChanges="orientation"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".caminatas.Settings"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Citas.CitasMedicas"
+            android:theme="@style/CustomActionBarTheme">
+        </activity>
 
         <receiver android:name=".AlarmaMedicamentoReceiver" />
-        <service android:name=".caminatas.StepService"/>
+        <service android:name=".caminatas.StepService" />
     </application>
 
 </manifest>

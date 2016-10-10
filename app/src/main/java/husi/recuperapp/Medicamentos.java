@@ -25,6 +25,7 @@ public class Medicamentos extends AppCompatActivity {
     Paciente paciente;
 
     private List<Medicamento> medicamentos;
+    ArrayList<String> medicamentosBD;
     private ListView listViewMedicamentos;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
@@ -45,6 +46,9 @@ public class Medicamentos extends AppCompatActivity {
         getSupportActionBar().setTitle("  "+paciente.getUsuario());
 
         dbHelper = new DataBaseHelper(this);
+
+        medicamentos = new ArrayList<>();
+        medicamentosBD = new ArrayList<String>();
 
         this.listViewMedicamentos = (ListView) findViewById(R.id.listViewMedicamentos);
         crearListaMedicamentos();
@@ -69,7 +73,7 @@ public class Medicamentos extends AppCompatActivity {
             Log.i("Alarma: ","ring");
         }
 
-        //En caso de activar Asignar alarma a un medicamento
+        //Para desactivar la alarma de un medicamento
         this.listViewMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
@@ -79,7 +83,7 @@ public class Medicamentos extends AppCompatActivity {
             }
 
         });
-        //En caso de activar Asignar alarma a un medicamento
+        //Para cuadrar la alarma de un medicamento
         this.listViewMedicamentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicion, long arg) {
@@ -123,7 +127,10 @@ public class Medicamentos extends AppCompatActivity {
                 medicamentos.get(posicion).setAsignado("true");
                 medicamentos.get(posicion).setHora(selectedHour + ":" + selectedMinute);
 
-                actualizarMedicamento(posicion);
+                actualizarMedicamentoBD(posicion);
+                crearListaMedicamentos();
+
+                adaptadorListViewMedicamentos.notifyDataSetChanged();
 
             }
         }, hour, minute, true);//Yes 24 hour time
@@ -132,22 +139,23 @@ public class Medicamentos extends AppCompatActivity {
     }
 
     private void crearListaMedicamentos() {
-        medicamentos = new ArrayList<>();
-        ArrayList<String> medicamentosBD = new ArrayList<String>();
+        medicamentos.clear();
+        medicamentosBD.clear();
 
         medicamentosBD = dbHelper.obtenerMedicamentos();
 
-        //Obtiene los medicamentos de la BD y Llena la lista de medicamentos
-        for (int i = 0; i < medicamentosBD.size(); i=i+6) {
-            medicamentos.add(new Medicamento(medicamentosBD.get(i),medicamentosBD.get(i+1),medicamentosBD.get(i+2)
-            ,medicamentosBD.get(i+3),medicamentosBD.get(i+4),medicamentosBD.get(i+5)));
+        if(medicamentosBD!=null) {
+            //Obtiene los medicamentos de la BD y Llena la lista de medicamentos
+            for (int i = 0; i < medicamentosBD.size(); i = i + 6) {
+                medicamentos.add(new Medicamento(medicamentosBD.get(i), medicamentosBD.get(i + 1), medicamentosBD.get(i + 2)
+                        , medicamentosBD.get(i + 3), medicamentosBD.get(i + 4), medicamentosBD.get(i + 5)));
+            }
         }
     }
 
-    private void actualizarMedicamento(int posicion){
+    private void actualizarMedicamentoBD(int posicion){
         dbHelper.actualizarUnMedicamento((posicion+1)+"", medicamentos.get(posicion).getNombre(),
                 medicamentos.get(posicion).getDosis(),medicamentos.get(posicion).getFrecuencia(),
                 medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
-        adaptadorListViewMedicamentos.notifyDataSetChanged();
     }
 }

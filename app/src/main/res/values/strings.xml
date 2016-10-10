@@ -61,7 +61,6 @@
     <string name="longitud_paso_setting_titulo">Ingrese su longitud de paso en cm</string>
 
 
-
     <!-- Prefences Array sensitivity_preference -->
     <string name="extra_high">extra high</string>
     <string name="very_high">very high</string>
@@ -81,5 +80,14 @@
     <!-- Actionbar -->
     <string name="actionbar_settings">Ajustes</string>
     <string name="actionbar_usuario">Nombre</string>
+
+    <!-- Citas -->
+    <string name="citas_nueva_cita_boton">Agendar Cita</string>
+    <string name="citas_fecha_titulo_texto">Fecha</string>
+    <string name="citas_medico_titulo_texto">Cita con</string>
+
+    <!-- Cita item -->
+    <string name="cita_fecha_texto">Fecha</string>
+    <string name="cita_medico_texto">Medico</string>
 
 </resources>
