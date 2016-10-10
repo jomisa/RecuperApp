@@ -92,16 +92,13 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
                     String valor = viewHolder.dato.getText().toString();
 
-                    SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String fechaTexto = fecha.format(new Date(System.currentTimeMillis()));
-
                     Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
                     Log.i("Tag: ", valor);//obtener el editText del ViewHolder
-                    Log.i("Tag: ", fechaTexto);//obtener el editText del ViewHolder
+                    Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
 
                     dbHelper = new DataBaseHelper(context.getApplicationContext());
 
-                    dbHelper.insertarUnFisiologico(fechaTexto, medicion, valor);
+                    dbHelper.insertarUnFisiologico(Funciones.getFechaString(), medicion, valor);
 
                     //fisiologicos.remove(viewHolder.fisiologico);
                     //notifyDataSetChanged();

@@ -78,4 +78,8 @@
     <string name="keep_screen_on">Screen on (keep screen dim)</string>
     <string name="wake_up">Aggressive (wake up when I turn screen off)</string>
 
+    <!-- Actionbar -->
+    <string name="actionbar_settings">Ajustes</string>
+    <string name="actionbar_usuario">Nombre</string>
+
 </resources>

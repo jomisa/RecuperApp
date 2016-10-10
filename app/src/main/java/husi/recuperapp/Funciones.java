@@ -1,5 +1,9 @@
 package husi.recuperapp;
 
+import android.text.format.Time;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,4 +18,16 @@ public final class Funciones {
         Matcher matcher = EMAIL_VALIDO .matcher(correo);
         return matcher.find();
     }
+
+    public static long currentTimeInMillis() {
+        Time time = new Time();
+        time.setToNow();
+        return time.toMillis(false);
+    }
+
+    public static String getFechaString(){
+        SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return fecha.format(new Date(System.currentTimeMillis()));
+    }
+
 }

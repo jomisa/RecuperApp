@@ -57,7 +57,6 @@ public class StepService extends Service {
     private PedometerSettings mPedometerSettings;
     private SharedPreferences mState;
     private SharedPreferences.Editor mStateEditor;
-    private Utils mUtils;
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private StepDetector mStepDetector;
@@ -94,9 +93,6 @@ public class StepService extends Service {
         mPedometerSettings = new PedometerSettings(mSettings);
         mState = getSharedPreferences("state", 0);
 
-        mUtils = Utils.getInstance();
-        mUtils.setService(this);
-
         //Hace funcionar app de acuerdo al Operational Level
         acquireWakeLock();
         
@@ -110,12 +106,12 @@ public class StepService extends Service {
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mReceiver, filter);
 
-        mStepDisplayer = new StepDisplayer(mPedometerSettings, mUtils);
+        mStepDisplayer = new StepDisplayer(mPedometerSettings);
         mStepDisplayer.setSteps(mSteps = mState.getInt("steps", 0));
         mStepDisplayer.addListener(mStepListener);
         mStepDetector.addStepListener(mStepDisplayer);
 
-        mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings, mUtils);
+        mDistanceNotifier = new DistanceNotifier(mDistanceListener, mPedometerSettings);
         mDistanceNotifier.setDistance(mDistance = mState.getFloat("distance", 0));
         mStepDetector.addStepListener(mDistanceNotifier);
 

@@ -20,6 +20,8 @@ package husi.recuperapp.caminatas;
 
 import android.content.SharedPreferences;
 
+import husi.recuperapp.Funciones;
+
 /**
  * Wrapper for {@link SharedPreferences}, handles preferences-related tasks.
  * @author Levente Bagi
@@ -53,7 +55,7 @@ public class PedometerSettings {
     public void saveServiceRunningWithTimestamp(boolean running) {
         SharedPreferences.Editor editor = mSettings.edit();
         editor.putBoolean("service_running", running);
-        editor.putLong("last_seen", Utils.currentTimeInMillis());
+        editor.putLong("last_seen", Funciones.currentTimeInMillis());
         editor.commit();
     }
     
@@ -77,7 +79,7 @@ public class PedometerSettings {
 
     public boolean isNewStart() {
         // activity last paused more than 10 minutes ago
-        return mSettings.getLong("last_seen", 0) < Utils.currentTimeInMillis() - 1000*60*10;
+        return mSettings.getLong("last_seen", 0) < Funciones.currentTimeInMillis() - 1000*60*10;
     }
 
 }

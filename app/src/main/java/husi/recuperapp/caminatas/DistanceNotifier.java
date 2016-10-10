@@ -34,12 +34,10 @@ public class DistanceNotifier implements StepListener{
     float mDistance = 0;
     
     PedometerSettings mSettings;
-    Utils mUtils;
     float mStepLength;
 
-    public DistanceNotifier(Listener listener, PedometerSettings settings, Utils utils) {
+    public DistanceNotifier(Listener listener, PedometerSettings settings) {
         mListener = listener;
-        mUtils = utils;
         mSettings = settings;
         reloadSettings();
     }

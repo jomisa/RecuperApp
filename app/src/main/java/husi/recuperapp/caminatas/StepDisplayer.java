@@ -28,15 +28,10 @@ public class StepDisplayer implements StepListener{
 
     private int mCount = 0;
     PedometerSettings mSettings;
-    Utils mUtils;
 
-    public StepDisplayer(PedometerSettings settings, Utils utils) {
-        mUtils = utils;
+    public StepDisplayer(PedometerSettings settings) {
         mSettings = settings;
         notifyListener();
-    }
-    public void setUtils(Utils utils) {
-        mUtils = utils;
     }
 
     public void setSteps(int steps) {

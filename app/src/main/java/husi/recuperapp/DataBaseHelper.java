@@ -34,9 +34,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_5_MEDICAMENTOS = "HORA";
     public static final String COL_6_MEDICAMENTOS = "ASIGNADO";
 
+    public static final String TABLA_CAMINATAS = "tabla_caminatas";
+    public static final String COL_1_CAMINATAS = "ID";
+    public static final String COL_2_CAMINATAS = "FECHA";
+    public static final String COL_3_CAMINATAS = "TIEMPO";
+    public static final String COL_4_CAMINATAS = "DISTANCIA";
+    public static final String COL_5_CAMINATAS = "PASOS";
+
     public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
             "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_PACIENTE +
             " TEXT," + COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " INTEGER)";
+
     public static final String CREAR_TABLA_FISIOLOGICOS = "create table " + TABLA_FISIOLOGICOS + " " +
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
             " TEXT," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " INTEGER)";
@@ -45,6 +53,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_MEDICAMENTOS +
             " TEXT," + COL_3_MEDICAMENTOS + " TEXT," + COL_4_MEDICAMENTOS + " TEXT," + COL_5_MEDICAMENTOS
             + " TEXT," + COL_6_MEDICAMENTOS +" TEXT)";
+
+    public static final String CREAR_TABLA_CAMINATAS = "create table " + TABLA_CAMINATAS + " " +
+            "("+COL_1_CAMINATAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CAMINATAS +
+            " TEXT," + COL_3_CAMINATAS + " TEXT," + COL_4_CAMINATAS + " TEXT," + COL_5_CAMINATAS
+            + " TEXT)";
 
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
@@ -55,6 +68,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREAR_TABLA_PACIENTE);
         db.execSQL(CREAR_TABLA_FISIOLOGICOS);
         db.execSQL(CREAR_TABLA_MEDICAMENTOS);
+        db.execSQL(CREAR_TABLA_CAMINATAS);
     }
 
     @Override
@@ -62,6 +76,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_PACIENTE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_FISIOLOGICOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_MEDICAMENTOS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_CAMINATAS);
         onCreate(db);
     }
 
@@ -235,6 +250,64 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean borrarUnMedicamento(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Integer filasBorradas = db.delete(TABLA_MEDICAMENTOS, "ID = ?", new String[]{id});
+
+        if(filasBorradas > 0)
+            return true;
+        return false;
+    }
+
+    //Caminatas
+
+    public boolean insertarUnaCaminata(String fecha, String tiempo, String distancia, String pasos) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_CAMINATAS, fecha);
+        contentValues.put(COL_3_CAMINATAS, tiempo);
+        contentValues.put(COL_4_CAMINATAS, distancia);
+        contentValues.put(COL_5_CAMINATAS, pasos);
+        long result = db.insert(TABLA_CAMINATAS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public ArrayList<String> obtenerCaminatas() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ArrayList<String> caminatas = new ArrayList<String>();
+        Cursor resultado = db.rawQuery("select * from " + TABLA_CAMINATAS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        StringBuffer buffer = new StringBuffer();
+        while (resultado.moveToNext()) {
+            caminatas.add(resultado.getString(0));
+            caminatas.add(resultado.getString(1));
+            caminatas.add(resultado.getString(2));
+            caminatas.add(resultado.getString(3));
+            caminatas.add(resultado.getString(4));
+        }
+        return caminatas;
+    }
+
+    public boolean actualizarUnaCaminata(String id, String fecha, String tiempo, String distancia,
+                                         String pasos) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_CAMINATAS, id);
+        contentValues.put(COL_2_CAMINATAS, fecha);
+        contentValues.put(COL_3_CAMINATAS, tiempo);
+        contentValues.put(COL_4_CAMINATAS, distancia);
+        contentValues.put(COL_5_CAMINATAS, pasos);
+        db.update(TABLA_CAMINATAS, contentValues, "ID = ?", new String[]{id});
+        return true;
+    }
+
+    public boolean borrarUnaCaminata(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer filasBorradas = db.delete(TABLA_CAMINATAS, "ID = ?", new String[]{id});
 
         if(filasBorradas > 0)
             return true;

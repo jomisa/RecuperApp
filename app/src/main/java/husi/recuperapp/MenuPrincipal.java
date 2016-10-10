@@ -1,22 +1,18 @@
 package husi.recuperapp;
 
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import husi.recuperapp.caminatas.Pedometer;
+import husi.recuperapp.caminatas.Settings;
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -48,6 +44,7 @@ public class MenuPrincipal extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
         getSupportActionBar().setTitle("  "+usuario);
+        //TODO: Toca implementar un boton en el actionbar para los ajustes y llamar al método ingresarAjustes()
 
         this.listView = (ListView) findViewById(R.id.listViewFunciones);
 
@@ -60,10 +57,14 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
                 activarActivity(posicion);
-                //TextView texto = (TextView) view.findViewById(R.id.descripcion_texto);
             }
         });
 
+    }
+
+    private void ingresarAjustes(){
+        iniciarActivity = new Intent(this, Settings.class);
+        this.startActivity(iniciarActivity);
     }
 
     private void crearListaFunciones() {

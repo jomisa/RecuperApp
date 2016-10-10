@@ -35,6 +35,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import husi.recuperapp.DataBaseHelper;
+import husi.recuperapp.Funciones;
 import husi.recuperapp.R;
 
 
@@ -60,6 +62,8 @@ public class Pedometer extends Activity {
     private Button mBotonTerminar;
     private Button mBotonFinalizar;
 //    private Button mBotonSettings;
+
+    private static DataBaseHelper dbHelper;
 
     /**
      * True, when service is running.
@@ -143,6 +147,9 @@ public class Pedometer extends Activity {
                 Log.i("Distancia Total: ",""+mDistanceValue);
                 Log.i("Tiempo Total: ",""+(int) duracion);
 
+                dbHelper = new DataBaseHelper(getApplicationContext());
+                dbHelper.insertarUnaCaminata(Funciones.getFechaString(), String.valueOf((int) duracion)
+                        , mDistanceValue+"", mStepValue+"");
 
                 mBotonTerminar.setVisibility(View.GONE);
                 mBotonFinalizar.setVisibility(View.VISIBLE);
