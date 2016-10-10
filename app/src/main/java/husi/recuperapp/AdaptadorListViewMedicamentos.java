@@ -23,7 +23,9 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return this.medicamentos.size();
+        return (medicamentos == null) ? 0 : medicamentos.size();
+
+        //return this.medicamentos.size();
     }
 
     @Override
@@ -74,7 +76,8 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return getCount();
+        return 1;
+        //return getCount();
     }
 
     @Override

@@ -25,7 +25,8 @@ public class Medicamentos extends AppCompatActivity {
     Paciente paciente;
 
     private List<Medicamento> medicamentos;
-    ArrayList<String> medicamentosBD;
+    private List<List<String>> medicamentosBD;
+
     private ListView listViewMedicamentos;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
@@ -48,7 +49,7 @@ public class Medicamentos extends AppCompatActivity {
         dbHelper = new DataBaseHelper(this);
 
         medicamentos = new ArrayList<>();
-        medicamentosBD = new ArrayList<String>();
+        medicamentosBD = new ArrayList<List<String>>();
 
         this.listViewMedicamentos = (ListView) findViewById(R.id.listViewMedicamentos);
         crearListaMedicamentos();
@@ -139,16 +140,18 @@ public class Medicamentos extends AppCompatActivity {
     }
 
     private void crearListaMedicamentos() {
-        medicamentos.clear();
-        medicamentosBD.clear();
 
         medicamentosBD = dbHelper.obtenerMedicamentos();
+        Log.i("obtener medicamentosBD ","");
 
         if(medicamentosBD!=null) {
+            Log.i("medicamentosBD ","");
+            medicamentos.clear();
             //Obtiene los medicamentos de la BD y Llena la lista de medicamentos
-            for (int i = 0; i < medicamentosBD.size(); i = i + 6) {
-                medicamentos.add(new Medicamento(medicamentosBD.get(i), medicamentosBD.get(i + 1), medicamentosBD.get(i + 2)
-                        , medicamentosBD.get(i + 3), medicamentosBD.get(i + 4), medicamentosBD.get(i + 5)));
+            int i = 0;
+            for (List<String> medicamentoBD: medicamentosBD) {
+                medicamentos.add(new Medicamento(medicamentoBD.get(i), medicamentoBD.get(i + 1), medicamentoBD.get(i + 2)
+                        , medicamentoBD.get(i + 3), medicamentoBD.get(i + 4), medicamentoBD.get(i + 5)));
             }
         }
     }

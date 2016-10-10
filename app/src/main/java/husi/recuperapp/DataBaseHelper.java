@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jmss1 on 22/09/2016.
@@ -186,23 +188,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<String> obtenerFisiologico() {
+    public List<List<String>> obtenerFisiologicos() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ArrayList<String> fisiologico = new ArrayList<String>();
         Cursor resultado = db.rawQuery("select * from " + TABLA_FISIOLOGICOS, null);
         if(resultado.getCount() == 0) {
             return null;
         }
 
-        StringBuffer buffer = new StringBuffer();
+        List<List<String>> fisiologicos = new ArrayList<List<String>>();
+        ArrayList<String> fisiologico;
+
         while (resultado.moveToNext()) {
+            fisiologico = new ArrayList<String>();
             fisiologico.add(resultado.getString(0));
             fisiologico.add(resultado.getString(1));
             fisiologico.add(resultado.getString(2));
             fisiologico.add(resultado.getString(3));
+
+            fisiologicos.add(fisiologico);
         }
-        return fisiologico;
+        return fisiologicos;
     }
 
     //Medicamentos
@@ -223,25 +229,29 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<String> obtenerMedicamentos() {
+    public List<List<String>> obtenerMedicamentos() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ArrayList<String> medicamento = new ArrayList<String>();
         Cursor resultado = db.rawQuery("select * from " + TABLA_MEDICAMENTOS, null);
         if(resultado.getCount() == 0) {
             return null;
         }
 
-        StringBuffer buffer = new StringBuffer();
+        List<List<String>> medicamentos = new ArrayList<List<String>>();
+        ArrayList<String> medicamento;
+
         while (resultado.moveToNext()) {
+            medicamento = new ArrayList<String>();
             medicamento.add(resultado.getString(0));
             medicamento.add(resultado.getString(1));
             medicamento.add(resultado.getString(2));
             medicamento.add(resultado.getString(3));
             medicamento.add(resultado.getString(4));
             medicamento.add(resultado.getString(5));
+
+            medicamentos.add(medicamento);
         }
-        return medicamento;
+        return medicamentos;
     }
 
     public boolean actualizarUnMedicamento(String id, String medicamento, String dosis,
@@ -283,22 +293,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<String> obtenerCaminatas() {
+    public List<List<String>> obtenerCaminatas() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ArrayList<String> caminatas = new ArrayList<String>();
         Cursor resultado = db.rawQuery("select * from " + TABLA_CAMINATAS, null);
         if(resultado.getCount() == 0) {
             return null;
         }
 
-        StringBuffer buffer = new StringBuffer();
+        List<List<String>> caminatas = new ArrayList<List<String>>();
+        ArrayList<String> caminata;
+
         while (resultado.moveToNext()) {
-            caminatas.add(resultado.getString(0));
-            caminatas.add(resultado.getString(1));
-            caminatas.add(resultado.getString(2));
-            caminatas.add(resultado.getString(3));
-            caminatas.add(resultado.getString(4));
+            caminata = new ArrayList<String>();
+            caminata.add(resultado.getString(0));
+            caminata.add(resultado.getString(1));
+            caminata.add(resultado.getString(2));
+            caminata.add(resultado.getString(3));
+            caminata.add(resultado.getString(4));
+
+            caminatas.add(caminata);
         }
         return caminatas;
     }
@@ -339,21 +353,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public ArrayList<String> obtenerCitas() {
+    public List<List<String>> obtenerCitas() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ArrayList<String> citas = new ArrayList<String>();
         Cursor resultado = db.rawQuery("select * from " + TABLA_CITAS, null);
         if(resultado.getCount() == 0) {
             return null;
         }
 
-        StringBuffer buffer = new StringBuffer();
+        List<List<String>> citas = new ArrayList<List<String>>();
+        ArrayList<String> cita;
+
         while (resultado.moveToNext()) {
-            citas.add(resultado.getString(0));
-            citas.add(resultado.getString(1));
-            citas.add(resultado.getString(2));
+            cita = new ArrayList<String>();
+            cita.add(resultado.getString(0));
+            cita.add(resultado.getString(1));
+            cita.add(resultado.getString(2));
+
+            citas.add(cita);
         }
+
         return citas;
     }
 

@@ -38,7 +38,7 @@ public class CitasMedicas extends AppCompatActivity {
     Paciente paciente;
 
     private List<Cita> citas;
-    ArrayList<String> citasBD;
+    private List<List<String>> citasBD;
     private ListView listViewCitas;
     private AdaptadorListViewCitas adaptadorListViewCitas;
     DataBaseHelper dbHelper;
@@ -67,7 +67,7 @@ public class CitasMedicas extends AppCompatActivity {
         dbHelper = new DataBaseHelper(this);
 
         citas = new ArrayList<>();
-        citasBD = new ArrayList<String>();
+        citasBD = new ArrayList<List<String>>();
 
         //En caso de oprimir el boton de agendar una cita nueva
         mAgendarCitaView = (Button) findViewById(R.id.crear_cita_button);
@@ -136,16 +136,14 @@ public class CitasMedicas extends AppCompatActivity {
     }
 
     private void crearListaCitas() {
-        // citas = new ArrayList<>();
-        citas.clear();
-        citasBD.clear();
-
         citasBD = dbHelper.obtenerCitas();
 
-        if(citasBD!=null) {
+        if(citasBD!=null){
+            citas.clear();
             //Obtiene las citas de la BD y llena la lista de citas
-            for (int i = 0; i < citasBD.size(); i = i + 3) {
-                citas.add(new Cita(citasBD.get(i), citasBD.get(i + 1), citasBD.get(i + 2)));
+            int i=0;
+            for (List<String> citaBD: citasBD){
+                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2)));
             }
         }
     }
