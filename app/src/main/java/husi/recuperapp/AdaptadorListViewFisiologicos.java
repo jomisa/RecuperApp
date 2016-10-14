@@ -98,7 +98,8 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
                     dbHelper = new DataBaseHelper(context.getApplicationContext());
 
-                    dbHelper.insertarUnFisiologico(Funciones.getFechaString(), medicion, valor);
+                    //TODO poener la cédula real
+                    dbHelper.insertarUnFisiologico("1113651779", Funciones.getFechaString(), medicion, valor);
 
                     //fisiologicos.remove(viewHolder.fisiologico);
                     //notifyDataSetChanged();

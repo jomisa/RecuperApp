@@ -1,4 +1,4 @@
-package husi.recuperapp.Citas;
+package husi.recuperapp.citas;
 
 import android.content.Context;
 import android.view.LayoutInflater;

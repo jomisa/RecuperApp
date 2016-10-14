@@ -5,7 +5,7 @@
     android:id="@+id/activity_citas_medicas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.Citas.CitasMedicas">
+    tools:context="husi.recuperapp.citas.CitasMedicas">
 
     <TextView
         android:text="@string/citas_fecha_titulo_texto"

@@ -1,4 +1,4 @@
-package husi.recuperapp.Citas;
+package husi.recuperapp.citas;
 
 /**
  * Created by jmss1 on 9/10/2016.

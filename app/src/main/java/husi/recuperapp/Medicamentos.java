@@ -112,9 +112,12 @@ public class Medicamentos extends AppCompatActivity {
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
 
                 Intent myIntent = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-                myIntent.putExtra("id_medicamento",medicamentos.get(posicion).getId());
 
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, myIntent, posicion);
+                String idMedicamento=medicamentos.get(posicion).getId();
+                myIntent.putExtra("id_medicamento",idMedicamento);
+
+                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                        Integer.parseInt(idMedicamento), myIntent, posicion);
 
                 int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
 

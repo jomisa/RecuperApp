@@ -1,15 +1,11 @@
-package husi.recuperapp.Citas;
+package husi.recuperapp.citas;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,15 +17,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import husi.recuperapp.AdaptadorListViewMedicamentos;
 import husi.recuperapp.DataBaseHelper;
-import husi.recuperapp.Medicamento;
 import husi.recuperapp.Paciente;
 import husi.recuperapp.R;
 
@@ -92,6 +85,9 @@ public class CitasMedicas extends AppCompatActivity {
             }
 
         });
+
+        //TODO este método se debe ejecutar en el Receiver de Citas Medicas
+        notificar();
     }
 
     private void presionoBotonAgendarCita(){
@@ -157,6 +153,29 @@ public class CitasMedicas extends AppCompatActivity {
         dbHelper.actualizarUnaCita((posicion+1)+"", citas.get(posicion).getFecha(),
                 citas.get(posicion).getMedico());
         adaptadorListViewCitas.notifyDataSetChanged();
+    }
+
+    //TODO este método debe ir en Receiber de la alarma, debe contener la hora de la cita y el nombre del médico
+    //TODO tambien debe ejecutarse 1 día antes de la cita y debe cancelar la alarma al ejecutar la notificación
+    //Notifiacion
+    private void notificar() {
+        String tituloNotifiacion = "Recordatorio cita";
+        String mensajeNotificacion = "Recuerde que tiene una cita el día de mañana";
+
+        Intent notificationIntent = new Intent(this, CitasMedicas.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(),//tiempo actual como id
+                notificationIntent, 0);
+
+        Notification n  = new Notification.Builder(this)
+            .setContentTitle(tituloNotifiacion)
+            .setContentText(mensajeNotificacion)
+            .setSmallIcon(R.drawable.ic_action_alarm)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true).build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        notificationManager.notify(0, n);
     }
 
 
