@@ -30,5 +30,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     compile project(':volley')
-    compile files('libs/ksoap2-android-assembly-3.6.2-jar-with-dependencies.jar')
 }
