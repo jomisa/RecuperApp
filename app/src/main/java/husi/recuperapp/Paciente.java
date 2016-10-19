@@ -64,6 +64,8 @@ public class Paciente extends Application{
             e.printStackTrace();
         }
 
+        getMisMedicamentso(queue,1113651779);
+
         //postRequestWebService(servicioListaSintomas, queue, obj);
 
         //getRequestWebService(servicioListaSintomas, queue);
@@ -107,12 +109,12 @@ public class Paciente extends Application{
         if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)){
 
             //TODO: Crea medicamentos iniciales en BD, se debe borrar estas líneas al crear web service
-            dbHelper.insertarUnMedicamento("dolex", "10g", "12", "Sin Asignar", "false") ;
-            dbHelper.insertarUnMedicamento("dolex forte", "20g", "24", "Sin Asignar", "false") ;
-            dbHelper.insertarUnMedicamento("buscapina", "30g", "6", "Sin Asignar", "false") ;
-            dbHelper.insertarUnMedicamento("mareol", "15g", "8", "Sin Asignar", "false") ;
-            dbHelper.insertarUnMedicamento("advil", "20g", "48", "Sin Asignar", "false") ;
-            dbHelper.insertarUnMedicamento("dolex", "18g", "12", "Sin Asignar", "false") ;
+            dbHelper.insertarUnMedicamento("1", "dolex", "10g", "12", "Sin Asignar", "Mareo","false") ;
+            dbHelper.insertarUnMedicamento("2", "dolex forte", "20g", "24", "Sin Asignar", "Vomito","false") ;
+            dbHelper.insertarUnMedicamento("3", "buscapina", "30g", "6", "Sin Asignar", "Dolor Cabeza","false") ;
+            dbHelper.insertarUnMedicamento("4", "mareol", "15g", "8", "Sin Asignar", "Mareo","false") ;
+            dbHelper.insertarUnMedicamento("5", "advil", "20g", "48", "Sin Asignar", "Vomito","false") ;
+            dbHelper.insertarUnMedicamento("6", "dolex", "18g", "12", "Sin Asignar", "Dolor Pecho","false") ;
 
             crearObjetoDesdeBD(dbHelper);
         }
@@ -242,9 +244,9 @@ public class Paciente extends Application{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    VolleyLog.d("Fisiologico ", response.toString());
+                                    Log.i("Volley Fisiologicos: ", response.toString());
                                     try {
-                                        dbHelper.actualizarEnviadoFisiologico(fisologicoJson.getString("fecha"));
+                                        dbHelper.actualizarEnviadoFisiologico(response.getString("fecha"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -272,5 +274,27 @@ public class Paciente extends Application{
         }
 
 
+    }
+
+    private void getMisMedicamentso(RequestQueue queue, int cedula){
+
+        JsonArrayRequest getMisMedicamentosRequest = new JsonArrayRequest(Request.Method.GET,
+                URL_BASE+"medicamentos/misMedicamentos/"+cedula,null,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("Volley misMedicamentos ", response.toString());
+                        //TODO: debe perisir los medicamentos en la BD
+                    }
+                },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                VolleyLog.d("misMedicamentos: ", error.getMessage());
+            }
+        });
+        if(getMisMedicamentosRequest!=null) {
+            getMisMedicamentosRequest.setShouldCache(false);
+            queue.add(getMisMedicamentosRequest);
+        }
     }
 }

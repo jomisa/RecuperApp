@@ -38,7 +38,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_3_MEDICAMENTOS = "DOSIS";
     public static final String COL_4_MEDICAMENTOS = "FRECUENCIA";
     public static final String COL_5_MEDICAMENTOS = "HORA";
-    public static final String COL_6_MEDICAMENTOS = "ASIGNADO";
+    public static final String COL_6_MEDICAMENTOS = "SINTOMA";
+    public static final String COL_7_MEDICAMENTOS = "ASIGNADO";
 
     public static final String TABLA_CAMINATAS = "tabla_caminatas";
     public static final String COL_1_CAMINATAS = "ID";
@@ -66,9 +67,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             COL_5_FISIOLOGICOS + " REAL, "+ COL_6_FISIOLOGICOS +" INTEGER )";
 
     public static final String CREAR_TABLA_MEDICAMENTOS = "create table " + TABLA_MEDICAMENTOS + " " +
-            "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_MEDICAMENTOS +
+            "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY, " + COL_2_MEDICAMENTOS +
             " TEXT," + COL_3_MEDICAMENTOS + " TEXT," + COL_4_MEDICAMENTOS + " TEXT," + COL_5_MEDICAMENTOS
-            + " TEXT," + COL_6_MEDICAMENTOS +" TEXT)";
+            + " TEXT," + COL_6_MEDICAMENTOS + " TEXT," + COL_7_MEDICAMENTOS +" TEXT)";
 
     public static final String CREAR_TABLA_CAMINATAS = "create table " + TABLA_CAMINATAS + " " +
             "("+COL_1_CAMINATAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CAMINATAS +
@@ -240,15 +241,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Medicamentos
 
-    public boolean insertarUnMedicamento(String medicamento, String dosis, String frecuencia,
-                                         String hora, String asignado) {
+    public boolean insertarUnMedicamento(String id, String medicamento, String dosis, String frecuencia,
+                                         String hora,String sintoma, String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_MEDICAMENTOS, id);
         contentValues.put(COL_2_MEDICAMENTOS, medicamento);
         contentValues.put(COL_3_MEDICAMENTOS, dosis);
         contentValues.put(COL_4_MEDICAMENTOS, frecuencia);
         contentValues.put(COL_5_MEDICAMENTOS, hora);
-        contentValues.put(COL_6_MEDICAMENTOS, asignado);
+        contentValues.put(COL_6_MEDICAMENTOS, sintoma);
+        contentValues.put(COL_7_MEDICAMENTOS, asignado);
         long result = db.insert(TABLA_MEDICAMENTOS, null, contentValues);
         if (result == -1)
             return false;
@@ -275,6 +278,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             medicamento.add(resultado.getString(3));
             medicamento.add(resultado.getString(4));
             medicamento.add(resultado.getString(5));
+            medicamento.add(resultado.getString(6));
 
             medicamentos.add(medicamento);
         }
@@ -282,7 +286,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean actualizarUnMedicamento(String id, String medicamento, String dosis,
-                                           String frecuencia, String hora, String asignado) {
+                                           String frecuencia, String hora, String sintoma,
+                                           String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1_MEDICAMENTOS, id);
@@ -290,7 +295,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3_MEDICAMENTOS, dosis);
         contentValues.put(COL_4_MEDICAMENTOS, frecuencia);
         contentValues.put(COL_5_MEDICAMENTOS, hora);
-        contentValues.put(COL_6_MEDICAMENTOS, asignado);
+        contentValues.put(COL_6_MEDICAMENTOS, sintoma);
+        contentValues.put(COL_7_MEDICAMENTOS, asignado);
+        db.update(TABLA_MEDICAMENTOS, contentValues, "ID = ?", new String[]{id});
+        return true;
+    }
+
+    public boolean actualizarHoraConsumoMedicamento(String id, String hora, String asignado){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_MEDICAMENTOS, id);
+        contentValues.put(COL_5_MEDICAMENTOS, hora);
+        contentValues.put(COL_7_MEDICAMENTOS, asignado);
         db.update(TABLA_MEDICAMENTOS, contentValues, "ID = ?", new String[]{id});
         return true;
     }

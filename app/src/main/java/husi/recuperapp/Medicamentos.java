@@ -154,14 +154,12 @@ public class Medicamentos extends AppCompatActivity {
             int i = 0;
             for (List<String> medicamentoBD: medicamentosBD) {
                 medicamentos.add(new Medicamento(medicamentoBD.get(i), medicamentoBD.get(i + 1), medicamentoBD.get(i + 2)
-                        , medicamentoBD.get(i + 3), medicamentoBD.get(i + 4), medicamentoBD.get(i + 5)));
+                        , medicamentoBD.get(i + 3), medicamentoBD.get(i + 4), medicamentoBD.get(i + 6)));
             }
         }
     }
 
     private void actualizarMedicamentoBD(int posicion){
-        dbHelper.actualizarUnMedicamento((posicion+1)+"", medicamentos.get(posicion).getNombre(),
-                medicamentos.get(posicion).getDosis(),medicamentos.get(posicion).getFrecuencia(),
-                medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
+        dbHelper.actualizarHoraConsumoMedicamento((posicion+1)+"", medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
     }
 }
