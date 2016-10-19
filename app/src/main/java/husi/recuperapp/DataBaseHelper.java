@@ -7,7 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +30,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_3_FISIOLOGICOS = "FECHA";
     public static final String COL_4_FISIOLOGICOS = "MEDICION";
     public static final String COL_5_FISIOLOGICOS = "VALOR";
+    public static final String COL_6_FISIOLOGICOS = "ENVIADO";
 
     public static final String TABLA_MEDICAMENTOS = "tabla_medicamentos";
     public static final String COL_1_MEDICAMENTOS = "ID";
@@ -59,7 +62,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String CREAR_TABLA_FISIOLOGICOS = "create table " + TABLA_FISIOLOGICOS + " " +
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
-            " INTEGER," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " TEXT," + COL_5_FISIOLOGICOS + " INTEGER)";
+            " INTEGER," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " TEXT," +
+            COL_5_FISIOLOGICOS + " REAL, "+ COL_6_FISIOLOGICOS +" INTEGER )";
 
     public static final String CREAR_TABLA_MEDICAMENTOS = "create table " + TABLA_MEDICAMENTOS + " " +
             "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_MEDICAMENTOS +
@@ -185,13 +189,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Fisiológicos
 
-    public boolean insertarUnFisiologico(String cedula, String fecha, String medicion, String valor) {
+    public boolean insertarUnFisiologico(Integer cedula, String fecha, String medicion, double valor) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2_FISIOLOGICOS, cedula);
         contentValues.put(COL_3_FISIOLOGICOS, fecha);
         contentValues.put(COL_4_FISIOLOGICOS, medicion);
         contentValues.put(COL_5_FISIOLOGICOS, valor);
+        contentValues.put(COL_6_FISIOLOGICOS, 0);
         long result = db.insert(TABLA_FISIOLOGICOS, null, contentValues);
         if (result == -1)
             return false;
@@ -199,7 +204,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public List<List<String>> obtenerFisiologicos() {
+    public List<List<Object>> obtenerFisiologicos() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor resultado = db.rawQuery("select * from " + TABLA_FISIOLOGICOS, null);
@@ -207,19 +212,35 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return null;
         }
 
-        List<List<String>> fisiologicos = new ArrayList<List<String>>();
-        ArrayList<String> fisiologico;
+        List<List<Object>> fisiologicos = new ArrayList<>();
+        List<Object> fisiologico;
 
         while (resultado.moveToNext()) {
-            fisiologico = new ArrayList<String>();
-            fisiologico.add(resultado.getString(0));
-            fisiologico.add(resultado.getString(1));
+            fisiologico = new ArrayList<>();
+            fisiologico.add(resultado.getInt(0));
+            fisiologico.add(resultado.getInt(1));
             fisiologico.add(resultado.getString(2));
             fisiologico.add(resultado.getString(3));
+            fisiologico.add(resultado.getDouble(4));
+            fisiologico.add(resultado.getInt(5));
 
             fisiologicos.add(fisiologico);
         }
         return fisiologicos;
+    }
+
+    public boolean actualizarUnFisiologico(String id, int cedula, String fecha,
+                                           String medicion, double valor, int enviado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_FISIOLOGICOS, id);
+        contentValues.put(COL_2_FISIOLOGICOS, cedula);
+        contentValues.put(COL_3_FISIOLOGICOS, fecha);
+        contentValues.put(COL_4_FISIOLOGICOS, medicion);
+        contentValues.put(COL_5_FISIOLOGICOS, valor);
+        contentValues.put(COL_6_FISIOLOGICOS, enviado);
+        db.update(TABLA_FISIOLOGICOS, contentValues, "ID = ?", new String[]{id});
+        return true;
     }
 
     //Medicamentos

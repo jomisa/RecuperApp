@@ -15,7 +15,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import husi.recuperapp.citas.Cita;
 
 /**
  * Created by jmss1 on 22/09/2016.
@@ -38,6 +48,7 @@ public class Paciente extends Application{
     private String usuario;
     private String contrasena;
     private boolean existeEnBd;
+    private RequestQueue queue;
 
     public static Paciente getInstance(){
         return singleton;
@@ -48,7 +59,7 @@ public class Paciente extends Application{
         super.onCreate();
 
 
-        RequestQueue queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
         JSONObject obj = new JSONObject();
 
@@ -61,9 +72,9 @@ public class Paciente extends Application{
             e.printStackTrace();
         }
 
-        postRequestWebService(servicioListaSintomas, queue, obj);
+        //postRequestWebService(servicioListaSintomas, queue, obj);
 
-        getRequestWebService(servicioListaSintomas, queue);
+        //getRequestWebService(servicioListaSintomas, queue);
 
         this.existeEnBd=false;
 
@@ -211,5 +222,56 @@ public class Paciente extends Application{
         queue.add(postRequest);
     }
 
+    public void postFisiologicos(){
+        JsonObjectRequest postRequest=null;
+        List<List<Object>> fisiologicosBD;
+        List<Object> fisiologico;
 
+        fisiologicosBD = dbHelper.obtenerFisiologicos();
+
+        if(fisiologicosBD!=null){
+            for (int i = 0; i < fisiologicosBD.size(); i++){
+                fisiologico=fisiologicosBD.get(i);
+
+                if(fisiologico.get(5).toString().equals("0")) {
+
+                    JSONObject fisologicoJson = new JSONObject();
+                    try {
+                        fisologicoJson.put("id", fisiologico.get(0).toString());
+                        fisologicoJson.put("cedula", fisiologico.get(1).toString());
+                        fisologicoJson.put("fecha", fisiologico.get(2).toString());
+                        fisologicoJson.put("medicion", fisiologico.get(3).toString());
+                        fisologicoJson.put("valor", fisiologico.get(4).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_BASE + "fisiologicos", fisologicoJson,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    VolleyLog.d("Voley Fisiol Response: ", response.toString());
+                                    //dbHelper.actualizarUnFisiologico(fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"));
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            VolleyLog.d("Fisiologico: ", error.getMessage());
+
+                            if(error.networkResponse != null && error.networkResponse.data != null){
+                                String esrrorString = new String(error.networkResponse.data);
+                                VolleyLog.d("Volley Error Fisiologico:", esrrorString);
+                            }
+
+                        }
+                    });
+                }
+                if(!postRequest.equals(null))
+                    queue.add(postRequest);
+            }
+        }
+
+
+    }
 }

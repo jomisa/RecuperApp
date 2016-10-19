@@ -27,7 +27,7 @@ public final class Funciones {
 
     public static String getFechaString(){
         SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return fecha.format(new Date(System.currentTimeMillis()));
+        return fecha.format(new Date(System.currentTimeMillis())).replace(" ","T");
     }
 
 }

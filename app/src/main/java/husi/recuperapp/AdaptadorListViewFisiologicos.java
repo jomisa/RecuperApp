@@ -24,6 +24,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
     private Context context;
     private List<Fisiologico> fisiologicos;
     private static DataBaseHelper dbHelper;
+    Paciente paciente;
 
     public AdaptadorListViewFisiologicos(Context context, List<Fisiologico> fisiologicos) {
         this.context = context;
@@ -90,16 +91,21 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
                 else {
                     String medicion = viewHolder.medicion.getText().toString();
 
-                    String valor = viewHolder.dato.getText().toString();
+                    double valor = Double.parseDouble(viewHolder.dato.getText().toString());
 
                     Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
-                    Log.i("Tag: ", valor);//obtener el editText del ViewHolder
+                    Log.i("Tag: ", valor+"");//obtener el editText del ViewHolder
                     Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
 
                     dbHelper = new DataBaseHelper(context.getApplicationContext());
 
-                    //TODO poener la cédula real
-                    dbHelper.insertarUnFisiologico("1113651779", Funciones.getFechaString(), medicion, valor);
+                    //TODO poner la cédula real
+                    dbHelper.insertarUnFisiologico(1113651779, Funciones.getFechaString(), medicion, valor);
+
+                    dbHelper.close();
+
+                    paciente=Paciente.getInstance();
+                    paciente.postFisiologicos();
 
                     //fisiologicos.remove(viewHolder.fisiologico);
                     //notifyDataSetChanged();
