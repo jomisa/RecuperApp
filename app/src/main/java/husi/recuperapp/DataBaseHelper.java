@@ -229,17 +229,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return fisiologicos;
     }
 
-    public boolean actualizarUnFisiologico(String id, int cedula, String fecha,
-                                           String medicion, double valor, int enviado) {
+    //TODO: cambia todos los datos, solo debe cambiar el dato con la fecha exacta
+    public boolean actualizarEnviadoFisiologico(String fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_FISIOLOGICOS, id);
-        contentValues.put(COL_2_FISIOLOGICOS, cedula);
-        contentValues.put(COL_3_FISIOLOGICOS, fecha);
-        contentValues.put(COL_4_FISIOLOGICOS, medicion);
-        contentValues.put(COL_5_FISIOLOGICOS, valor);
-        contentValues.put(COL_6_FISIOLOGICOS, enviado);
-        db.update(TABLA_FISIOLOGICOS, contentValues, "ID = ?", new String[]{id});
+        contentValues.put(COL_6_FISIOLOGICOS, 1);
+        db.update(TABLA_FISIOLOGICOS, contentValues, "FECHA = ?", new String[]{fecha});
         return true;
     }
 

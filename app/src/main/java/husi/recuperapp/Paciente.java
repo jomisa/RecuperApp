@@ -16,16 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import husi.recuperapp.citas.Cita;
 
 /**
  * Created by jmss1 on 22/09/2016.
@@ -235,7 +227,7 @@ public class Paciente extends Application{
 
                 if(fisiologico.get(5).toString().equals("0")) {
 
-                    JSONObject fisologicoJson = new JSONObject();
+                    final JSONObject fisologicoJson = new JSONObject();
                     try {
                         fisologicoJson.put("id", fisiologico.get(0).toString());
                         fisologicoJson.put("cedula", fisiologico.get(1).toString());
@@ -250,25 +242,32 @@ public class Paciente extends Application{
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
-                                    VolleyLog.d("Voley Fisiol Response: ", response.toString());
-                                    //dbHelper.actualizarUnFisiologico(fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"),fisologicoJson.get("id"));
+                                    VolleyLog.d("Fisiologico ", response.toString());
+                                    try {
+                                        dbHelper.actualizarEnviadoFisiologico(fisologicoJson.getString("fecha"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
 
-                            VolleyLog.d("Fisiologico: ", error.getMessage());
-
                             if(error.networkResponse != null && error.networkResponse.data != null){
-                                String esrrorString = new String(error.networkResponse.data);
-                                VolleyLog.d("Volley Error Fisiologico:", esrrorString);
+                                String errorString = new String(error.networkResponse.data);
+                                VolleyLog.d("Fisiologico:", errorString);
+                            } else if(error.networkResponse != null) {
+                                VolleyLog.d("Fisiologico Network: ", error.networkResponse.statusCode);
+                            }else{
+                                VolleyLog.d("Fisiologico: ", error.getMessage());
                             }
-
                         }
                     });
                 }
-                if(!postRequest.equals(null))
+                if(postRequest!=null) {
+                    postRequest.setShouldCache(false);
                     queue.add(postRequest);
+                }
             }
         }
 
