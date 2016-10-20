@@ -107,15 +107,6 @@ public class Paciente extends Application{
         this.existeEnBd=false;
         dbHelper = new DataBaseHelper(this);
         if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)){
-
-            //TODO: Crea medicamentos iniciales en BD, se debe borrar estas líneas al crear web service
-            dbHelper.insertarUnMedicamento("1", "dolex", "10g", "12", "Sin Asignar", "Mareo","false") ;
-            dbHelper.insertarUnMedicamento("2", "dolex forte", "20g", "24", "Sin Asignar", "Vomito","false") ;
-            dbHelper.insertarUnMedicamento("3", "buscapina", "30g", "6", "Sin Asignar", "Dolor Cabeza","false") ;
-            dbHelper.insertarUnMedicamento("4", "mareol", "15g", "8", "Sin Asignar", "Mareo","false") ;
-            dbHelper.insertarUnMedicamento("5", "advil", "20g", "48", "Sin Asignar", "Vomito","false") ;
-            dbHelper.insertarUnMedicamento("6", "dolex", "18g", "12", "Sin Asignar", "Dolor Pecho","false") ;
-
             crearObjetoDesdeBD(dbHelper);
         }
         return existeEnBd;
@@ -284,7 +275,44 @@ public class Paciente extends Application{
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.i("Volley misMedicamentos ", response.toString());
-                        //TODO: debe perisir los medicamentos en la BD
+
+                        JSONObject jObjectResponse;
+                        for(int i=0;i<response.length();i++){
+
+                            try {
+                                jObjectResponse = response.getJSONObject(i);
+                                Log.i("jObjectResponse ", jObjectResponse.toString());
+                                int id = jObjectResponse.getInt("idMed");
+                                Log.d("id",id+"");
+
+                                String medicamento = jObjectResponse.getString("nombreMed");
+                                Log.d("medicamento",medicamento);
+
+                                String dosis = jObjectResponse.getString("dosis");
+                                Log.d("dosis",dosis);
+
+                                int frecuencia = jObjectResponse.getInt("frecuencia");
+                                Log.d("frecuencia",frecuencia+"");
+
+                                //String hora = jObjectResponse.getString("hora");
+                                //Log.d("hora",hora);
+
+                                String sintoma = jObjectResponse.getString("sintoma");
+                                Log.d("sintoma",sintoma);
+
+                                int asignado = jObjectResponse.getInt("asignado");
+                                Log.d("asignado",asignado+"");
+
+
+                                dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", "Sin Asignar", sintoma,asignado+"");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+
+
                     }
                 },new Response.ErrorListener(){
             @Override
