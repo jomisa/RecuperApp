@@ -74,8 +74,8 @@ public class Login extends Activity{
         mContrasenaView.setError(null);
 
         // Obtener valores de los campos
-        String usuario = mUsuarioView.getText().toString();
-        String contrsena = mContrasenaView.getText().toString();
+        String cedula = mUsuarioView.getText().toString();
+        String contrasena = mContrasenaView.getText().toString();
 
         boolean cancelar = false;
         View focusView = null;
@@ -85,14 +85,14 @@ public class Login extends Activity{
             return;
         }
 
-        if (TextUtils.isEmpty(usuario)) {
+        if (TextUtils.isEmpty(cedula)) {
             mUsuarioView.setError(getString(R.string.error_campo_requirido));
             focusView = mUsuarioView;
             focusView.requestFocus();
             cancelar = true;
         }
 
-        if (TextUtils.isEmpty(contrsena)) {
+        if (TextUtils.isEmpty(contrasena)) {
             mContrasenaView.setError(getString(R.string.error_campo_requirido));
             focusView = mContrasenaView;
             focusView.requestFocus();
@@ -104,9 +104,9 @@ public class Login extends Activity{
 
         } else {
 
-            if(validarUsuario(usuario, contrsena)==true){
+            if(validarUsuario(cedula, contrasena)==true){
                 activarMenu = new Intent(this, MenuPrincipal.class);
-                activarMenu.putExtra("usuario", paciente.getUsuario());
+                activarMenu.putExtra("usuario", paciente.getNombresApellidos());
                 startActivity(activarMenu);
             }
             else{
@@ -116,7 +116,7 @@ public class Login extends Activity{
     }
 
     private boolean validarUsuario(String usuario, String contrasena){
-        if(paciente.comprobarContrasena(contrasena) && paciente.comprobarUsuario(usuario))
+        if(paciente.comprobarContrasena(contrasena) && paciente.comprobarCedula(usuario))
             return true;
         return false;
     }
@@ -141,7 +141,7 @@ public class Login extends Activity{
     }
 
     private boolean comprobarUsuarioExistente(){
-        return paciente.existeEnBd();
+        return paciente.existePaciente();
     }
 }
 

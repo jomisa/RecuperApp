@@ -98,26 +98,6 @@
             android:layout_marginTop="8dp" />
 
         <EditText
-            android:id="@+id/email_crear_texto"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="32dp"
-            app:layout_constraintHorizontal_bias="0.55"
-            android:textColor="#fafafa"
-            android:textSize="15sp"
-            android:background="@drawable/estilo_texto"
-            app:layout_constraintLeft_toRightOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/contrasena1_crear_texto"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp" />
-
-        <EditText
             android:id="@+id/contrasena1_crear_texto"
             android:layout_width="0dp"
             android:layout_height="43dp"
@@ -139,7 +119,8 @@
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/contrasena2_crear_texto"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp" />
 
         <ImageView
             android:id="@+id/candado_image"
@@ -177,12 +158,11 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_crear_texto"
-            app:layout_constraintVertical_bias="1.0"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/contrasena1_crear_texto" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -193,16 +173,6 @@
             android:layout_marginLeft="32dp"
             app:layout_constraintBottom_toBottomOf="@+id/contrasena1_crear_texto"
             android:background="@drawable/ic_action_lock_outline" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            app:layout_constraintBottom_toBottomOf="@+id/email_crear_texto"
-            android:background="@drawable/ic_communication_email" />
 
         <EditText
             android:layout_width="0dp"
@@ -221,7 +191,8 @@
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@+id/usuario_crear_texto"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp" />
 
         <EditText
             android:layout_width="0dp"
@@ -312,17 +283,6 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintBottom_toBottomOf="@+id/direccion_imagen" />
-
-    <ImageView
-        android:id="@+id/husi_image"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/logohusi"
-        android:layout_height="0dp"
-        android:layout_width="150dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

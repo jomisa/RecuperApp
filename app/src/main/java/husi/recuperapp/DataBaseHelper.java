@@ -18,19 +18,13 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String NOMBRE_BD = "RecuperapDP.db";
-    public static final String TABLA_PACIENTE = "tabla_paciente";
-    public static final String COL_1_PACIENTE = "ID";
-    public static final String COL_2_PACIENTE = "USUARIO";
-    public static final String COL_3_PACIENTE = "CONTRASENA";
-    public static final String COL_4_PACIENTE = "EMAIL";
 
-    public static final String TABLA_FISIOLOGICOS = "tabla_fisiologicos";
-    public static final String COL_1_FISIOLOGICOS = "ID";
-    public static final String COL_2_FISIOLOGICOS = "CEDULA";
-    public static final String COL_3_FISIOLOGICOS = "FECHA";
-    public static final String COL_4_FISIOLOGICOS = "MEDICION";
-    public static final String COL_5_FISIOLOGICOS = "VALOR";
-    public static final String COL_6_FISIOLOGICOS = "ENVIADO";
+    public static final String TABLA_PACIENTE = "tabla_paciente";
+    public static final String COL_1_PACIENTE = "CEDULA";
+    public static final String COL_2_PACIENTE = "CONTRASENA";
+    public static final String COL_3_PACIENTE = "NOMBRES";
+    public static final String COL_4_PACIENTE = "APELLIDOS";
+    public static final String COL_5_PACIENTE = "EMAIL";
 
     public static final String TABLA_MEDICAMENTOS = "tabla_medicamentos";
     public static final String COL_1_MEDICAMENTOS = "ID";
@@ -41,47 +35,59 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_6_MEDICAMENTOS = "SINTOMA";
     public static final String COL_7_MEDICAMENTOS = "ASIGNADO";
 
+    public static final String TABLA_FISIOLOGICOS = "tabla_fisiologicos";
+    public static final String COL_1_FISIOLOGICOS = "ID";
+    public static final String COL_2_FISIOLOGICOS = "CEDULA";
+    public static final String COL_3_FISIOLOGICOS = "FECHA";
+    public static final String COL_4_FISIOLOGICOS = "MEDICION";
+    public static final String COL_5_FISIOLOGICOS = "VALOR";
+    public static final String COL_6_FISIOLOGICOS = "ENVIADO";
+
     public static final String TABLA_CAMINATAS = "tabla_caminatas";
     public static final String COL_1_CAMINATAS = "ID";
-    public static final String COL_2_CAMINATAS = "FECHA";
-    public static final String COL_3_CAMINATAS = "TIEMPO";
-    public static final String COL_4_CAMINATAS = "DISTANCIA";
-    public static final String COL_5_CAMINATAS = "PASOS";
+    public static final String COL_2_CAMINATAS = "CEDULA";
+    public static final String COL_3_CAMINATAS = "FECHA";
+    public static final String COL_4_CAMINATAS = "TIEMPO";
+    public static final String COL_5_CAMINATAS = "DISTANCIA";
+    public static final String COL_6_CAMINATAS = "PASOS";
+    public static final String COL_7_CAMINATAS = "ID_SINTOMA_CAMINATA";
+    public static final String COL_8_CAMINATAS = "ENVIADO";
+
+    public static final String TABLA_LISTA_SINTOMAS = "tabla_lista_sintomas";
+    public static final String COL_1_LISTA_SINTOMAS = "ID_SINTOMA";
+    public static final String COL_2_LISTA_SINTOMAS = "SINTOMA";
 
     public static final String TABLA_CITAS = "tabla_citas";
     public static final String COL_1_CITAS = "ID";
     public static final String COL_2_CITAS = "FECHA";
     public static final String COL_3_CITAS = "MEDICO";
 
-    public static final String TABLA_LISTA_SINTOMAS = "tabla_lista_sintomas";
-    public static final String COL_1_LISTA_SINTOMAS = "ID_SINTOMA";
-    public static final String COL_2_LISTA_SINTOMAS = "SINTOMA";
-
     public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
-            "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_PACIENTE +
-            " TEXT," + COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " INTEGER)";
+            "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY, " + COL_2_PACIENTE + " TEXT," +
+            COL_3_PACIENTE + " TEXT," + COL_4_PACIENTE + " TEXT," + COL_5_PACIENTE + " TEXT)";
 
     public static final String CREAR_TABLA_FISIOLOGICOS = "create table " + TABLA_FISIOLOGICOS + " " +
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
             " INTEGER," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " TEXT," +
             COL_5_FISIOLOGICOS + " REAL, "+ COL_6_FISIOLOGICOS +" INTEGER )";
 
+    public static final String CREAR_TABLA_CAMINATAS = "create table " + TABLA_CAMINATAS + " " +
+            "("+COL_1_CAMINATAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CAMINATAS
+            + " INTEGER," + COL_3_CAMINATAS + " TEXT," + COL_4_CAMINATAS + " INTEGER," + COL_5_CAMINATAS
+            + " INTEGER,"+ COL_6_CAMINATAS + " INTEGER,"+ COL_7_CAMINATAS + " INTEGER, "
+            + COL_8_CAMINATAS +" INTEGER )";
+
     public static final String CREAR_TABLA_MEDICAMENTOS = "create table " + TABLA_MEDICAMENTOS + " " +
             "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY, " + COL_2_MEDICAMENTOS +
             " TEXT," + COL_3_MEDICAMENTOS + " TEXT," + COL_4_MEDICAMENTOS + " TEXT," + COL_5_MEDICAMENTOS
             + " TEXT," + COL_6_MEDICAMENTOS + " TEXT," + COL_7_MEDICAMENTOS +" TEXT)";
 
-    public static final String CREAR_TABLA_CAMINATAS = "create table " + TABLA_CAMINATAS + " " +
-            "("+COL_1_CAMINATAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CAMINATAS +
-            " TEXT," + COL_3_CAMINATAS + " TEXT," + COL_4_CAMINATAS + " TEXT," + COL_5_CAMINATAS
-            + " TEXT)";
+    public static final String CREAR_TABLA_LISTA_SINTOMAS = "create table " + TABLA_LISTA_SINTOMAS + " " +
+            "("+COL_1_LISTA_SINTOMAS+" INTEGER PRIMARY KEY, " + COL_2_LISTA_SINTOMAS + " TEXT )";
 
     public static final String CREAR_TABLA_CITAS = "create table " + TABLA_CITAS + " " +
             "("+COL_1_CITAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CITAS +
             " TEXT," + COL_3_CITAS + " TEXT)";
-
-    public static final String CREAR_TABLA_LISTA_SINTOMAS = "create table " + TABLA_LISTA_SINTOMAS + " " +
-            "("+COL_1_LISTA_SINTOMAS+" INTEGER PRIMARY KEY, " + COL_2_LISTA_SINTOMAS + " TEXT )";
 
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
@@ -135,13 +141,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     //Paciente
-
-    public boolean insertarUnPaciente(String usuario, String contrasena, String email) {
+    public boolean insertarUnPaciente(int cedula, String contrasena, String nombres,
+                                      String apellidos, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2_PACIENTE, usuario);
-        contentValues.put(COL_3_PACIENTE, contrasena);
-        contentValues.put(COL_4_PACIENTE, email);
+        contentValues.put(COL_1_PACIENTE, cedula);
+        contentValues.put(COL_2_PACIENTE, contrasena);
+        contentValues.put(COL_3_PACIENTE, nombres);
+        contentValues.put(COL_4_PACIENTE, apellidos);
+        contentValues.put(COL_5_PACIENTE, email);
         long result = db.insert(TABLA_PACIENTE, null, contentValues);
         if (result == -1)
             return false;
@@ -152,7 +160,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public ArrayList<String> obtenerPaciente() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ArrayList<String> paciente = new ArrayList<String>();
+        ArrayList<String> paciente = new ArrayList<>();
         Cursor resultado = db.rawQuery("select * from " + TABLA_PACIENTE, null);
         if(resultado.getCount() == 0) {
             return null;
@@ -164,28 +172,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             paciente.add(resultado.getString(1));
             paciente.add(resultado.getString(2));
             paciente.add(resultado.getString(3));
+            paciente.add(resultado.getString(4));
         }
         return paciente;
     }
 
-    public boolean actualizarUnPaciente(String id, String usuario, String contrasena, String email) {
+    public boolean actualizarUnPaciente(int cedula, String contrasena, String nombres,
+                                        String apellidos, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_PACIENTE, id);
-        contentValues.put(COL_2_PACIENTE, usuario);
-        contentValues.put(COL_3_PACIENTE, contrasena);
-        contentValues.put(COL_4_PACIENTE, email);
-        db.update(TABLA_PACIENTE, contentValues, "ID = ?", new String[]{id});
+        contentValues.put(COL_1_PACIENTE, cedula);
+        contentValues.put(COL_2_PACIENTE, contrasena);
+        contentValues.put(COL_3_PACIENTE, nombres);
+        contentValues.put(COL_4_PACIENTE, apellidos);
+        contentValues.put(COL_5_PACIENTE, email);
+        db.update(TABLA_PACIENTE, contentValues, COL_1_PACIENTE+" = ?", new String[]{cedula+""});
         return true;
-    }
-
-    public boolean borrarUnPaciente(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Integer filasBorradas = db.delete(TABLA_PACIENTE, "ID = ?", new String[]{id});
-
-        if(filasBorradas > 0)
-            return true;
-        return false;
     }
 
     //Fisiológicos
@@ -239,10 +241,95 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //Caminatas
+
+    public boolean insertarUnaCaminata(int cedula, String fecha, int tiempo, int distancia,
+                                       int pasos, int idSintomaCaminata) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_CAMINATAS, cedula);
+        contentValues.put(COL_3_CAMINATAS, fecha);
+        contentValues.put(COL_4_CAMINATAS, tiempo);
+        contentValues.put(COL_5_CAMINATAS, distancia);
+        contentValues.put(COL_6_CAMINATAS, pasos);
+        contentValues.put(COL_7_CAMINATAS, idSintomaCaminata);
+        contentValues.put(COL_8_CAMINATAS, 0);
+        long result = db.insert(TABLA_CAMINATAS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public List<List<Object>> obtenerCaminatas() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_CAMINATAS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        List<List<Object>> caminatas = new ArrayList<>();
+        ArrayList<Object> caminata;
+
+        while (resultado.moveToNext()) {
+            caminata = new ArrayList<>();
+            caminata.add(resultado.getString(0));
+            caminata.add(resultado.getString(1));
+            caminata.add(resultado.getString(2));
+            caminata.add(resultado.getString(3));
+            caminata.add(resultado.getString(4));
+            caminata.add(resultado.getString(5));
+            caminata.add(resultado.getString(6));
+            caminata.add(resultado.getString(7));
+
+            caminatas.add(caminata);
+        }
+        return caminatas;
+    }
+
+    //TODO: cambia todos los datos, solo debe cambiar el dato con la fecha exacta
+    public boolean actualizarEnviadoCaminata(String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_8_CAMINATAS, 1);
+        db.update(TABLA_CAMINATAS, contentValues, "FECHA = ?", new String[]{fecha});
+        return true;
+    }
+
+    /*
+    public boolean actualizarUnaCaminata(int id, int cedula, String fecha, int tiempo,
+                                         int distancia, int pasos, int idSintomaCaminata,
+                                         int enviado) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_CAMINATAS, id);
+        contentValues.put(COL_2_CAMINATAS, cedula);
+        contentValues.put(COL_3_CAMINATAS, fecha);
+        contentValues.put(COL_4_CAMINATAS, tiempo);
+        contentValues.put(COL_5_CAMINATAS, distancia);
+        contentValues.put(COL_6_CAMINATAS, pasos);
+        contentValues.put(COL_7_CAMINATAS, idSintomaCaminata);
+        contentValues.put(COL_8_CAMINATAS, enviado);
+        db.update(TABLA_CAMINATAS, contentValues, "ID = ?", new String[]{id+""});
+        return true;
+    }
+
+    public boolean borrarUnaCaminata(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Integer filasBorradas = db.delete(TABLA_CAMINATAS, "ID = ?", new String[]{id+""});
+
+        if(filasBorradas > 0)
+            return true;
+        return false;
+    }
+    */
+
     //Medicamentos
 
-    public boolean insertarUnMedicamento(String id, String medicamento, String dosis, String frecuencia,
-                                         String hora,String sintoma, String asignado) {
+    public boolean insertarUnMedicamento(String id, String medicamento, String dosis,
+                                         String frecuencia, String hora,String sintoma,
+                                         String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1_MEDICAMENTOS, id);
@@ -285,6 +372,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return medicamentos;
     }
 
+    public boolean buscarMedicamento(String id){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_MEDICAMENTOS + " where "+
+                COL_1_MEDICAMENTOS+" = "+ id, null);
+        if(resultado.getCount() == 0) {
+            return false;
+        }else
+            return true;
+    }
+
     public boolean actualizarUnMedicamento(String id, String medicamento, String dosis,
                                            String frecuencia, String hora, String sintoma,
                                            String asignado) {
@@ -320,62 +419,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    //Caminatas
+    //Lista Sintomas
 
-    public boolean insertarUnaCaminata(String fecha, String tiempo, String distancia, String pasos) {
+    public boolean insertarUnListaSintoma(String id, String sintoma) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2_CAMINATAS, fecha);
-        contentValues.put(COL_3_CAMINATAS, tiempo);
-        contentValues.put(COL_4_CAMINATAS, distancia);
-        contentValues.put(COL_5_CAMINATAS, pasos);
-        long result = db.insert(TABLA_CAMINATAS, null, contentValues);
+        contentValues.put(COL_1_LISTA_SINTOMAS, id);
+        contentValues.put(COL_2_LISTA_SINTOMAS, sintoma);
+        long result = db.insert(TABLA_LISTA_SINTOMAS, null, contentValues);
         if (result == -1)
             return false;
         else
             return true;
     }
 
-    public List<List<String>> obtenerCaminatas() {
+    public List<List<String>> obtenerListaSintomas() {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor resultado = db.rawQuery("select * from " + TABLA_CAMINATAS, null);
+        Cursor resultado = db.rawQuery("select * from " + TABLA_LISTA_SINTOMAS, null);
         if(resultado.getCount() == 0) {
             return null;
         }
 
-        List<List<String>> caminatas = new ArrayList<List<String>>();
-        ArrayList<String> caminata;
+        List<List<String>> sintomas = new ArrayList<List<String>>();
+        ArrayList<String> sintoma;
 
         while (resultado.moveToNext()) {
-            caminata = new ArrayList<String>();
-            caminata.add(resultado.getString(0));
-            caminata.add(resultado.getString(1));
-            caminata.add(resultado.getString(2));
-            caminata.add(resultado.getString(3));
-            caminata.add(resultado.getString(4));
+            sintoma = new ArrayList<String>();
+            sintoma.add(resultado.getString(0));
+            sintoma.add(resultado.getString(1));
 
-            caminatas.add(caminata);
+            sintomas.add(sintoma);
         }
-        return caminatas;
+
+        return sintomas;
     }
 
-    public boolean actualizarUnaCaminata(String id, String fecha, String tiempo, String distancia,
-                                         String pasos) {
+    public boolean actualizarUnListaSintoma(String id, String sintoma) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_CAMINATAS, id);
-        contentValues.put(COL_2_CAMINATAS, fecha);
-        contentValues.put(COL_3_CAMINATAS, tiempo);
-        contentValues.put(COL_4_CAMINATAS, distancia);
-        contentValues.put(COL_5_CAMINATAS, pasos);
-        db.update(TABLA_CAMINATAS, contentValues, "ID = ?", new String[]{id});
+        contentValues.put(COL_1_LISTA_SINTOMAS, id);
+        contentValues.put(COL_2_LISTA_SINTOMAS, sintoma);
+        db.update(TABLA_LISTA_SINTOMAS, contentValues, "ID_SINTOMA = ?", new String[]{id});
         return true;
     }
 
-    public boolean borrarUnaCaminata(String id) {
+    public boolean borrarUnListaSintoma(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Integer filasBorradas = db.delete(TABLA_CAMINATAS, "ID = ?", new String[]{id});
+        Integer filasBorradas = db.delete(TABLA_LISTA_SINTOMAS, "ID_SINTOMA = ?", new String[]{id});
 
         if(filasBorradas > 0)
             return true;
@@ -432,60 +523,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean borrarUnaCita(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         Integer filasBorradas = db.delete(TABLA_CITAS, "ID = ?", new String[]{id});
-
-        if(filasBorradas > 0)
-            return true;
-        return false;
-    }
-
-    //Lista Sintomas
-
-    public boolean insertarUnListaSintoma(String id, String sintoma) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_LISTA_SINTOMAS, id);
-        contentValues.put(COL_2_LISTA_SINTOMAS, sintoma);
-        long result = db.insert(TABLA_LISTA_SINTOMAS, null, contentValues);
-        if (result == -1)
-            return false;
-        else
-            return true;
-    }
-
-    public List<List<String>> obtenerListaSintomas() {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor resultado = db.rawQuery("select * from " + TABLA_LISTA_SINTOMAS, null);
-        if(resultado.getCount() == 0) {
-            return null;
-        }
-
-        List<List<String>> sintomas = new ArrayList<List<String>>();
-        ArrayList<String> sintoma;
-
-        while (resultado.moveToNext()) {
-            sintoma = new ArrayList<String>();
-            sintoma.add(resultado.getString(0));
-            sintoma.add(resultado.getString(1));
-
-            sintomas.add(sintoma);
-        }
-
-        return sintomas;
-    }
-
-    public boolean actualizarUnListaSintoma(String id, String sintoma) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_LISTA_SINTOMAS, id);
-        contentValues.put(COL_2_LISTA_SINTOMAS, sintoma);
-        db.update(TABLA_LISTA_SINTOMAS, contentValues, "ID_SINTOMA = ?", new String[]{id});
-        return true;
-    }
-
-    public boolean borrarUnListaSintoma(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Integer filasBorradas = db.delete(TABLA_LISTA_SINTOMAS, "ID_SINTOMA = ?", new String[]{id});
 
         if(filasBorradas > 0)
             return true;

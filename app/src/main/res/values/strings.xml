@@ -2,9 +2,8 @@
     <string name="app_name">RecuperApp</string>
 
     <!-- Login & CrearUsuario -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_usuario">Usuario</string>
-    <string name="prompt_contrasena">Contrsaeña </string>
+    <string name="prompt_usuario">Cedula</string>
+    <string name="prompt_contrasena">Contraseña </string>
     <string name="action_sign_in">Ingresar</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_email_invalido">Ingrese un correo valido</string>
@@ -89,5 +88,6 @@
     <!-- Cita item -->
     <string name="cita_fecha_texto">Fecha</string>
     <string name="cita_medico_texto">Medico</string>
+    <string name="error_campo_numerico">Debe ser un número</string>
 
 </resources>

@@ -23,7 +23,6 @@ import java.util.List;
 public class AdaptadorListViewFisiologicos extends BaseAdapter{
     private Context context;
     private List<Fisiologico> fisiologicos;
-    private static DataBaseHelper dbHelper;
     Paciente paciente;
 
     public AdaptadorListViewFisiologicos(Context context, List<Fisiologico> fisiologicos) {
@@ -97,15 +96,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
                     Log.i("Tag: ", valor+"");//obtener el editText del ViewHolder
                     Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
 
-                    dbHelper = new DataBaseHelper(context.getApplicationContext());
-
-                    //TODO poner la cédula real
-                    dbHelper.insertarUnFisiologico(1113651779, Funciones.getFechaString(), medicion, valor);
-
-                    dbHelper.close();
-
-                    paciente=Paciente.getInstance();
-                    paciente.postFisiologicos();
+                    Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
 
                     //fisiologicos.remove(viewHolder.fisiologico);
                     //notifyDataSetChanged();

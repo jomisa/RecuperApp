@@ -16,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,22 +23,10 @@ import java.util.List;
  */
 
 public class Paciente extends Application{
+
     private static Paciente singleton;
-
     static DataBaseHelper dbHelper;
-
-
     private final String URL_BASE = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-
-    private final String servicioListaSintomas="listasintomas";
-
-    private Integer id;
-    private String nombres;
-    private String apellidos;
-    private String email;
-    private String usuario;
-    private String contrasena;
-    private boolean existeEnBd;
     private RequestQueue queue;
 
     public static Paciente getInstance(){
@@ -50,164 +37,65 @@ public class Paciente extends Application{
     public void onCreate() {
         super.onCreate();
 
-
         queue = Volley.newRequestQueue(this);
-
-        JSONObject obj = new JSONObject();
-
-        JSONArray jArray = new JSONArray();
-
-        try {
-            obj.put("idSintoma", "99");
-            obj.put("sintoma", "sintoma prueba android");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        getMisMedicamentso(queue,1113651779);
-
-        //postRequestWebService(servicioListaSintomas, queue, obj);
-
-        //getRequestWebService(servicioListaSintomas, queue);
-
-        this.existeEnBd=false;
-
         dbHelper = new DataBaseHelper(this);
-        crearObjetoDesdeBD(dbHelper);
+
+        sincronizarBD();
+
         singleton = this;
     }
 
-    public boolean crearObjetoDesdeBD(DataBaseHelper dbHelper) {
-        if (this.existeEnBd == false){
-            ArrayList<String> paciente = new ArrayList<String>();
+    //Info paciente
 
-            if(dbHelper.existeLaTabla("tabla_paciente")==false){
-
-            }
-            else {
-                paciente = dbHelper.obtenerPaciente();
-            }
-            //no hay datos de paciente en la tabla
-            if (paciente == null) {
-                return existeEnBd;
-            }
-
-            this.id = Integer.valueOf(paciente.get(0));
-            this.usuario = paciente.get(1);
-            this.contrasena = paciente.get(2);
-            this.email = paciente.get(3);
-            this.existeEnBd = true;
-
-            return existeEnBd;
-        }
-        return existeEnBd;
+    public boolean existePaciente(){
+        if (dbHelper.obtenerPaciente()!=null)
+            return true;
+        return false;
     }
 
-    public boolean crearPaciente(String usuario,String contrasena1,String email){
-        this.existeEnBd=false;
-        dbHelper = new DataBaseHelper(this);
-        if(dbHelper.insertarUnPaciente(usuario, contrasena1, email)){
-            crearObjetoDesdeBD(dbHelper);
-        }
-        return existeEnBd;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsuario(){
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public boolean comprobarUsuario(String usuario){
-        if (this.usuario.equalsIgnoreCase(usuario))
+    public boolean comprobarCedula(String cedula){
+        if (dbHelper.obtenerPaciente().get(0).equalsIgnoreCase(cedula))
             return true;
         return false;
     }
 
     public boolean comprobarContrasena(String contrasena){
-        if (this.contrasena.equalsIgnoreCase(contrasena))
+        if (dbHelper.obtenerPaciente().get(1).equalsIgnoreCase(contrasena))
             return true;
         return false;
     }
 
-    public boolean existeEnBd() {
-        return existeEnBd;
+    public String getNombresApellidos(){
+        return dbHelper.obtenerPaciente().get(2)+" "+dbHelper.obtenerPaciente().get(3);
     }
 
-    //Sincronizador
-
-    private void getRequestWebService(final String servicio, RequestQueue queue){
-
-        JsonArrayRequest getArrayRequest = new JsonArrayRequest(Request.Method.GET, URL_BASE+servicio,null,
-                new Response.Listener<JSONArray>(){
-                    @Override
-                    public void onResponse(JSONArray respuesta){
-                        Log.i("Volley: ", respuesta.toString());
-                    }
-                },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                Log.d("Error: ", error.getMessage());
-            }
-        });
-
-        queue.add(getArrayRequest);
+    public int getCedula(){
+        return Integer.parseInt(dbHelper.obtenerPaciente().get(0));
     }
 
-    private void postRequestWebService(final String servicio, RequestQueue queue, final JSONObject obj){
-
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, URL_BASE+servicio,obj,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Volley: ", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Volley ", "Error: " + error.getMessage());
-            }
-        });
-
-        queue.add(postRequest);
+    //Sincroniza BD interna con BD servidor
+    public void sincronizarBD(){
+        if(existePaciente()==true) {
+            getMisMedicamentosDelServidor();
+            //TODO llenar tablas de sintomas medicamentos y sintomas caminatas
+        }
     }
 
-    public void postFisiologicos(){
+    //Acceso BD
+
+    List<List<String>> obtenerMedicamentosBD(){
+        return dbHelper.obtenerMedicamentos();
+    }
+
+    public void actualizarMedicamentoBD(String id, String hora, String asignado){
+        dbHelper.actualizarHoraConsumoMedicamento( id, hora, asignado);
+    }
+
+    //Acceso BD Y WEB SERVICES
+    public void insertarYpostFisiologicos(String fecha,String medicion,double valor){
+
+        dbHelper.insertarUnFisiologico(getCedula(), fecha, medicion, valor);
+
         JsonObjectRequest postRequest=null;
         List<List<Object>> fisiologicosBD;
         List<Object> fisiologico;
@@ -218,6 +106,7 @@ public class Paciente extends Application{
             for (int i = 0; i < fisiologicosBD.size(); i++){
                 fisiologico=fisiologicosBD.get(i);
 
+                //Dato del Valor (fila 6), si es 0 no se a enviado
                 if(fisiologico.get(5).toString().equals("0")) {
 
                     final JSONObject fisologicoJson = new JSONObject();
@@ -236,7 +125,7 @@ public class Paciente extends Application{
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     Log.i("Volley Fisiologicos: ", response.toString());
-                                    try {
+                                    try {//La fecha es un identificador unico e igual tanto en el servido como en el app
                                         dbHelper.actualizarEnviadoFisiologico(response.getString("fecha"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -266,11 +155,75 @@ public class Paciente extends Application{
 
 
     }
+    public void insertarYpostCaminatas(String fecha, int tiempo, int distancia, int pasos, int idSintomaCaminata){
 
-    private void getMisMedicamentso(RequestQueue queue, int cedula){
+        dbHelper.insertarUnaCaminata(getCedula(), fecha, tiempo, distancia, pasos,  idSintomaCaminata);
+
+        JsonObjectRequest postRequest=null;
+        List<List<Object>> caminatasBD;
+        List<Object> caminata;
+
+        caminatasBD = dbHelper.obtenerCaminatas();
+
+        if(caminatasBD!=null){
+            for (int i = 0; i < caminatasBD.size(); i++){
+                caminata=caminatasBD.get(i);
+
+                //Dato del Valor (fila 8), si es 0 no se a enviado
+                if(caminata.get(7).toString().equals("0")) {
+
+                    final JSONObject caminataJson = new JSONObject();
+                    try {
+                        caminataJson.put("id", caminata.get(0).toString());
+                        caminataJson.put("cedula", caminata.get(1).toString());
+                        caminataJson.put("fecha", caminata.get(2).toString());
+                        caminataJson.put("tiempo", caminata.get(3).toString());
+                        caminataJson.put("distancia", caminata.get(4).toString());
+                        caminataJson.put("pasos", caminata.get(5).toString());
+                        caminataJson.put("idSintoma", caminata.get(6).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_BASE + "caminatas", caminataJson,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.i("Volley Caminatas: ", response.toString());
+                                    try {//La fecha es un identificador unico e igual tanto en el servido como en el app
+                                        dbHelper.actualizarEnviadoCaminata(response.getString("fecha"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            if(error.networkResponse != null && error.networkResponse.data != null){
+                                String errorString = new String(error.networkResponse.data);
+                                VolleyLog.d("Caminata:", errorString);
+                            } else if(error.networkResponse != null) {
+                                VolleyLog.d("Caminata Network: ", error.networkResponse.statusCode);
+                            }else{
+                                VolleyLog.d("Caminata: ", error.getMessage());
+                            }
+                        }
+                    });
+                }
+                if(postRequest!=null) {
+                    postRequest.setShouldCache(false);
+                    queue.add(postRequest);
+                }
+            }
+        }
+
+
+    }
+    public void getMisMedicamentosDelServidor(){
 
         JsonArrayRequest getMisMedicamentosRequest = new JsonArrayRequest(Request.Method.GET,
-                URL_BASE+"medicamentos/misMedicamentos/"+cedula,null,
+                URL_BASE+"medicamentos/misMedicamentos/"+getCedula(),null,
                 new Response.Listener<JSONArray>(){
                     @Override
                     public void onResponse(JSONArray response) {
@@ -283,35 +236,23 @@ public class Paciente extends Application{
                                 jObjectResponse = response.getJSONObject(i);
                                 Log.i("jObjectResponse ", jObjectResponse.toString());
                                 int id = jObjectResponse.getInt("idMed");
-                                Log.d("id",id+"");
-
                                 String medicamento = jObjectResponse.getString("nombreMed");
-                                Log.d("medicamento",medicamento);
-
                                 String dosis = jObjectResponse.getString("dosis");
-                                Log.d("dosis",dosis);
-
                                 int frecuencia = jObjectResponse.getInt("frecuencia");
-                                Log.d("frecuencia",frecuencia+"");
-
-                                //String hora = jObjectResponse.getString("hora");
-                                //Log.d("hora",hora);
-
+                                //String hora = jObjectResponse.getString("hora"); //TODO: problema dato Date en servidor
                                 String sintoma = jObjectResponse.getString("sintoma");
-                                Log.d("sintoma",sintoma);
-
                                 int asignado = jObjectResponse.getInt("asignado");
-                                Log.d("asignado",asignado+"");
 
-
-                                dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", "Sin Asignar", sintoma,asignado+"");
+                                //Si no exite el medicamento no lo incerta, los id de los medicamentos
+                                //no son autonumerados, el id es el mismo de la tabla del servidor
+                                //esto para evitar agregar medicamentos existentes a la tabla (evitar repetidos)
+                                if(dbHelper.buscarMedicamento(id+"")==false)
+                                    dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", "Sin Asignar", sintoma,asignado+"");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                         }
-
-
 
                     }
                 },new Response.ErrorListener(){
@@ -323,6 +264,35 @@ public class Paciente extends Application{
         if(getMisMedicamentosRequest!=null) {
             getMisMedicamentosRequest.setShouldCache(false);
             queue.add(getMisMedicamentosRequest);
+        }
+    }
+    public void verificarYcrearPaciente(int cedula, String contrasena) {
+        JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,
+                URL_BASE+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("Volley findPaciente ", response.toString());
+                        if(response != null && dbHelper.obtenerPaciente() == null){
+
+                            try {
+                                dbHelper.insertarUnPaciente(response.getInt("cedula"),
+                                        response.getString("contrasena"), response.getString("nombres"),
+                                        response.getString("apellidos"), response.getString("correo"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                VolleyLog.d("getVerificarPacienteRequest: ", error.getMessage());
+            }
+        });
+        if(getVerificarPacienteRequest!=null) {
+            getVerificarPacienteRequest.setShouldCache(false);
+            queue.add(getVerificarPacienteRequest);
         }
     }
 }

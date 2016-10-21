@@ -55,7 +55,7 @@ public class CitasMedicas extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getUsuario());
+        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
 
         dbHelper = new DataBaseHelper(this);
 

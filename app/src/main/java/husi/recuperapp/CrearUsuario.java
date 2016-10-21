@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.TimeUnit;
+
 public class CrearUsuario extends Activity {
 
     Intent activarLogin;
@@ -24,7 +26,6 @@ public class CrearUsuario extends Activity {
     private EditText mUsuarioView;
     private EditText mContrasena1View;
     private EditText mContrasena2View;
-    private EditText mEmailView;
     private Button mCrearView;
 
     @Override
@@ -50,7 +51,6 @@ public class CrearUsuario extends Activity {
         mUsuarioView = (EditText) findViewById(R.id.usuario_crear_texto);
         mContrasena1View = (EditText) findViewById(R.id.contrasena1_crear_texto);
         mContrasena2View = (EditText) findViewById(R.id.contrasena2_crear_texto);
-        mEmailView = (EditText) findViewById(R.id.email_crear_texto);
 
         mCrearView = (Button) findViewById(R.id.crear_usuario_button);
         mCrearView.setOnClickListener(new Button.OnClickListener() {
@@ -67,27 +67,40 @@ public class CrearUsuario extends Activity {
         mUsuarioView.setError(null);
         mContrasena1View.setError(null);
         mContrasena2View.setError(null);
-        mEmailView.setError(null);
 
         // Obtener valores de los campos
-        String usuario = mUsuarioView.getText().toString();
+        String cedula = mUsuarioView.getText().toString();
         String contrasena1 = mContrasena1View.getText().toString();
         String contrasena2 = mContrasena2View.getText().toString();
-        String email = mEmailView.getText().toString();
 
         View focusView = null;
 
-        if (verificarCampos(focusView, usuario, contrasena1, contrasena2, email)) {
+        if (verificarCampos(focusView, cedula+"", contrasena1, contrasena2)) {
             //focusView.requestFocus();
         } else {
-            //Ingresa los datos del paciente en la BD
-            if(paciente.crearPaciente(usuario, contrasena1, email)==true) {
-                Toast.makeText(this, "Se creó el usuario: " + paciente.getUsuario().toString(),
+
+            paciente.verificarYcrearPaciente(Integer.parseInt(cedula), contrasena1);
+
+            Toast.makeText(this, "Espere mientras Validamos Datos", Toast.LENGTH_LONG).show();
+            //Para el proceso mientras consulta WS (asincrono) y crea el usuario en la BD,
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            //Verificar si en efecto se creo el usuario despues de esperar un tiempo
+            if(paciente.existePaciente()==true) {
+                Toast.makeText(this, "Se creó el usuario: " + paciente.getNombresApellidos(),
                         Toast.LENGTH_LONG).show();
+
+                //Actualiza los datos del paciente
+                Paciente.getInstance().sincronizarBD();
+
                 //Crea un intent
                 activarLogin = new Intent(this, Login.class);
                 //retorna al objeto paciente en el intent a la actividad LoginUI
-                activarLogin.putExtra("usuario", paciente.getUsuario());
+                activarLogin.putExtra("usuario", paciente.getCedula());
 
                 //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
                 setResult(Activity.RESULT_OK, activarLogin);
@@ -99,13 +112,13 @@ public class CrearUsuario extends Activity {
         }
     }
 
-    private boolean verificarCampos(View focusView, String usuario, String contrasena1,
-                                    String contrasena2, String email){
+    private boolean verificarCampos(View focusView, String cedula, String contrasena1,
+                                    String contrasena2){
 
         boolean cancelar = false;
 
         //Verifica campo usuario diligenciado
-        if (TextUtils.isEmpty(usuario)){
+        if (TextUtils.isEmpty(cedula)){
             mUsuarioView.setError(getString(R.string.error_campo_requirido));
             focusView = mUsuarioView;
             focusView.requestFocus();
@@ -128,6 +141,7 @@ public class CrearUsuario extends Activity {
             return true;
         }
 
+        //Verifica que las contrasenas sean iguales
         if(!TextUtils.equals(contrasena1, contrasena2)){
             mContrasena2View.setError(getString(R.string.error_contrasenas_diferentes));
             focusView = mContrasena2View;
@@ -135,16 +149,10 @@ public class CrearUsuario extends Activity {
             return true;
         }
 
-        //Verifica campo email diligenciado
-        if (TextUtils.isEmpty(email)){
-            mEmailView.setError(getString(R.string.error_campo_requirido));
-            focusView = mEmailView;
-            focusView.requestFocus();
-            return true;
-        }
-        else if(!Funciones.validarFormatoEmail(email)){
-            mEmailView.setError(getString(R.string.error_email_invalido));
-            focusView = mEmailView;
+        //Verifica que el campo sea numerico
+        if(!TextUtils.isDigitsOnly(cedula)){
+            mUsuarioView.setError(getString(R.string.error_campo_numerico));
+            focusView = mUsuarioView;
             focusView.requestFocus();
             return true;
         }

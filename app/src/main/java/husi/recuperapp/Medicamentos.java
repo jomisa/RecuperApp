@@ -31,7 +31,7 @@ public class Medicamentos extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private AdaptadorListViewMedicamentos adaptadorListViewMedicamentos;
-    DataBaseHelper dbHelper;
+
     Ringtone ringtone;
 
     @Override
@@ -44,12 +44,10 @@ public class Medicamentos extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getUsuario());
-
-        dbHelper = new DataBaseHelper(this);
+        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
 
         medicamentos = new ArrayList<>();
-        medicamentosBD = new ArrayList<List<String>>();
+        medicamentosBD = new ArrayList<>();
 
         this.listViewMedicamentos = (ListView) findViewById(R.id.listViewMedicamentos);
         crearListaMedicamentos();
@@ -131,7 +129,7 @@ public class Medicamentos extends AppCompatActivity {
                 medicamentos.get(posicion).setAsignado("true");
                 medicamentos.get(posicion).setHora(selectedHour + ":" + selectedMinute);
 
-                actualizarMedicamentoBD(posicion);
+                Paciente.getInstance().actualizarMedicamentoBD((posicion+1)+"", medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
                 crearListaMedicamentos();
 
                 adaptadorListViewMedicamentos.notifyDataSetChanged();
@@ -144,7 +142,7 @@ public class Medicamentos extends AppCompatActivity {
 
     private void crearListaMedicamentos() {
 
-        medicamentosBD = dbHelper.obtenerMedicamentos();
+        medicamentosBD = Paciente.getInstance().obtenerMedicamentosBD();
         Log.i("obtener medicamentosBD ","");
 
         if(medicamentosBD!=null) {
@@ -157,9 +155,5 @@ public class Medicamentos extends AppCompatActivity {
                         , medicamentoBD.get(i + 3), medicamentoBD.get(i + 4), medicamentoBD.get(i + 6)));
             }
         }
-    }
-
-    private void actualizarMedicamentoBD(int posicion){
-        dbHelper.actualizarHoraConsumoMedicamento((posicion+1)+"", medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
     }
 }

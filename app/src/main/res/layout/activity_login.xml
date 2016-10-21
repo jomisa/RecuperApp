@@ -137,8 +137,8 @@
             android:textColor="#fafafa"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintBottom_toTopOf="@+id/crear_usuario_button"
             android:layout_height="35dp" />
 
         <ImageView
@@ -187,11 +187,9 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_sign_in_button"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -252,17 +250,6 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.22"
         app:layout_constraintBottom_toBottomOf="@+id/direccion_imagen" />
-
-    <ImageView
-        android:id="@+id/husi_image"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/logohusi"
-        android:layout_height="0dp"
-        android:layout_width="150dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
-        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"

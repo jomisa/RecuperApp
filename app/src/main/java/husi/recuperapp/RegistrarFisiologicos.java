@@ -24,7 +24,7 @@ public class RegistrarFisiologicos extends AppCompatActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getUsuario());
+        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
 
         this.listView = (ListView) findViewById(R.id.listViewFisiologicos);
 

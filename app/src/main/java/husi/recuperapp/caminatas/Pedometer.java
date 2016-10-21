@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import husi.recuperapp.DataBaseHelper;
 import husi.recuperapp.Funciones;
+import husi.recuperapp.Paciente;
 import husi.recuperapp.R;
 
 
@@ -46,6 +47,8 @@ public class Pedometer extends Activity {
     private PedometerSettings mPedometerSettings;
 
     private StepService mService;
+
+    Thread hiloTiempo;
 
     private TextView mStepValueView;
     private TextView mDistanceValueView;
@@ -62,8 +65,6 @@ public class Pedometer extends Activity {
     private Button mBotonTerminar;
     private Button mBotonFinalizar;
 //    private Button mBotonSettings;
-
-    private static DataBaseHelper dbHelper;
 
     /**
      * True, when service is running.
@@ -107,14 +108,14 @@ public class Pedometer extends Activity {
         mDistanceValueView = (TextView) findViewById(R.id.distancia_dato_texto);
         mTiempoValorView = (TextView) findViewById(R.id.tiempo_dato_texto);
 
-        if (mIsRunning) {//Si estácmainando desde antes
+        if (mIsRunning) {//Si está caminando desde antes
             mBotonTerminar.setVisibility(View.VISIBLE);
             bindStepService();
         }else{//en caso de abrir caminata por primera vez
             mBotonTerminar.setVisibility(View.GONE);
             mBotonFinalizar.setVisibility(View.GONE);
  //           mBotonSettings.setVisibility(View.VISIBLE);
-            mTiempoValorView.setText("");
+            mTiempoValorView.setText("0");
         }
 
         mPedometerSettings.clearServiceRunning();
@@ -128,6 +129,32 @@ public class Pedometer extends Activity {
 
                 tiempoInicio = System.currentTimeMillis();
 
+                //Este Hilo actualiza el mTiempoValorView cada cierto tiempo
+                hiloTiempo = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            while (!isInterrupted()) {
+                                Thread.sleep(1000);//Actualiza cada segundo
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tiempoFin = System.currentTimeMillis();
+                                        duracion = (tiempoFin - tiempoInicio) / 1000.0;
+
+                                        //TODO si está en modo prueba de los 6 minutos, debe
+                                        //notificar a los 6 minutos
+
+                                        mTiempoValorView.setText(""+ (int) duracion);
+                                    }
+                                });
+                            }
+                        } catch (InterruptedException e) {
+                        }
+                    }
+                };
+                hiloTiempo.start();
+
                 mBotonEmpezar.setVisibility(View.GONE);
                 mBotonTerminar.setVisibility(View.VISIBLE);
             }
@@ -140,16 +167,15 @@ public class Pedometer extends Activity {
                 stopStepService();
                 mQuitting = true;
 
-                mTiempoValorView.setText(""+ (int) duracion);
+                hiloTiempo.interrupt();
 
                 //TODO: Perisistir resultados
                 Log.i("Pasos Totales: ",""+mStepValue);
                 Log.i("Distancia Total: ",""+mDistanceValue);
                 Log.i("Tiempo Total: ",""+(int) duracion);
 
-                dbHelper = new DataBaseHelper(getApplicationContext());
-                dbHelper.insertarUnaCaminata(Funciones.getFechaString(), String.valueOf((int) duracion)
-                        , mDistanceValue+"", mStepValue+"");
+                Paciente.getInstance().insertarYpostCaminatas(Funciones.getFechaString(),
+                        (int) duracion , (int) mDistanceValue, mStepValue, 1);//TODO Poner sintoma si obtubo alguno
 
                 mBotonTerminar.setVisibility(View.GONE);
                 mBotonFinalizar.setVisibility(View.VISIBLE);
@@ -286,22 +312,14 @@ public class Pedometer extends Activity {
                 case STEPS_MSG:
                     mStepValue = (int)msg.arg1;
                     mStepValueView.setText("" + mStepValue);
-                    tiempoFin = System.currentTimeMillis();
-                    duracion = (tiempoFin - tiempoInicio) / 1000.0;
-                    mTiempoValorView.setText(""+(int) duracion);
                     break;
                 case DISTANCE_MSG:
                     mDistanceValue = ((int)msg.arg1)/1000f;
                     if (mDistanceValue <= 0) {
                         mDistanceValueView.setText("0");
-                        mTiempoValorView.setText("0");
                     }
                     else {
-                        //mDistanceValueView.setText(("" + (mDistanceValue + 0.000001f)).substring(0, 5));
                         mDistanceValueView.setText("" + mDistanceValue );
-                        tiempoFin = System.currentTimeMillis();
-                        duracion = (tiempoFin - tiempoInicio) / 1000.0;
-                        mTiempoValorView.setText(""+(int) duracion);
                     }
                     break;
                 default:
