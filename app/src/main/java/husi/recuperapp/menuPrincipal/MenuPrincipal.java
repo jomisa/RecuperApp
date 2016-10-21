@@ -1,25 +1,24 @@
-package husi.recuperapp;
+package husi.recuperapp.menuPrincipal;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import java.util.ArrayList;
 import java.util.List;
 
+import husi.recuperapp.R;
 import husi.recuperapp.citas.CitasMedicas;
 import husi.recuperapp.caminatas.Pedometer;
 import husi.recuperapp.caminatas.Settings;
+import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
+import husi.recuperapp.login.Login;
+import husi.recuperapp.medicamentos.Medicamentos;
+import husi.recuperapp.menuPrincipal.AdaptadorListView;
+import husi.recuperapp.menuPrincipal.Funcionalidad;
 
 public class MenuPrincipal extends AppCompatActivity {
 

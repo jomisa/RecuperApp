@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import husi.recuperapp.menuPrincipal.MenuPrincipal;
+import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.R;
 
 /**
  * Login

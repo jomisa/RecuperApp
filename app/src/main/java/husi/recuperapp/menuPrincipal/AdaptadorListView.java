@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.menuPrincipal;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import husi.recuperapp.R;
 
 /**
  * Created by jmss1 on 25/09/2016.

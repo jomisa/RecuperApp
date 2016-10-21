@@ -5,7 +5,7 @@
     android:id="@+id/activity_registrar_fisiologicos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.RegistrarFisiologicos">
+    tools:context="husi.recuperapp.fisiologicos.RegistrarFisiologicos">
 
     <ListView
         android:id="@+id/listViewFisiologicos"

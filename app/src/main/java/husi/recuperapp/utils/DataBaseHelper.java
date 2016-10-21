@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.utils;
 
 import android.content.ContentValues;
 import android.content.Context;

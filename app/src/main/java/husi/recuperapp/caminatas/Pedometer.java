@@ -35,9 +35,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import husi.recuperapp.DataBaseHelper;
-import husi.recuperapp.Funciones;
-import husi.recuperapp.Paciente;
+import husi.recuperapp.utils.Funciones;
+import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
 
 
@@ -169,7 +168,6 @@ public class Pedometer extends Activity {
 
                 hiloTiempo.interrupt();
 
-                //TODO: Perisistir resultados
                 Log.i("Pasos Totales: ",""+mStepValue);
                 Log.i("Distancia Total: ",""+mDistanceValue);
                 Log.i("Tiempo Total: ",""+(int) duracion);
@@ -292,7 +290,6 @@ public class Pedometer extends Activity {
         }
     }
 
-    // TODO: unite all into 1 type of message
     private StepService.ICallback mCallback = new StepService.ICallback() {
         public void stepsChanged(int value) {
             mHandler.sendMessage(mHandler.obtainMessage(STEPS_MSG, value, 0));

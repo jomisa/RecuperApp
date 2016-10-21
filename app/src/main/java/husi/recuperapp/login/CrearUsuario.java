@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.login;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
+
+import husi.recuperapp.utils.DataBaseHelper;
+import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.R;
 
 public class CrearUsuario extends Activity {
 

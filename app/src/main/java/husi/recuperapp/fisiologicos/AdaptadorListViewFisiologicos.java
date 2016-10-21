@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.fisiologicos;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,9 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import husi.recuperapp.R;
+import husi.recuperapp.fisiologicos.Fisiologico;
+import husi.recuperapp.utils.Funciones;
+import husi.recuperapp.utils.Paciente;
 
 /**
  * Created by jmss1 on 25/09/2016.

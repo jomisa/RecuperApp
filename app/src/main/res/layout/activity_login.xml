@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="husi.recuperapp.Login"
+    tools:context="husi.recuperapp.login.Login"
     android:background="@drawable/background">
 
     <ImageView

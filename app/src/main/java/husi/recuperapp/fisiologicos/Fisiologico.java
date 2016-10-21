@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.fisiologicos;
 
 /**
  * Created by jmss1 on 25/09/2016.

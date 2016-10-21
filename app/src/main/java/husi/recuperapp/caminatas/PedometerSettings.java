@@ -20,7 +20,7 @@ package husi.recuperapp.caminatas;
 
 import android.content.SharedPreferences;
 
-import husi.recuperapp.Funciones;
+import husi.recuperapp.utils.Funciones;
 
 /**
  * Wrapper for {@link SharedPreferences}, handles preferences-related tasks.

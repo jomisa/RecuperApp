@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.medicamentos;
 
 /**
  * Created by jmss1 on 4/10/2016.

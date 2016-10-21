@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.medicamentos;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -19,6 +19,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.R;
 
 public class Medicamentos extends AppCompatActivity {
 
@@ -76,7 +79,7 @@ public class Medicamentos extends AppCompatActivity {
         this.listViewMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                //TODO: Desactivar alarma al hacer click en el medicamento
+                //TODO: Desactivar alarma al hacer click en el medicamento indicado
                 if(ringtone!=null)
                     ringtone.stop();
             }

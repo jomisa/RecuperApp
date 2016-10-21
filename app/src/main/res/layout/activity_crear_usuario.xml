@@ -5,7 +5,7 @@
     android:id="@+id/activity_crear_usuario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.CrearUsuario"
+    tools:context="husi.recuperapp.login.CrearUsuario"
     android:background="@drawable/background">
 
     <!-- Login progress -->

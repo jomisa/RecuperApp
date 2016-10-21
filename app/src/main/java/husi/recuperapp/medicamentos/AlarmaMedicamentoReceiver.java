@@ -1,10 +1,10 @@
-package husi.recuperapp;
+package husi.recuperapp.medicamentos;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-import static android.support.v4.content.WakefulBroadcastReceiver.startWakefulService;
+import husi.recuperapp.medicamentos.Medicamentos;
 
 /**
  * Created by jmss1 on 4/10/2016.

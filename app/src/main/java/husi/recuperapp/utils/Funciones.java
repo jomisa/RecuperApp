@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.utils;
 
 import android.text.format.Time;
 

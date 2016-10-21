@@ -5,7 +5,7 @@
     android:id="@+id/activity_menu_principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.MenuPrincipal">
+    tools:context="husi.recuperapp.menuPrincipal.MenuPrincipal">
 
     <ListView
         android:id="@+id/listViewFunciones"

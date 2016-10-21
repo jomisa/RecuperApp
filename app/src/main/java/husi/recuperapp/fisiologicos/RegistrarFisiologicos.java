@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.fisiologicos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.R;
 
 public class RegistrarFisiologicos extends AppCompatActivity {
 

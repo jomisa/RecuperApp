@@ -5,7 +5,7 @@
     android:id="@+id/activity_medicamentos"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.Medicamentos">
+    tools:context="husi.recuperapp.medicamentos.Medicamentos">
 
     <ListView
         android:id="@+id/listViewMedicamentos"

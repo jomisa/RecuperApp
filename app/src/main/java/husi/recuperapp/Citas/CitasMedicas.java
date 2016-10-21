@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import husi.recuperapp.DataBaseHelper;
-import husi.recuperapp.Paciente;
+import husi.recuperapp.utils.DataBaseHelper;
+import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
 
 public class CitasMedicas extends AppCompatActivity {
@@ -156,7 +156,8 @@ public class CitasMedicas extends AppCompatActivity {
     }
 
     //TODO este método debe ir en Receiber de la alarma, debe contener la hora de la cita y el nombre del médico
-    //TODO tambien debe ejecutarse 1 día antes de la cita y debe cancelar la alarma al ejecutar la notificación
+    //tambien debe ejecutarse 1 día antes de la cita y debe cancelar la alarma al ejecutar la notificación
+
     //Notifiacion
     private void notificar() {
         String tituloNotifiacion = "Recordatorio cita";

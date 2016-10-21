@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.menuPrincipal;
 
 /**
  * Created by jmss1 on 24/09/2016.

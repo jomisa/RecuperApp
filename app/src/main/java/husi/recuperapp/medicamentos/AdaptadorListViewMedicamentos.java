@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.medicamentos;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import java.util.List;
+
+import husi.recuperapp.R;
 
 /**
  * Created by jmss1 on 4/10/2016.

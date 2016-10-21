@@ -1,4 +1,4 @@
-package husi.recuperapp;
+package husi.recuperapp.utils;
 
 import android.app.Application;
 import android.util.Log;
@@ -83,7 +83,7 @@ public class Paciente extends Application{
 
     //Acceso BD
 
-    List<List<String>> obtenerMedicamentosBD(){
+    public List<List<String>> obtenerMedicamentosBD(){
         return dbHelper.obtenerMedicamentos();
     }
 
