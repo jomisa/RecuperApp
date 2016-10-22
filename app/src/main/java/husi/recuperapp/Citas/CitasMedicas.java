@@ -28,13 +28,10 @@ import husi.recuperapp.R;
 
 public class CitasMedicas extends AppCompatActivity {
 
-    Paciente paciente;
-
     private List<Cita> citas;
     private List<List<String>> citasBD;
     private ListView listViewCitas;
     private AdaptadorListViewCitas adaptadorListViewCitas;
-    DataBaseHelper dbHelper;
 
     private Button mAgendarCitaView;
 
@@ -51,13 +48,9 @@ public class CitasMedicas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citas_medicas);
 
-        paciente=(Paciente)getApplicationContext();
-
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
-
-        dbHelper = new DataBaseHelper(this);
+        getSupportActionBar().setTitle("  "+Paciente.getInstance().getNombresApellidos());
 
         citas = new ArrayList<>();
         citasBD = new ArrayList<List<String>>();
@@ -116,7 +109,7 @@ public class CitasMedicas extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 nombreMedico = input.getText().toString();
                 Log.i("Medico: ",nombreMedico);
-                dbHelper.insertarUnaCita(mAno+""+mMes+""+mDia ,nombreMedico+"");
+                Paciente.getInstance().insertarCitaBD(mAno+""+mMes+""+mDia ,nombreMedico+"");
                 crearListaCitas();
                 adaptadorListViewCitas.notifyDataSetChanged();
             }
@@ -132,7 +125,7 @@ public class CitasMedicas extends AppCompatActivity {
     }
 
     private void crearListaCitas() {
-        citasBD = dbHelper.obtenerCitas();
+        citasBD = Paciente.getInstance().obtenerCitasBD();
 
         if(citasBD!=null){
             citas.clear();
@@ -150,7 +143,7 @@ public class CitasMedicas extends AppCompatActivity {
     }
 
     private void actualizarCitaBD(int posicion){
-        dbHelper.actualizarUnaCita((posicion+1)+"", citas.get(posicion).getFecha(),
+        Paciente.getInstance().actualizarUnaCitaBD((posicion+1)+"", citas.get(posicion).getFecha(),
                 citas.get(posicion).getMedico());
         adaptadorListViewCitas.notifyDataSetChanged();
     }

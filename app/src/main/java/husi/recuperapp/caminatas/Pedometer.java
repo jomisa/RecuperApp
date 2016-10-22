@@ -40,6 +40,7 @@ import husi.recuperapp.R;
 
 public class Pedometer extends Activity {
 	private static final String TAG = "Pedometer";
+
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
 
@@ -51,12 +52,12 @@ public class Pedometer extends Activity {
     private TextView mDistanceValueView;
     private TextView mTiempoValorView;
 
-    private int mStepValue;
     private long tiempoInicio;
     private long tiempoFin;
     private double duracion;
-    private float mDistanceValue;
-    private boolean mQuitting = false; // Set when user selected Quit from menu, can be used by onPause, onStop, onDestroy
+    private int valorPaso;
+    private float valorDistancia;
+    private boolean quitando = false; // Set when user selected Quit from menu, can be used by onPause, onStop, onDestroy
 
     private Button mBotonEmpezar;
     private Button mBotonTerminar;
@@ -74,7 +75,7 @@ public class Pedometer extends Activity {
         Log.i(TAG, "[ACTIVITY] onCreate");
         super.onCreate(savedInstanceState);
 
-        mStepValue = 0;
+        valorPaso = 0;
 
         setContentView(R.layout.activity_pedometer);
     }
@@ -162,16 +163,16 @@ public class Pedometer extends Activity {
                 //resetValues(false);
                 unbindStepService();
                 stopStepService();
-                mQuitting = true;
+                quitando = true;
 
                 hiloTiempo.interrupt();
 
-                Log.i("Pasos Totales: ",""+mStepValue);
-                Log.i("Distancia Total: ",""+mDistanceValue);
+                Log.i("Pasos Totales: ",""+valorPaso);
+                Log.i("Distancia Total: ",""+valorDistancia);
                 Log.i("Tiempo Total: ",""+(int) duracion);
 
                 Paciente.getInstance().insertarYpostCaminatas(Funciones.getFechaString(),
-                        (int) duracion , (int) mDistanceValue, mStepValue, 1);//TODO Poner sintoma si obtubo alguno
+                        (int) duracion , (int) valorDistancia, valorPaso, 1);//TODO Poner sintoma si obtubo alguno
 
                 mBotonTerminar.setVisibility(View.GONE);
                 mBotonFinalizar.setVisibility(View.VISIBLE);
@@ -200,7 +201,7 @@ public class Pedometer extends Activity {
         if (mIsRunning) {
             unbindStepService();
         }
-        if (mQuitting) {
+        if (quitando) {
             mPedometerSettings.saveServiceRunningWithNullTimestamp(mIsRunning);
         }
         else {
@@ -305,16 +306,16 @@ public class Pedometer extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case STEPS_MSG:
-                    mStepValue = (int)msg.arg1;
-                    mStepValueView.setText("" + mStepValue);
+                    valorPaso = (int)msg.arg1;
+                    mStepValueView.setText("" + valorPaso);
                     break;
                 case DISTANCE_MSG:
-                    mDistanceValue = ((int)msg.arg1)/1000f;
-                    if (mDistanceValue <= 0) {
+                    valorDistancia = ((int)msg.arg1)/1000f;
+                    if (valorDistancia <= 0) {
                         mDistanceValueView.setText("0");
                     }
                     else {
-                        mDistanceValueView.setText("" + mDistanceValue );
+                        mDistanceValueView.setText("" + valorDistancia );
                     }
                     break;
                 default:

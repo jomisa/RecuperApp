@@ -1,11 +1,13 @@
 package husi.recuperapp.login;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,6 @@ import husi.recuperapp.R;
 public class CrearUsuario extends Activity {
 
     Intent activarLogin;
-    Paciente paciente;
 
     //Textos en GUI
     private EditText mUsuarioView;
@@ -44,7 +45,6 @@ public class CrearUsuario extends Activity {
         String text = "<font color=#424242>Recuper</font><font color=#b71c1c>App</font>";
         mRecuperappText.setText(Html.fromHtml(text));
 
-        //obtiene los textos de xml en java
         mUsuarioView = (EditText) findViewById(R.id.usuario_crear_texto);
         mContrasena1View = (EditText) findViewById(R.id.contrasena1_crear_texto);
         mContrasena2View = (EditText) findViewById(R.id.contrasena2_crear_texto);
@@ -72,11 +72,11 @@ public class CrearUsuario extends Activity {
 
         View focusView = null;
 
-        if (verificarCampos(focusView, cedula+"", contrasena1, contrasena2)) {
+        if (verificarCampos(focusView, cedula, contrasena1, contrasena2)) {
             //focusView.requestFocus();
         } else {
 
-            paciente.verificarYcrearPaciente(Integer.parseInt(cedula), contrasena1);
+            Paciente.getInstance().verificarYcrearPaciente(Integer.parseInt(cedula), contrasena1);
 
             Toast.makeText(this, "Espere mientras Validamos Datos", Toast.LENGTH_LONG).show();
             //Para el proceso mientras consulta WS (asincrono) y crea el usuario en la BD,
@@ -87,8 +87,8 @@ public class CrearUsuario extends Activity {
             }
 
             //Verificar si en efecto se creo el usuario despues de esperar un tiempo
-            if(paciente.existePaciente()==true) {
-                Toast.makeText(this, "Se creó el usuario: " + paciente.getNombresApellidos(),
+            if(Paciente.getInstance().existePaciente()==true) {
+                Toast.makeText(this, "Se creó el usuario: " + Paciente.getInstance().getNombresApellidos(),
                         Toast.LENGTH_LONG).show();
 
                 //Actualiza los datos del paciente
@@ -97,7 +97,7 @@ public class CrearUsuario extends Activity {
                 //Crea un intent
                 activarLogin = new Intent(this, Login.class);
                 //retorna al objeto paciente en el intent a la actividad LoginUI
-                activarLogin.putExtra("usuario", paciente.getCedula());
+                activarLogin.putExtra("usuario", Paciente.getInstance().getCedula());
 
                 //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
                 setResult(Activity.RESULT_OK, activarLogin);

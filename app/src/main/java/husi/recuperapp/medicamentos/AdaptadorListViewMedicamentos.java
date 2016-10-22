@@ -24,23 +24,6 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return (medicamentos == null) ? 0 : medicamentos.size();
-
-        //return this.medicamentos.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return this.medicamentos.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int posicion, View convertView, ViewGroup parent) {
 
         View vistaFila = convertView;
@@ -74,6 +57,23 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
         holder.nombre.setText(holder.medicamento.getNombre());
         holder.dosis.setText(holder.medicamento.getDosis());
         holder.frecuencia.setText(holder.medicamento.getFrecuencia());
+    }
+
+    @Override
+    public int getCount() {
+        return (medicamentos == null) ? 0 : medicamentos.size();
+
+        //return this.medicamentos.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.medicamentos.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

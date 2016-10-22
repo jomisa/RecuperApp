@@ -389,7 +389,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                                            String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_MEDICAMENTOS, id);
         contentValues.put(COL_2_MEDICAMENTOS, medicamento);
         contentValues.put(COL_3_MEDICAMENTOS, dosis);
         contentValues.put(COL_4_MEDICAMENTOS, frecuencia);
@@ -403,11 +402,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public boolean actualizarHoraConsumoMedicamento(String id, String hora, String asignado){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_MEDICAMENTOS, id);
         contentValues.put(COL_5_MEDICAMENTOS, hora);
         contentValues.put(COL_7_MEDICAMENTOS, asignado);
         db.update(TABLA_MEDICAMENTOS, contentValues, "ID = ?", new String[]{id});
         return true;
+    }
+
+    public List<Object> obtenerUnMedicamento(int idMedicamento) {
+
+        List<Object> medicamento= new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_MEDICAMENTOS + " where "+
+                COL_1_MEDICAMENTOS+" = "+ idMedicamento, null);
+        if(resultado.getCount() == 0) {
+            Log.i("No existe el medic id: ",idMedicamento+"");
+            return null;
+        }else{
+            while (resultado.moveToNext()) {
+                medicamento = new ArrayList<>();
+                medicamento.add(resultado.getString(0));
+                medicamento.add(resultado.getString(1));
+                medicamento.add(resultado.getString(2));
+                medicamento.add(resultado.getString(3));
+                medicamento.add(resultado.getString(4));
+                medicamento.add(resultado.getString(5));
+                medicamento.add(resultado.getString(6));
+            }
+            return medicamento;
+        }
     }
 
     public boolean borrarUnMedicamento(String id) {
@@ -528,6 +552,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         return false;
     }
-
-
 }

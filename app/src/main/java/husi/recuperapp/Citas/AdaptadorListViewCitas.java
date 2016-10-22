@@ -25,23 +25,6 @@ public class AdaptadorListViewCitas extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return (citas == null) ? 0 : citas.size();
-
-        //return this.citas.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return this.citas.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int posicion, View convertView, ViewGroup parent) {
 
         View vistaFila = convertView;
@@ -71,6 +54,23 @@ public class AdaptadorListViewCitas extends BaseAdapter {
     private void llenarDatosHolder(AdaptadorListViewCitas.ViewHolder holder) {
         holder.fecha.setText(holder.cita.getFecha());
         holder.medico.setText(holder.cita.getMedico());
+    }
+
+    @Override
+    public int getCount() {
+        return (citas == null) ? 0 : citas.size();
+
+        //return this.citas.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.citas.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

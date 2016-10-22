@@ -37,7 +37,7 @@ public class AdaptadorListView extends BaseAdapter{
 
             //Crear una nueva vista en la lista
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            vistaFila = inflater.inflate(R.layout.item_menu_principal, parent, false);
+            vistaFila = inflater.inflate(R.layout.item_menu, parent, false);
 
             holder.imagen = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);
             holder.funcion = (TextView) vistaFila.findViewById(R.id.funcionalidad_texto);

@@ -88,11 +88,23 @@ public class Paciente extends Application{
         return dbHelper.obtenerMedicamentos();
     }
 
+    public List<Object> buscarMedicamento(int idMedicamento){
+        return dbHelper.obtenerUnMedicamento(idMedicamento);
+    }
+
     public void actualizarMedicamentoBD(String id, String hora, String asignado){
         dbHelper.actualizarHoraConsumoMedicamento( id, hora, asignado);
     }
 
-    //Acceso BD Y WEB SERVICES
+    public void insertarCitaBD(String fecha, String medico) {
+        dbHelper.insertarUnaCita(fecha ,medico);
+    }
+
+    public List<List<String>> obtenerCitasBD() {
+        return dbHelper.obtenerCitas();
+    }
+
+    //Acceso BD + WEB SERVICES
     public void insertarYpostFisiologicos(String fecha,String medicion,double valor){
 
         dbHelper.insertarUnFisiologico(getCedula(), fecha, medicion, valor);
@@ -296,5 +308,9 @@ public class Paciente extends Application{
             getVerificarPacienteRequest.setShouldCache(false);
             queue.add(getVerificarPacienteRequest);
         }
+    }
+
+    public void actualizarUnaCitaBD(String id, String fecha, String medico) {
+        dbHelper.actualizarUnaCita(id, fecha,medico);
     }
 }

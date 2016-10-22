@@ -24,7 +24,7 @@ package husi.recuperapp.caminatas;
  * @author Levente Bagi
  */
 public interface StepListener {
-    public void onStep();
-    public void passValue();
+    void onStep();
+    void passValue();
 }
 

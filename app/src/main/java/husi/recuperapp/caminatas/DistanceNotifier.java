@@ -26,8 +26,8 @@ package husi.recuperapp.caminatas;
 public class DistanceNotifier implements StepListener{
 
     public interface Listener {
-        public void valueChanged(float value);
-        public void passValue();
+        void valueChanged(float value);
+        void passValue();
     }
     private Listener mListener;
     

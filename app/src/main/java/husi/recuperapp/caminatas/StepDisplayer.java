@@ -54,8 +54,8 @@ public class StepDisplayer implements StepListener{
     // Listener
     
     public interface Listener {
-        public void stepsChanged(int value);
-        public void passValue();
+        void stepsChanged(int value);
+        void passValue();
     }
     private ArrayList<Listener> mListeners = new ArrayList<Listener>();
 
@@ -64,7 +64,7 @@ public class StepDisplayer implements StepListener{
     }
     public void notifyListener() {
         for (Listener listener : mListeners) {
-            listener.stepsChanged((int)mCount);
+            listener.stepsChanged(mCount);
         }
     }
 

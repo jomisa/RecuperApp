@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,7 +27,6 @@ import husi.recuperapp.utils.Paciente;
 public class AdaptadorListViewFisiologicos extends BaseAdapter{
     private Context context;
     private List<Fisiologico> fisiologicos;
-    Paciente paciente;
 
     public AdaptadorListViewFisiologicos(Context context, List<Fisiologico> fisiologicos) {
         this.context = context;
@@ -86,28 +86,36 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
             @Override
             public void onClick(View v) {
 
-                //El boton tiene guardado el viewholder en su Tag
-                ViewHolder viewHolder = (ViewHolder) v.getTag();
-                if(viewHolder==null)
-                    Log.i("Tag: ", "Es null");
-                else {
-                    String medicion = viewHolder.medicion.getText().toString();
-
-                    double valor = Double.parseDouble(viewHolder.dato.getText().toString());
-
-                    Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
-                    Log.i("Tag: ", valor+"");//obtener el editText del ViewHolder
-                    Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
-
-                    Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
-
-                    //fisiologicos.remove(viewHolder.fisiologico);
-                    //notifyDataSetChanged();
-                }
+                presionoBotonIngresarDato(v);
             }
         });
 
         return vistaFila;
+    }
+
+    private void presionoBotonIngresarDato(View v){
+        //El boton tiene guardado el viewholder en su Tag
+        ViewHolder viewHolder = (ViewHolder) v.getTag();
+        if(viewHolder==null)
+            Log.i("Tag: ", "Es null");
+        else {
+            String medicion = viewHolder.medicion.getText().toString();
+
+            double valor = Double.parseDouble(viewHolder.dato.getText().toString());
+
+            Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
+            Log.i("Tag: ", valor+"");//obtener el editText del ViewHolder
+            Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
+
+            Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
+
+            Toast.makeText(context, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
+            viewHolder.dato.setText("");
+            viewHolder.dato.clearFocus();
+
+            //fisiologicos.remove(viewHolder.fisiologico);
+            //notifyDataSetChanged();
+        }
     }
 
     private void llenarDatosHolder(View vistaFila, ViewHolder holder, int posicion) {

@@ -3,10 +3,12 @@ package husi.recuperapp.medicamentos;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,103 +27,144 @@ import husi.recuperapp.R;
 
 public class Medicamentos extends AppCompatActivity {
 
-    Paciente paciente;
-
     private List<Medicamento> medicamentos;
     private List<List<String>> medicamentosBD;
-
+    private AdaptadorListViewMedicamentos adaptadorListViewMedicamentos;
     private ListView listViewMedicamentos;
+
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    private AdaptadorListViewMedicamentos adaptadorListViewMedicamentos;
 
-    Ringtone ringtone;
+    Intent intentAlarma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        paciente=(Paciente)getApplicationContext();
-
         setContentView(R.layout.activity_medicamentos);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
+        getSupportActionBar().setTitle("  "+Paciente.getInstance().getNombresApellidos());
 
         medicamentos = new ArrayList<>();
         medicamentosBD = new ArrayList<>();
 
-        this.listViewMedicamentos = (ListView) findViewById(R.id.listViewMedicamentos);
+        listViewMedicamentos = (ListView) findViewById(R.id.listViewMedicamentos);
         crearListaMedicamentos();
-        adaptadorListViewMedicamentos=new AdaptadorListViewMedicamentos(this, medicamentos);
-        this.listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
+        adaptadorListViewMedicamentos = new AdaptadorListViewMedicamentos(this, medicamentos);
+        listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
 
-        //Obtiene el id del medicamento que ejecuto la alarma
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            String id = extras.getString("id_medicamento");
-            Log.i("id: ",id);
-            //TODO: Colorear fila según id medicamento
-
-            Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            if (alarmUri == null) {
-                alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            }
-
-            ringtone = RingtoneManager.getRingtone(this, alarmUri);
-            ringtone.play();
-            Log.i("Alarma: ","ring");
+        //Si el activity se activo por una alarma, se extrae el id de la alarma
+        intentAlarma = getIntent();
+        Bundle idAlarma = intentAlarma.getExtras();
+        if (idAlarma != null) {
+            manejarAlarma(idAlarma.getString("id_medicamento"));
         }
 
-        //Para desactivar la alarma de un medicamento
-        this.listViewMedicamentos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                //TODO: Desactivar alarma al hacer click en el medicamento indicado
-                if(ringtone!=null)
-                    ringtone.stop();
-            }
-
-        });
         //Para cuadrar la alarma de un medicamento
         this.listViewMedicamentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                cuadrarAlarmaMedicamento(posicion);
+            public boolean onItemLongClick(AdapterView<?> adapter, View view, final int posicion, long arg) {
+
+                CharSequence opciones[] = new CharSequence[] {"Cuadrar/Modificar", "Eliminar"};
+
+                AlertDialog.Builder dialogOpcionAlarma = new AlertDialog.Builder(view.getContext());
+                dialogOpcionAlarma.setTitle("Que desea hacer con la hora");
+                dialogOpcionAlarma.setItems(opciones, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int opcion) {
+
+
+
+                        if(opcion==0)
+                            cuadrarAlarmaMedicamento(posicion);
+                        eliminarAlarmaMedicamento(posicion);
+                    }
+                });
+                dialogOpcionAlarma.create();
+                dialogOpcionAlarma.show();
+
                 return true;
             }
 
         });
     }
 
-    private void cuadrarAlarmaMedicamento(final int posicion){
+    //Este metodo se ejecta al recibir un intent de una alarma agendada
+    private void manejarAlarma(String idAlarma){
+        Log.i("id: ",idAlarma);
+
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null) {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        final Ringtone ringtone = RingtoneManager.getRingtone(this, alarmUri);
+        ringtone.play();
+        Log.i("Alarma: ","ring");
+
+        AlertDialog.Builder dialogAlarma = new AlertDialog.Builder(this);
+        dialogAlarma.setTitle("Hora De Tomar El Medicamento");
+
+        String mensajeDialog = Paciente.getInstance().buscarMedicamento(Integer.parseInt(idAlarma)).get(1).toString() + //1 Es la col Medicamento
+                " "+ Paciente.getInstance().buscarMedicamento(Integer.parseInt(idAlarma)).get(2).toString(); //2 es la col dosis
+
+        dialogAlarma.setMessage(mensajeDialog);
+        dialogAlarma.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if(ringtone!=null)
+                    ringtone.stop();
+            }
+        });
+        dialogAlarma.create();
+        dialogAlarma.show();
+    }
+
+    private void eliminarAlarmaMedicamento(final int posicion){
+
+        int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
+        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+        pendingIntent.cancel();
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+        Toast.makeText(getApplicationContext(), "Se eliminó la Alarma",Toast.LENGTH_LONG).show();
+
+        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", "Sin Asignar","false");
+        crearListaMedicamentos();
+
         adaptadorListViewMedicamentos.notifyDataSetChanged();
+    }
+
+    private void cuadrarAlarmaMedicamento(final int posicion){
+
+        //adaptadorListViewMedicamentos.notifyDataSetChanged();
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
+
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
+                int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
+
+                Log.i("posicion lista: ",posicion+"");
+                Log.i("idMedicamento de pos: ",idMedicamento+"");
+
+                Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+                intentInfoAlarma.putExtra("id_medicamento",idMedicamento+"");
+
+                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+
+                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-
-                Intent myIntent = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-
-                String idMedicamento=medicamentos.get(posicion).getId();
-                myIntent.putExtra("id_medicamento",idMedicamento);
-
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                        Integer.parseInt(idMedicamento), myIntent, posicion);
-
-                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
-
                 alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
 
                 Long t=calendar.getTimeInMillis();
@@ -129,10 +172,7 @@ public class Medicamentos extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Seleccionó: " + selectedHour + ":" + selectedMinute,Toast.LENGTH_LONG).show();
 
-                medicamentos.get(posicion).setAsignado("true");
-                medicamentos.get(posicion).setHora(selectedHour + ":" + selectedMinute);
-
-                Paciente.getInstance().actualizarMedicamentoBD((posicion+1)+"", medicamentos.get(posicion).getHora(),medicamentos.get(posicion).getAsignado());
+                Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", selectedHour + ":" + selectedMinute,"true");
                 crearListaMedicamentos();
 
                 adaptadorListViewMedicamentos.notifyDataSetChanged();
