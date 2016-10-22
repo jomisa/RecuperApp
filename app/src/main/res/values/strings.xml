@@ -41,24 +41,22 @@
     <string name="stopped">Pedometer stopped.</string>
 
     <!-- Prefences -->
-    <string name="steps_settings_title">Basic Settings</string>
-    <string name="sensitivity_setting">Sensitivity</string>
-    <string name="sensitivity_setting_details">Calibrate the step detector</string>
+    <string name="titulo_settins_caminatas">Ajustes de Caminatas</string>
+    <string name="sensibilidad_setting">Sensibilidad</string>
+    <string name="sensibilidad_setting_detalle">Calibrar el detector de pasos</string>
     <string name="sensitivity_preference">bfadzxh</string>
     <string name="sensitivity_preference_values">adhfzbx</string>
-    <string name="sensitivity_setting_title">Select sensitivity level</string>
+    <string name="sensibilidad_setting_titulo">Seleccióne el nivel de sensibilidad</string>
 
-
-    <string name="operation_level_setting">Operational level</string>
-    <string name="operation_level_setting_details">Some OS versions prevent using sensors when the screen is off; set the level that works for you</string>
+    <string name="forzar_operacion_setting">Forzar Operacion de Android</string>
+    <string name="forzar_operacion_setting_detalles">Algunas versiones de Android impiden el uso de sensores cualdo la pantalla está apagada; seleccióne el nivel de forzamiento del OS</string>
     <string name="operation_level_preference">DXbvd</string>
     <string name="operation_level_preference_values">dgxcv</string>
-    <string name="operation_level_setting_title">Select operational level</string>
+    <string name="forzar_operacion_setting_titulo">Seleccione el nivel de forzamiento</string>
 
-    <string name="step_length_setting">Step length</string>
-    <string name="step_length_setting_details">For distance, speed &amp; calorie calculation</string>
+    <string name="longitud_paso_setting">Longitud de paso</string>
+    <string name="longitud_paso_setting_detalle">Para el calculo aproximado de distancias, se necesita la longitud promedio de los pasos</string>
     <string name="longitud_paso_setting_titulo">Ingrese su longitud de paso en cm</string>
-
 
     <!-- Prefences Array sensitivity_preference -->
     <string name="extra_high">extra high</string>
@@ -89,5 +87,6 @@
     <string name="cita_fecha_texto">Fecha</string>
     <string name="cita_medico_texto">Medico</string>
     <string name="error_campo_numerico">Debe ser un número</string>
+    <string name="ajustes_caminata">Ajustes</string>
 
 </resources>

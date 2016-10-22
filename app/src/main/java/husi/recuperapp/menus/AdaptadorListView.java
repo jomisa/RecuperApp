@@ -1,4 +1,4 @@
-package husi.recuperapp.menuPrincipal;
+package husi.recuperapp.menus;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -24,21 +24,6 @@ public class AdaptadorListView extends BaseAdapter{
     public AdaptadorListView(Context context, List<Funcionalidad> funcionalidades) {
         this.context = context;
         this.funcionalidades = funcionalidades;
-    }
-
-    @Override
-    public int getCount() {
-    return this.funcionalidades.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-    return this.funcionalidades.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-    return position;
     }
 
     @Override
@@ -121,6 +106,20 @@ public class AdaptadorListView extends BaseAdapter{
         }
     }
 
+    @Override
+    public int getCount() {
+    return this.funcionalidades.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+    return this.funcionalidades.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+    return position;
+    }
 
     @Override
     public int getViewTypeCount() {

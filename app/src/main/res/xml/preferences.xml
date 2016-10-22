@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-            android:title="@string/steps_settings_title">
+            android:title="@string/titulo_settins_caminatas">
 
         <ListPreference
                 android:key="sensitivity"
-                android:title="@string/sensitivity_setting"
-                android:summary="@string/sensitivity_setting_details"
+                android:title="@string/sensibilidad_setting"
+                android:summary="@string/sensibilidad_setting_detalle"
                 android:entries="@array/sensitivity_preference"
                 android:entryValues="@array/sensitivity_preference_values"
-                android:dialogTitle="@string/sensitivity_setting_title"
+                android:dialogTitle="@string/sensibilidad_setting_titulo"
                 android:defaultValue="30" />
 
         <ListPreference
                 android:key="operation_level"
-                android:title="@string/operation_level_setting"
-                android:summary="@string/operation_level_setting_details"
+                android:title="@string/forzar_operacion_setting"
+                android:summary="@string/forzar_operacion_setting_detalles"
                 android:entries="@array/operation_level_preference"
                 android:entryValues="@array/operation_level_preference_values"
-                android:dialogTitle="@string/operation_level_setting_title"
+                android:dialogTitle="@string/forzar_operacion_setting_titulo"
                 android:defaultValue="30" />
 
         <EditTextPreference
                 android:key="step_length"
-                android:title="@string/step_length_setting"
-                android:summary="@string/step_length_setting_details"
+                android:title="@string/longitud_paso_setting"
+                android:summary="@string/longitud_paso_setting_detalle"
                 android:dialogTitle="@string/longitud_paso_setting_titulo"
                 android:inputType="number"
                 android:defaultValue="20" />

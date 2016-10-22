@@ -19,7 +19,7 @@ public final class Funciones {
         return matcher.find();
     }
 
-    public static long currentTimeInMillis() {
+    public static long tiempoActualEnMillisegundos() {
         Time time = new Time();
         time.setToNow();
         return time.toMillis(false);

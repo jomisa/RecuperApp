@@ -18,7 +18,6 @@
 
 package husi.recuperapp.caminatas;
 
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -38,7 +37,6 @@ import android.widget.TextView;
 import husi.recuperapp.utils.Funciones;
 import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
-
 
 public class Pedometer extends Activity {
 	private static final String TAG = "Pedometer";
@@ -63,7 +61,7 @@ public class Pedometer extends Activity {
     private Button mBotonEmpezar;
     private Button mBotonTerminar;
     private Button mBotonFinalizar;
-//    private Button mBotonSettings;
+    private Button mBotonSettings;
 
     /**
      * True, when service is running.
@@ -101,7 +99,7 @@ public class Pedometer extends Activity {
         mBotonEmpezar = (Button) findViewById(R.id.empezar_caminata_button);
         mBotonTerminar = (Button) findViewById(R.id.terminar_caminata_button);
         mBotonFinalizar = (Button) findViewById(R.id.finalizar_caminata_button);
-        //mBotonSettings = (Button) findViewById(R.id.settings_boton);
+        mBotonSettings = (Button) findViewById(R.id.ajustes_caminata_button);
 
         mStepValueView     = (TextView) findViewById(R.id.pasos_dato_texto);
         mDistanceValueView = (TextView) findViewById(R.id.distancia_dato_texto);
@@ -113,7 +111,7 @@ public class Pedometer extends Activity {
         }else{//en caso de abrir caminata por primera vez
             mBotonTerminar.setVisibility(View.GONE);
             mBotonFinalizar.setVisibility(View.GONE);
- //           mBotonSettings.setVisibility(View.VISIBLE);
+            mBotonSettings.setVisibility(View.VISIBLE);
             mTiempoValorView.setText("0");
         }
 
@@ -186,14 +184,14 @@ public class Pedometer extends Activity {
                 finish();
             }
         });
-        /*
+
         mBotonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent settingsActivity = new Intent(getApplicationContext(), Settings.class);
                 startActivity(settingsActivity);
             }
         });
-        */
+
     }
 
     @Override

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import husi.recuperapp.menuPrincipal.MenuPrincipal;
+import husi.recuperapp.menus.MenuPrincipal;
 import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
 
@@ -21,8 +21,6 @@ import husi.recuperapp.R;
  * Login
  */
 public class Login extends Activity{
-
-    Paciente paciente;
 
     //Intenst para activar actividades crear usuario y menu
     Intent activarCrearUsuario;
@@ -41,8 +39,6 @@ public class Login extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        paciente=(Paciente)getApplicationContext();
 
         //Asigna fuente personalizada al logo de RecuperApp(está en la carpeta assets)
         TextView mRecuperappText = (TextView) findViewById(R.id.recuperapp);
@@ -108,9 +104,9 @@ public class Login extends Activity{
 
         } else {
 
-            if(validarUsuario(cedula, contrasena)==true){
+            if(validarUsuario(cedula.trim(), contrasena)==true){
                 activarMenu = new Intent(this, MenuPrincipal.class);
-                activarMenu.putExtra("usuario", paciente.getNombresApellidos());
+                activarMenu.putExtra("usuario", Paciente.getInstance().getNombresApellidos());
                 startActivity(activarMenu);
             }
             else{
@@ -120,7 +116,7 @@ public class Login extends Activity{
     }
 
     private boolean validarUsuario(String usuario, String contrasena){
-        if(paciente.comprobarContrasena(contrasena) && paciente.comprobarCedula(usuario))
+        if(Paciente.getInstance().comprobarContrasena(contrasena) && Paciente.getInstance().comprobarCedula(usuario))
             return true;
         return false;
     }
@@ -145,7 +141,7 @@ public class Login extends Activity{
     }
 
     private boolean comprobarUsuarioExistente(){
-        return paciente.existePaciente();
+        return Paciente.getInstance().existePaciente();
     }
 }
 

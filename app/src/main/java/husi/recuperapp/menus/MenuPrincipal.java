@@ -1,4 +1,4 @@
-package husi.recuperapp.menuPrincipal;
+package husi.recuperapp.menus;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +17,6 @@ import husi.recuperapp.caminatas.Settings;
 import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
 import husi.recuperapp.login.Login;
 import husi.recuperapp.medicamentos.Medicamentos;
-import husi.recuperapp.menuPrincipal.AdaptadorListView;
-import husi.recuperapp.menuPrincipal.Funcionalidad;
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -50,11 +48,10 @@ public class MenuPrincipal extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
         getSupportActionBar().setTitle("  "+usuario);
-        //TODO: Toca implementar un boton en el actionbar para los ajustes y llamar al método ingresarAjustes()
 
-        this.listView = (ListView) findViewById(R.id.listViewFunciones);
+        listView = (ListView) findViewById(R.id.listViewFunciones);
         crearListaFunciones();
-        this.listView.setAdapter(new AdaptadorListView(this, funcionalidades));
+        listView.setAdapter(new AdaptadorListView(this, funcionalidades));
         //En caso de activar un elemento de la lista
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,11 +59,6 @@ public class MenuPrincipal extends AppCompatActivity {
                 activarActivity(posicion);
             }
         });
-    }
-
-    private void ingresarAjustes(){
-        iniciarActivity = new Intent(this, Settings.class);
-        this.startActivity(iniciarActivity);
     }
 
     private void crearListaFunciones() {

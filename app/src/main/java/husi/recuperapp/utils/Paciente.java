@@ -24,9 +24,11 @@ import java.util.List;
 
 public class Paciente extends Application{
 
+    private final String URL_BASE = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
+    private final String URL_BASEIP = "http://192.168.2.3:8080/RecuperAppServer/WebServices/";
+
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
-    private final String URL_BASE = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
     private RequestQueue queue;
 
     public static Paciente getInstance(){
@@ -82,7 +84,6 @@ public class Paciente extends Application{
     }
 
     //Acceso BD
-
     public List<List<String>> obtenerMedicamentosBD(){
         return dbHelper.obtenerMedicamentos();
     }
@@ -155,6 +156,7 @@ public class Paciente extends Application{
 
 
     }
+
     public void insertarYpostCaminatas(String fecha, int tiempo, int distancia, int pasos, int idSintomaCaminata){
 
         dbHelper.insertarUnaCaminata(getCedula(), fecha, tiempo, distancia, pasos,  idSintomaCaminata);
@@ -217,9 +219,8 @@ public class Paciente extends Application{
                 }
             }
         }
-
-
     }
+
     public void getMisMedicamentosDelServidor(){
 
         JsonArrayRequest getMisMedicamentosRequest = new JsonArrayRequest(Request.Method.GET,
@@ -243,7 +244,7 @@ public class Paciente extends Application{
                                 String sintoma = jObjectResponse.getString("sintoma");
                                 int asignado = jObjectResponse.getInt("asignado");
 
-                                //Si no exite el medicamento no lo incerta, los id de los medicamentos
+                                //Si no exite el medicamento no lo inserta, los id de los medicamentos
                                 //no son autonumerados, el id es el mismo de la tabla del servidor
                                 //esto para evitar agregar medicamentos existentes a la tabla (evitar repetidos)
                                 if(dbHelper.buscarMedicamento(id+"")==false)
@@ -266,6 +267,7 @@ public class Paciente extends Application{
             queue.add(getMisMedicamentosRequest);
         }
     }
+
     public void verificarYcrearPaciente(int cedula, String contrasena) {
         JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,
                 URL_BASE+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,

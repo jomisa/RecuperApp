@@ -21,10 +21,7 @@ import husi.recuperapp.R;
 public class CrearUsuario extends Activity {
 
     Intent activarLogin;
-
     Paciente paciente;
-
-    private DataBaseHelper dbHelper;
 
     //Textos en GUI
     private EditText mUsuarioView;
@@ -35,10 +32,6 @@ public class CrearUsuario extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dbHelper = new DataBaseHelper(this);
-
-        paciente=(Paciente)getApplicationContext();
 
         setContentView(R.layout.activity_crear_usuario);
 
@@ -88,7 +81,7 @@ public class CrearUsuario extends Activity {
             Toast.makeText(this, "Espere mientras Validamos Datos", Toast.LENGTH_LONG).show();
             //Para el proceso mientras consulta WS (asincrono) y crea el usuario en la BD,
             try {
-                TimeUnit.SECONDS.sleep(20);
+                TimeUnit.SECONDS.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
