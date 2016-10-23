@@ -113,6 +113,10 @@ public class Paciente extends Application{
         return dbHelper.buscarCitaId(idCita);
     }
 
+    public boolean eliminarCitaBD(int idCita) {
+        return dbHelper.borrarUnaCita(String.valueOf(idCita));
+    }
+
     //Acceso BD + WEB SERVICES
     public void verificarYcrearPaciente(int cedula, String contrasena) {
         JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,

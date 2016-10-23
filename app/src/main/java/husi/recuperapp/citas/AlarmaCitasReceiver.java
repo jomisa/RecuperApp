@@ -31,9 +31,7 @@ public class AlarmaCitasReceiver extends WakefulBroadcastReceiver {
         String mensajeNotificacion = "Está agendada el día: "+cita.get(1).toString();
 
         Intent abrirCitas = new Intent(context, CitasMedicas.class);
-        //abrirCitas.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         abrirCitas.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(context,idCita, abrirCitas, PendingIntent.FLAG_CANCEL_CURRENT);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,idCita,abrirCitas,PendingIntent.FLAG_CANCEL_CURRENT);
 

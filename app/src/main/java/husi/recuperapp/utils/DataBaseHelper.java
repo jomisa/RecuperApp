@@ -594,5 +594,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         return false;
     }
-
 }
