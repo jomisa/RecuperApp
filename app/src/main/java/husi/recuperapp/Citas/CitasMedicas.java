@@ -80,15 +80,26 @@ public class CitasMedicas extends AppCompatActivity {
         adaptadorListViewCitas=new AdaptadorListViewCitas(this, citas);
         this.listViewCitas.setAdapter(adaptadorListViewCitas);
 
-        //Para modificar una cita agendada
+        //Para eliminar una cita
         this.listViewCitas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapter, View view, int posicion, long arg) {
-                //TODO implementar modificar una cita agendada
-                //modificarCita(posicion);
+            public boolean onItemLongClick(AdapterView<?> adapter, View view, final int posicion, long arg) {
+                AlertDialog.Builder eliminarDialog = new AlertDialog.Builder(view.getContext());
+                eliminarDialog
+                        .setTitle("Eliminar Cita")
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                eliminarAlarmaCita(posicion);
+                            } })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            } })
+                        .create()
+                        .show();
+
                 return true;
             }
-
         });
     }
 
@@ -160,6 +171,8 @@ public class CitasMedicas extends AppCompatActivity {
         List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha,nombreMedico);
         if(citaAgendada != null) {
             int idCita=Integer.parseInt(citaAgendada.get(0).toString());
+
+            Log.i("nueva cita con id: ",idCita+"");
             Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
             intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
 
@@ -181,15 +194,29 @@ public class CitasMedicas extends AppCompatActivity {
 
     }
 
-    private void modificarCita(int posicion){
-        //Modifica la tabla de citas en la BD
-        actualizarCitaBD(posicion);
-    }
+    private void eliminarAlarmaCita(final int posicion){
 
-    private void actualizarCitaBD(int posicion){
-        Paciente.getInstance().actualizarUnaCitaBD((posicion+1)+"", citas.get(posicion).getFecha(),
-                citas.get(posicion).getMedico());
-        adaptadorListViewCitas.notifyDataSetChanged();
+        int idCita = Integer.parseInt(citas.get(posicion).getId());
+
+        if(Paciente.getInstance().eliminarCitaBD(idCita)==true) {
+
+            Log.i("Cancelar id cita: ", idCita+"");
+
+            Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
+            intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            pendingIntent.cancel();
+            alarmManager.cancel(pendingIntent);
+
+            crearListaCitas();
+            adaptadorListViewCitas.notifyDataSetChanged();
+
+            Toast.makeText(getApplicationContext(), "Se eliminó la Cita", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Hubo un problema eliminando la cita", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void crearListaCitas() {
