@@ -46,12 +46,4 @@ public class Medicamento {
     public String getFrecuencia() {
         return frecuencia;
     }
-
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
-
-    public void setAsignado(String asignado) {
-        this.asignado = asignado;
-    }
 }

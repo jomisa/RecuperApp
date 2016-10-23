@@ -18,11 +18,11 @@ import husi.recuperapp.R;
  */
 
 public class AdaptadorListView extends BaseAdapter{
-    private Context context;
+    private Context contexto;
     private List<Funcionalidad> funcionalidades;
 
-    public AdaptadorListView(Context context, List<Funcionalidad> funcionalidades) {
-        this.context = context;
+    public AdaptadorListView(Context contexto, List<Funcionalidad> funcionalidades) {
+        this.contexto = contexto;
         this.funcionalidades = funcionalidades;
     }
 
@@ -36,7 +36,7 @@ public class AdaptadorListView extends BaseAdapter{
             holder = new ViewHolder();
 
             //Crear una nueva vista en la lista
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vistaFila = inflater.inflate(R.layout.item_menu, parent, false);
 
             holder.imagen = (ImageView) vistaFila.findViewById(R.id.icono_funcionalidad);

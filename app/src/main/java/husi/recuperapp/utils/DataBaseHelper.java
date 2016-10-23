@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -574,16 +572,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
             return cita;
         }
-    }
-
-    public boolean actualizarUnaCita(String id, String fecha, String medico) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_CITAS, id);
-        contentValues.put(COL_2_CITAS, fecha);
-        contentValues.put(COL_3_CITAS, medico);
-        db.update(TABLA_CITAS, contentValues, "ID = ?", new String[]{id});
-        return true;
     }
 
     public boolean borrarUnaCita(String id) {

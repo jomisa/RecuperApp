@@ -21,23 +21,11 @@ public class Cita {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public String getMedico() {
         return medico;
-    }
-
-    public void setMedico(String medico) {
-        this.medico = medico;
     }
 }

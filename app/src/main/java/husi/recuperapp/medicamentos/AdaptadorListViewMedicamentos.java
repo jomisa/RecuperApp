@@ -15,11 +15,11 @@ import husi.recuperapp.R;
  */
 
 public class AdaptadorListViewMedicamentos extends BaseAdapter {
-    private Context context;
+    private Context contexto;
     private List<Medicamento> medicamentos;
 
-    public AdaptadorListViewMedicamentos(Context context, List<Medicamento> medicamentos) {
-        this.context = context;
+    public AdaptadorListViewMedicamentos(Context contexto, List<Medicamento> medicamentos) {
+        this.contexto = contexto;
         this.medicamentos = medicamentos;
     }
 
@@ -33,7 +33,7 @@ public class AdaptadorListViewMedicamentos extends BaseAdapter {
             holder = new AdaptadorListViewMedicamentos.ViewHolder();
 
             //Crear una nueva vista en la lista
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vistaFila = inflater.inflate(R.layout.item_medicamento, parent, false);
 
             holder.hora = (TextView) vistaFila.findViewById(R.id.hora_medicamento_texto);

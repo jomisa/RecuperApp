@@ -250,7 +250,7 @@ public class StepService extends Service {
                 pedometerIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_action_alarm);
+        builder.setSmallIcon(R.drawable.ic_maps_directions_walk);
         builder.setContentTitle("Caminata en curso");
         builder.setContentIntent(contentIntent);
 

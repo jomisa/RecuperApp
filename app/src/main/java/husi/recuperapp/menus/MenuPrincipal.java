@@ -13,7 +13,6 @@ import java.util.List;
 import husi.recuperapp.R;
 import husi.recuperapp.citas.CitasMedicas;
 import husi.recuperapp.caminatas.Pedometer;
-import husi.recuperapp.caminatas.Settings;
 import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
 import husi.recuperapp.login.Login;
 import husi.recuperapp.medicamentos.Medicamentos;

@@ -24,12 +24,12 @@ import java.util.List;
 
 public class Paciente extends Application{
 
-    private final String URL_BASE = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    //private final String URL_BASE = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
+    private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
+    //private final String URL_SERVIDOR = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
-    private RequestQueue queue;
+    private RequestQueue colaRequest;
 
     public static Paciente getInstance(){
         return singleton;
@@ -39,7 +39,7 @@ public class Paciente extends Application{
     public void onCreate() {
         super.onCreate();
 
-        queue = Volley.newRequestQueue(this);
+        colaRequest = Volley.newRequestQueue(this);
         dbHelper = new DataBaseHelper(this);
 
         sincronizarBD();
@@ -120,7 +120,7 @@ public class Paciente extends Application{
     //Acceso BD + WEB SERVICES
     public void verificarYcrearPaciente(int cedula, String contrasena) {
         JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,
-                URL_BASE+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,
+                URL_SERVIDOR+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
@@ -145,7 +145,7 @@ public class Paciente extends Application{
         });
         if(getVerificarPacienteRequest!=null) {
             getVerificarPacienteRequest.setShouldCache(false);
-            queue.add(getVerificarPacienteRequest);
+            colaRequest.add(getVerificarPacienteRequest);
         }
     }
 
@@ -177,7 +177,7 @@ public class Paciente extends Application{
                         e.printStackTrace();
                     }
 
-                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_BASE + "fisiologicos", fisologicoJson,
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_SERVIDOR + "fisiologicos", fisologicoJson,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -205,7 +205,7 @@ public class Paciente extends Application{
                 }
                 if(postRequest!=null) {
                     postRequest.setShouldCache(false);
-                    queue.add(postRequest);
+                    colaRequest.add(postRequest);
                 }
             }
         }
@@ -243,7 +243,7 @@ public class Paciente extends Application{
                         e.printStackTrace();
                     }
 
-                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_BASE + "caminatas", caminataJson,
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_SERVIDOR + "caminatas", caminataJson,
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject response) {
@@ -271,7 +271,7 @@ public class Paciente extends Application{
                 }
                 if(postRequest!=null) {
                     postRequest.setShouldCache(false);
-                    queue.add(postRequest);
+                    colaRequest.add(postRequest);
                 }
             }
         }
@@ -280,7 +280,7 @@ public class Paciente extends Application{
     public void getMisMedicamentosDelServidor(){
 
         JsonArrayRequest getMisMedicamentosRequest = new JsonArrayRequest(Request.Method.GET,
-                URL_BASE+"medicamentos/misMedicamentos/"+getCedula(),null,
+                URL_SERVIDOR+"medicamentos/misMedicamentos/"+getCedula(),null,
                 new Response.Listener<JSONArray>(){
                     @Override
                     public void onResponse(JSONArray response) {
@@ -320,11 +320,7 @@ public class Paciente extends Application{
         });
         if(getMisMedicamentosRequest!=null) {
             getMisMedicamentosRequest.setShouldCache(false);
-            queue.add(getMisMedicamentosRequest);
+            colaRequest.add(getMisMedicamentosRequest);
         }
-    }
-
-    public void actualizarUnaCitaBD(String id, String fecha, String medico) {
-        dbHelper.actualizarUnaCita(id, fecha,medico);
     }
 }

@@ -48,9 +48,9 @@ public class Pedometer extends Activity {
 
     Thread hiloTiempo;
 
-    private TextView mStepValueView;
-    private TextView mDistanceValueView;
-    private TextView mTiempoValorView;
+    private TextView mValorPasoView;
+    private TextView mValorDistanciaView;
+    private TextView mValorTiempoView;
 
     private long tiempoInicio;
     private long tiempoFin;
@@ -102,9 +102,9 @@ public class Pedometer extends Activity {
         mBotonFinalizar = (Button) findViewById(R.id.finalizar_caminata_button);
         mBotonSettings = (Button) findViewById(R.id.ajustes_caminata_button);
 
-        mStepValueView     = (TextView) findViewById(R.id.pasos_dato_texto);
-        mDistanceValueView = (TextView) findViewById(R.id.distancia_dato_texto);
-        mTiempoValorView = (TextView) findViewById(R.id.tiempo_dato_texto);
+        mValorPasoView     = (TextView) findViewById(R.id.pasos_dato_texto);
+        mValorDistanciaView = (TextView) findViewById(R.id.distancia_dato_texto);
+        mValorTiempoView = (TextView) findViewById(R.id.tiempo_dato_texto);
 
         if (mIsRunning) {//Si está caminando desde antes
             mBotonTerminar.setVisibility(View.VISIBLE);
@@ -113,7 +113,7 @@ public class Pedometer extends Activity {
             mBotonTerminar.setVisibility(View.GONE);
             mBotonFinalizar.setVisibility(View.GONE);
             mBotonSettings.setVisibility(View.VISIBLE);
-            mTiempoValorView.setText("0");
+            mValorTiempoView.setText("0");
         }
 
         mPedometerSettings.clearServiceRunning();
@@ -143,7 +143,7 @@ public class Pedometer extends Activity {
                                         //TODO si está en modo prueba de los 6 minutos, debe
                                         //notificar a los 6 minutos
 
-                                        mTiempoValorView.setText(""+ (int) duracion);
+                                        mValorTiempoView.setText(""+ (int) duracion);
                                     }
                                 });
                             }
@@ -276,9 +276,9 @@ public class Pedometer extends Activity {
             mService.resetValues();
         }
         else {
-            mStepValueView.setText("0");
-            mDistanceValueView.setText("0");
-            mTiempoValorView.setText("0");
+            mValorPasoView.setText("0");
+            mValorDistanciaView.setText("0");
+            mValorTiempoView.setText("0");
             SharedPreferences state = getSharedPreferences("state", 0);
             SharedPreferences.Editor stateEditor = state.edit();
             if (updateDisplay) {
@@ -307,15 +307,15 @@ public class Pedometer extends Activity {
             switch (msg.what) {
                 case STEPS_MSG:
                     valorPaso = (int)msg.arg1;
-                    mStepValueView.setText("" + valorPaso);
+                    mValorPasoView.setText("" + valorPaso);
                     break;
                 case DISTANCE_MSG:
                     valorDistancia = ((int)msg.arg1)/1000f;
                     if (valorDistancia <= 0) {
-                        mDistanceValueView.setText("0");
+                        mValorDistanciaView.setText("0");
                     }
                     else {
-                        mDistanceValueView.setText("" + valorDistancia );
+                        mValorDistanciaView.setText("" + valorDistancia );
                     }
                     break;
                 default:

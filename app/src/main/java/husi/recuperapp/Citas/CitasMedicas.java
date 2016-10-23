@@ -2,13 +2,10 @@ package husi.recuperapp.citas;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
 
@@ -53,7 +49,7 @@ public class CitasMedicas extends AppCompatActivity {
     private int mMinuto;
 
     //Variables para guardar resultado Dialog
-    private String nombreMedico;
+    private String mNombreMedico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +112,8 @@ public class CitasMedicas extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                nombreMedico = input.getText().toString();
-                Log.i("Medico: ",nombreMedico);
+                mNombreMedico = input.getText().toString();
+                Log.i("Medico: ",mNombreMedico);
 
                 guardarcitaBDyAgendarNotificacion();
             }
@@ -162,13 +158,13 @@ public class CitasMedicas extends AppCompatActivity {
         String fecha=mAno+"/"+mMes+"/"+mDia+"-"+mHora+":"+mMinuto;
 
         //Guarda la cita en la BD
-        Paciente.getInstance().insertarCitaBD(fecha,nombreMedico);
+        Paciente.getInstance().insertarCitaBD(fecha,mNombreMedico);
         //Actualiza el listview
         crearListaCitas();
         adaptadorListViewCitas.notifyDataSetChanged();
 
         //Se agenda Notificacion
-        List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha,nombreMedico);
+        List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha,mNombreMedico);
         if(citaAgendada != null) {
             int idCita=Integer.parseInt(citaAgendada.get(0).toString());
 

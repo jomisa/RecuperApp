@@ -16,7 +16,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import husi.recuperapp.R;
-import husi.recuperapp.fisiologicos.Fisiologico;
 import husi.recuperapp.utils.Funciones;
 import husi.recuperapp.utils.Paciente;
 
@@ -25,27 +24,12 @@ import husi.recuperapp.utils.Paciente;
  */
 
 public class AdaptadorListViewFisiologicos extends BaseAdapter{
-    private Context context;
+    private Context contexto;
     private List<Fisiologico> fisiologicos;
 
-    public AdaptadorListViewFisiologicos(Context context, List<Fisiologico> fisiologicos) {
-        this.context = context;
+    public AdaptadorListViewFisiologicos(Context contexto, List<Fisiologico> fisiologicos) {
+        this.contexto = contexto;
         this.fisiologicos = fisiologicos;
-    }
-
-    @Override
-    public int getCount() {
-        return this.fisiologicos.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return this.fisiologicos.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     @Override
@@ -58,7 +42,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
             holder = new ViewHolder();
 
             //Crear una nueva vista en la lista
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vistaFila = inflater.inflate(R.layout.item_fisiologico, parent, false);
 
             holder.imagenFisiologico = (ImageView) vistaFila.findViewById(R.id.icono_fisiologico);
@@ -109,7 +93,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
 
-            Toast.makeText(context, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
+            Toast.makeText(contexto, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
             viewHolder.dato.setText("");
             viewHolder.dato.clearFocus();
 
@@ -176,6 +160,21 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
             holder.imagenFisiologico.setColorFilter(Color.rgb(255, 255, 255), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
+    }
+
+    @Override
+    public int getCount() {
+        return this.fisiologicos.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return this.fisiologicos.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
