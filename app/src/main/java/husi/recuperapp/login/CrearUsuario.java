@@ -72,19 +72,9 @@ public class CrearUsuario extends Activity {
 
         View focusView = null;
 
-        if (verificarCampos(focusView, cedula, contrasena1, contrasena2)) {
-            //focusView.requestFocus();
-        } else {
+        if (!verificarCampos(focusView, cedula, contrasena1, contrasena2)){
 
             Paciente.getInstance().verificarYcrearPaciente(Integer.parseInt(cedula), contrasena1);
-
-            Toast.makeText(this, "Espere mientras Validamos Datos", Toast.LENGTH_LONG).show();
-            //Para el proceso mientras consulta WS (asincrono) y crea el usuario en la BD,
-            try {
-                TimeUnit.SECONDS.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             //Verificar si en efecto se creo el usuario despues de esperar un tiempo
             if(Paciente.getInstance().existePaciente()==true) {
@@ -105,7 +95,7 @@ public class CrearUsuario extends Activity {
 
                 this.finish();
             }else
-                Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario, verifique los datos", Toast.LENGTH_LONG).show();
         }
     }
 

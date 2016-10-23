@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -74,9 +75,6 @@ public class Medicamentos extends AppCompatActivity {
                 dialogOpcionAlarma.setItems(opciones, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int opcion) {
-
-
-
                         if(opcion==0)
                             cuadrarAlarmaMedicamento(posicion);
                         eliminarAlarmaMedicamento(posicion);
@@ -103,6 +101,11 @@ public class Medicamentos extends AppCompatActivity {
         ringtone.play();
         Log.i("Alarma: ","ring");
 
+        final Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+        // Vibrate for 500 milliseconds
+        v.vibrate(500);
+
+
         AlertDialog.Builder dialogAlarma = new AlertDialog.Builder(this);
         dialogAlarma.setTitle("Hora De Tomar El Medicamento");
 
@@ -112,29 +115,14 @@ public class Medicamentos extends AppCompatActivity {
         dialogAlarma.setMessage(mensajeDialog);
         dialogAlarma.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if(ringtone!=null)
+                if(ringtone!=null) {
                     ringtone.stop();
+                    v.cancel();
+                }
             }
         });
         dialogAlarma.create();
         dialogAlarma.show();
-    }
-
-    private void eliminarAlarmaMedicamento(final int posicion){
-
-        int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
-        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
-        pendingIntent.cancel();
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-
-        Toast.makeText(getApplicationContext(), "Se eliminó la Alarma",Toast.LENGTH_LONG).show();
-
-        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", "Sin Asignar","false");
-        crearListaMedicamentos();
-
-        adaptadorListViewMedicamentos.notifyDataSetChanged();
     }
 
     private void cuadrarAlarmaMedicamento(final int posicion){
@@ -178,9 +166,26 @@ public class Medicamentos extends AppCompatActivity {
                 adaptadorListViewMedicamentos.notifyDataSetChanged();
 
             }
-        }, hour, minute, true);//Yes 24 hour time
+        }, hour, minute, false);//true hora militar
         mTimePicker.setTitle("Seleccione la hora");
         mTimePicker.show();
+    }
+
+    private void eliminarAlarmaMedicamento(final int posicion){
+
+        int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
+        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+        pendingIntent.cancel();
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+        Toast.makeText(getApplicationContext(), "Se eliminó la Alarma",Toast.LENGTH_LONG).show();
+
+        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", "Sin Asignar","false");
+        crearListaMedicamentos();
+
+        adaptadorListViewMedicamentos.notifyDataSetChanged();
     }
 
     private void crearListaMedicamentos() {

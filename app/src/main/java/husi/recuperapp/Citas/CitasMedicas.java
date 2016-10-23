@@ -1,11 +1,14 @@
 package husi.recuperapp.citas;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,12 +20,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import husi.recuperapp.utils.DataBaseHelper;
+import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 import husi.recuperapp.utils.Paciente;
 import husi.recuperapp.R;
 
@@ -33,12 +38,19 @@ public class CitasMedicas extends AppCompatActivity {
     private ListView listViewCitas;
     private AdaptadorListViewCitas adaptadorListViewCitas;
 
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+
     private Button mAgendarCitaView;
 
     //Variables para guardar resultado del Date Picker
     private int mAno;
     private int mMes;
     private int mDia;
+
+    //Variables para guardar resultado del Time Picker
+    private int mHora;
+    private int mMinuto;
 
     //Variables para guardar resultado Dialog
     private String nombreMedico;
@@ -53,7 +65,7 @@ public class CitasMedicas extends AppCompatActivity {
         getSupportActionBar().setTitle("  "+Paciente.getInstance().getNombresApellidos());
 
         citas = new ArrayList<>();
-        citasBD = new ArrayList<List<String>>();
+        citasBD = new ArrayList<>();
 
         //En caso de oprimir el boton de agendar una cita nueva
         mAgendarCitaView = (Button) findViewById(R.id.crear_cita_button);
@@ -78,29 +90,15 @@ public class CitasMedicas extends AppCompatActivity {
             }
 
         });
-
-        //TODO este método se debe ejecutar en el Receiver de Citas Medicas
-        notificar();
     }
 
     private void presionoBotonAgendarCita(){
-        Calendar c = Calendar.getInstance();
-        int mYear = c.get(Calendar.YEAR);
-        int mMonth = c.get(Calendar.MONTH);
-        int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog dialog = new DatePickerDialog(this, new mDateSetListener(), mYear, mMonth, mDay);
-        dialog.show();
-    }
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
 
-    private void ingresarNombreMedico() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ingrese el nombre del medico");
-
-        // Set up the input
-        final EditText input = new EditText(this);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
         // Set up the buttons
@@ -109,9 +107,8 @@ public class CitasMedicas extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 nombreMedico = input.getText().toString();
                 Log.i("Medico: ",nombreMedico);
-                Paciente.getInstance().insertarCitaBD(mAno+""+mMes+""+mDia ,nombreMedico+"");
-                crearListaCitas();
-                adaptadorListViewCitas.notifyDataSetChanged();
+
+                guardarcitaBDyAgendarNotificacion();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -120,21 +117,68 @@ public class CitasMedicas extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
         builder.show();
+
+        Calendar calendario = Calendar.getInstance();
+        TimePickerDialog mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                mHora = selectedHour;
+                mMinuto = selectedMinute;
+
+                Log.i("Hora: ","Hora "+mHora+" minuto "+mMinuto);
+            }
+        }, calendario.get(Calendar.HOUR), calendario.get(Calendar.MINUTE), false);//true, hora militar
+        mTimePicker.setTitle("Seleccione la hora");
+        mTimePicker.show();
+
+        DatePickerDialog datePicker = new DatePickerDialog(this,new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                mAno = selectedYear;
+                mMes = selectedMonth+1;
+                mDia = selectedDay;
+
+                Log.i("Fecha: ","Año "+mAno+" Mes "+mMes+" Dia "+mDia);
+            }
+        },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
+        datePicker.setTitle("Seleccione la fecha de la cita");
+        datePicker.show();
     }
 
-    private void crearListaCitas() {
-        citasBD = Paciente.getInstance().obtenerCitasBD();
+    private void guardarcitaBDyAgendarNotificacion(){
 
-        if(citasBD!=null){
-            citas.clear();
-            //Obtiene las citas de la BD y llena la lista de citas
-            int i=0;
-            for (List<String> citaBD: citasBD){
-                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2)));
-            }
+        String fecha=mAno+"/"+mMes+"/"+mDia+"-"+mHora+":"+mMinuto;
+
+        //Guarda la cita en la BD
+        Paciente.getInstance().insertarCitaBD(fecha,nombreMedico);
+        //Actualiza el listview
+        crearListaCitas();
+        adaptadorListViewCitas.notifyDataSetChanged();
+
+        //Se agenda Notificacion
+        List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha,nombreMedico);
+        if(citaAgendada != null) {
+            int idCita=Integer.parseInt(citaAgendada.get(0).toString());
+            Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
+            intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
+
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.MONTH, mMes-1);
+            cal.set(Calendar.YEAR, mAno);
+            cal.set(Calendar.DAY_OF_MONTH, mDia);
+
+            cal.set(Calendar.HOUR_OF_DAY, mHora);
+            cal.set(Calendar.MINUTE, mMinuto);
+            cal.set(Calendar.SECOND, 00);
+            cal.setTimeInMillis(cal.getTimeInMillis()-86400000);
+            Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
+            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() ,pendingIntent);
         }
+
     }
 
     private void modificarCita(int posicion){
@@ -148,45 +192,16 @@ public class CitasMedicas extends AppCompatActivity {
         adaptadorListViewCitas.notifyDataSetChanged();
     }
 
-    //TODO este método debe ir en Receiber de la alarma, debe contener la hora de la cita y el nombre del médico
-    //tambien debe ejecutarse 1 día antes de la cita y debe cancelar la alarma al ejecutar la notificación
+    private void crearListaCitas() {
+        citasBD = Paciente.getInstance().obtenerCitasBD();
 
-    //Notifiacion
-    private void notificar() {
-        String tituloNotifiacion = "Recordatorio cita";
-        String mensajeNotificacion = "Recuerde que tiene una cita el día de mañana";
-
-        Intent notificationIntent = new Intent(this, CitasMedicas.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(),//tiempo actual como id
-                notificationIntent, 0);
-
-        Notification n  = new Notification.Builder(this)
-            .setContentTitle(tituloNotifiacion)
-            .setContentText(mensajeNotificacion)
-            .setSmallIcon(R.drawable.ic_action_alarm)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true).build();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, n);
-    }
-
-
-    //Date Picker
-    class mDateSetListener implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mAno = year;
-            mMes = monthOfYear+1;
-            mDia = dayOfMonth;
-
-            Log.i("Fecha: ","Año "+mAno+" Mes "+mMes+" Dia "+mDia);
-
-            ingresarNombreMedico();
-            nombreMedico="Medico ";
-            Log.i("Medico: ",nombreMedico);
+        if(citasBD!=null){
+            citas.clear();
+            //Obtiene las citas de la BD y llena la lista de citas
+            int i=0;
+            for (List<String> citaBD: citasBD){
+                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2)));
+            }
         }
     }
 

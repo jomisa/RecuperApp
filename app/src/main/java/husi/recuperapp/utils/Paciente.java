@@ -25,7 +25,7 @@ import java.util.List;
 public class Paciente extends Application{
 
     private final String URL_BASE = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    private final String URL_BASEIP = "http://192.168.2.3:8080/RecuperAppServer/WebServices/";
+    //private final String URL_BASE = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
@@ -97,6 +97,7 @@ public class Paciente extends Application{
     }
 
     public void insertarCitaBD(String fecha, String medico) {
+        Log.i("Paciente, insertar Cita",fecha+" "+" "+medico);
         dbHelper.insertarUnaCita(fecha ,medico);
     }
 
@@ -104,7 +105,46 @@ public class Paciente extends Application{
         return dbHelper.obtenerCitas();
     }
 
+    public List<Object> buscarCitaBD(String fecha, String medico ){
+        return dbHelper.buscarCita(fecha, medico);
+    }
+
+    public List<Object> buscarCitaIdBD(int idCita) {
+        return dbHelper.buscarCitaId(idCita);
+    }
+
     //Acceso BD + WEB SERVICES
+    public void verificarYcrearPaciente(int cedula, String contrasena) {
+        JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,
+                URL_BASE+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Log.i("Volley findPaciente ", response.toString());
+                        if(response != null && dbHelper.obtenerPaciente() == null){
+
+                            try {
+                                dbHelper.insertarUnPaciente(response.getInt("cedula"),
+                                        response.getString("contrasena"), response.getString("nombres"),
+                                        response.getString("apellidos"), response.getString("correo"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                VolleyLog.d("getVerificarPacienteRequest: ", error.getMessage());
+            }
+        });
+        if(getVerificarPacienteRequest!=null) {
+            getVerificarPacienteRequest.setShouldCache(false);
+            queue.add(getVerificarPacienteRequest);
+        }
+    }
+
     public void insertarYpostFisiologicos(String fecha,String medicion,double valor){
 
         dbHelper.insertarUnFisiologico(getCedula(), fecha, medicion, valor);
@@ -277,36 +317,6 @@ public class Paciente extends Application{
         if(getMisMedicamentosRequest!=null) {
             getMisMedicamentosRequest.setShouldCache(false);
             queue.add(getMisMedicamentosRequest);
-        }
-    }
-
-    public void verificarYcrearPaciente(int cedula, String contrasena) {
-        JsonObjectRequest getVerificarPacienteRequest = new JsonObjectRequest(Request.Method.GET,
-                URL_BASE+"pacientes/findPaciente/"+cedula+"/"+contrasena,null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("Volley findPaciente ", response.toString());
-                        if(response != null && dbHelper.obtenerPaciente() == null){
-
-                            try {
-                                dbHelper.insertarUnPaciente(response.getInt("cedula"),
-                                        response.getString("contrasena"), response.getString("nombres"),
-                                        response.getString("apellidos"), response.getString("correo"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                VolleyLog.d("getVerificarPacienteRequest: ", error.getMessage());
-            }
-        });
-        if(getVerificarPacienteRequest!=null) {
-            getVerificarPacienteRequest.setShouldCache(false);
-            queue.add(getVerificarPacienteRequest);
         }
     }
 

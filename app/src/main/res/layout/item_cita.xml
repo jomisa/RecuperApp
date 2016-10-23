@@ -39,11 +39,11 @@
         android:layout_marginLeft="8dp" />
 
     <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:id="@+id/guideline19"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50555557"
+        app:layout_constraintGuide_percent="0.57"
         tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="182dp" />
+        tools:layout_editor_absoluteX="0dp" />
 </android.support.constraint.ConstraintLayout>

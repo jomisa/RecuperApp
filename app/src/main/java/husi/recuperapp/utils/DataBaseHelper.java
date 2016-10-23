@@ -534,6 +534,48 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return citas;
     }
 
+    public List<Object> buscarCita(String fecha, String medico){
+        List<Object> cita= new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_CITAS + " where "+
+                COL_2_CITAS + " = " + "'"+fecha+"'" + " and "+ COL_3_CITAS + " = " + "'"+medico+"'", null);
+        if(resultado.getCount() == 0) {
+            Log.i("BD: ","No existe la cita");
+            return null;
+        }else{
+            while (resultado.moveToNext()) {
+                cita = new ArrayList<>();
+                cita.add(resultado.getString(0));
+                cita.add(resultado.getString(1));
+                cita.add(resultado.getString(2));
+            }
+            return cita;
+        }
+    }
+
+    public List<Object> buscarCitaId(int idCita) {
+        List<Object> cita = new ArrayList<>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_CITAS + " where " +
+                COL_1_CITAS + " = " + idCita, null);
+        if (resultado.getCount() == 0) {
+            Log.i("BD: ", "No existe la cita");
+            return null;
+        } else {
+            while (resultado.moveToNext()) {
+                cita = new ArrayList<>();
+                cita.add(resultado.getString(0));
+                cita.add(resultado.getString(1));
+                cita.add(resultado.getString(2));
+            }
+            return cita;
+        }
+    }
+
     public boolean actualizarUnaCita(String id, String fecha, String medico) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -552,4 +594,5 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         return false;
     }
+
 }
