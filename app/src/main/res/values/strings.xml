@@ -26,6 +26,8 @@
     <string name="medicion">Medición</string>
     <string name="unidades">Unidades</string>
     <string name="ingresar">Ingresar</string>
+    <string name="reomendaciones_alimento">Evite alimentos con altos contenidos en sal cómo:
+        Atún, Sardinas y papas fritas</string>
 
     <!-- Caminata -->
     <string name="caminata">Caminar</string>

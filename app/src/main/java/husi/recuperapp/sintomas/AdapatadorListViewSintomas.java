@@ -1,4 +1,4 @@
-package husi.recuperapp.fisiologicos;
+package husi.recuperapp.sintomas;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,26 +20,26 @@ import husi.recuperapp.utils.Funciones;
 import husi.recuperapp.utils.Paciente;
 
 /**
- * Created by jmss1 on 25/09/2016.
+ * Created by jmss1 on 23/10/2016.
  */
 
-public class AdaptadorListViewFisiologicos extends BaseAdapter{
+public class AdapatadorListViewSintomas extends BaseAdapter {
     private Context contexto;
-    private List<Fisiologico> fisiologicos;
+    private List<Sintoma> sintomas;
 
-    public AdaptadorListViewFisiologicos(Context contexto, List<Fisiologico> fisiologicos) {
+    public AdapatadorListViewSintomas(Context contexto, List<Sintoma> sintomas) {
         this.contexto = contexto;
-        this.fisiologicos = fisiologicos;
+        this.sintomas = sintomas;
     }
 
     @Override
     public View getView(int posicion, View convertView, ViewGroup parent) {
 
         View vistaFila = convertView;
-        ViewHolder holder;
+        AdapatadorListViewSintomas.ViewHolder holder;
 
         if (convertView == null) {
-            holder = new ViewHolder();
+            holder = new AdapatadorListViewSintomas.ViewHolder();
 
             //Crear una nueva vista en la lista
             LayoutInflater inflater = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -50,7 +50,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
             holder.unidades = (TextView) vistaFila.findViewById(R.id.unidades_texto);
             holder.dato = (EditText) vistaFila.findViewById(R.id.dato_medicion);
             holder.botonIngresar = (Button) vistaFila.findViewById(R.id.boton_ingresar_fisiologico);
-            holder.fisiologico = fisiologicos.get(posicion);
+            holder.fisiologico = sintomas.get(posicion);
 
             //asocio el holder a la vista
             vistaFila.setTag(holder);
@@ -60,7 +60,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             llenarDatosHolder(vistaFila, holder, posicion);
         } else{
-            holder = (ViewHolder) convertView.getTag();
+            holder = (AdapatadorListViewSintomas.ViewHolder) convertView.getTag();
         }
 
         //Obtener boton y manejar presionar el boton
@@ -79,7 +79,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
     private void presionoBotonIngresarDato(View v){
         //El boton tiene guardado el viewholder en su Tag
-        ViewHolder viewHolder = (ViewHolder) v.getTag();
+        AdapatadorListViewSintomas.ViewHolder viewHolder = (AdapatadorListViewSintomas.ViewHolder) v.getTag();
         if(viewHolder==null)
             Log.i("Tag: ", "Es null");
         else {
@@ -134,7 +134,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
         }
     }
 
-    private void llenarDatosHolder(View vistaFila, ViewHolder holder, int posicion) {
+    private void llenarDatosHolder(View vistaFila, AdapatadorListViewSintomas.ViewHolder holder, int posicion) {
 
         holder.medicion.setText(holder.fisiologico.getMedicion());
         holder.unidades.setText(holder.fisiologico.getUnidades());
@@ -204,12 +204,12 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return this.fisiologicos.size();
+        return this.sintomas.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.fisiologicos.get(position);
+        return this.sintomas.get(position);
     }
 
     @Override
@@ -233,7 +233,6 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
         EditText dato;
         ImageView imagenFisiologico;
         Button botonIngresar;
-        Fisiologico fisiologico;
+        Sintoma fisiologico;
     }
 }
-

@@ -30,4 +30,11 @@ public final class Funciones {
         return fecha.format(new Date(System.currentTimeMillis())).replace(" ","T");
     }
 
+    public static int getNumerosString(String string){
+        Matcher matcher = Pattern.compile("\\d+").matcher(string);
+        matcher.find();
+        int i = Integer.valueOf(matcher.group());
+        return i;
+    }
+
 }

@@ -79,6 +79,10 @@ public class Paciente extends Application{
     public void sincronizarBD(){
         if(existePaciente()==true) {
             getMisMedicamentosDelServidor();
+            getSintomasDelServidor();
+            postFisiologicos();
+            postSintomas();
+            postCaminatas();
             //TODO llenar tablas de sintomas medicamentos y sintomas caminatas
         }
     }
@@ -86,6 +90,10 @@ public class Paciente extends Application{
     //Acceso BD
     public List<List<String>> obtenerMedicamentosBD(){
         return dbHelper.obtenerMedicamentos();
+    }
+
+    public List<List<Object>> obtenerListaSintomasBD() {
+        return dbHelper.obtenerListaSintomas();
     }
 
     public List<Object> buscarMedicamento(int idMedicamento){
@@ -115,6 +123,10 @@ public class Paciente extends Application{
 
     public boolean eliminarCitaBD(int idCita) {
         return dbHelper.borrarUnaCita(String.valueOf(idCita));
+    }
+
+    public void insertarUnSintomaBD(int idSintoma, int cedula, String fechaString) {
+        dbHelper.insertarUnSintoma(cedula, idSintoma, fechaString);
     }
 
     //Acceso BD + WEB SERVICES
@@ -152,6 +164,11 @@ public class Paciente extends Application{
     public void insertarYpostFisiologicos(String fecha,String medicion,double valor){
 
         dbHelper.insertarUnFisiologico(getCedula(), fecha, medicion, valor);
+
+        postFisiologicos();
+    }
+
+    public void postFisiologicos(){
 
         JsonObjectRequest postRequest=null;
         List<List<Object>> fisiologicosBD;
@@ -209,14 +226,16 @@ public class Paciente extends Application{
                 }
             }
         }
-
-
     }
 
     public void insertarYpostCaminatas(String fecha, int tiempo, int distancia, int pasos, int idSintomaCaminata){
 
         dbHelper.insertarUnaCaminata(getCedula(), fecha, tiempo, distancia, pasos,  idSintomaCaminata);
 
+        postCaminatas();
+    }
+
+    public void postCaminatas(){
         JsonObjectRequest postRequest=null;
         List<List<Object>> caminatasBD;
         List<Object> caminata;
@@ -321,6 +340,109 @@ public class Paciente extends Application{
         if(getMisMedicamentosRequest!=null) {
             getMisMedicamentosRequest.setShouldCache(false);
             colaRequest.add(getMisMedicamentosRequest);
+        }
+    }
+
+    public void getSintomasDelServidor(){
+
+        JsonArrayRequest getSintomasRequest = new JsonArrayRequest(Request.Method.GET,
+                URL_SERVIDOR+"listasintomas",null,
+                new Response.Listener<JSONArray>(){
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.i("Volley listaSintomas ", response.toString());
+
+                        JSONObject jObjectResponse;
+                        for(int i=0;i<response.length();i++){
+                            try {
+                                jObjectResponse = response.getJSONObject(i);
+                                Log.i("jObjectResponse ", jObjectResponse.toString());
+                                int id = jObjectResponse.getInt("idSintoma");
+                                String sintoma = jObjectResponse.getString("sintoma");
+                                if(dbHelper.buscarListaSintoma(id+"")==false)
+                                    dbHelper.insertarUnListaSintoma(id, sintoma);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error){
+                VolleyLog.d("listaSintomas: ", error.getMessage());
+            }
+        });
+        if(getSintomasRequest!=null) {
+            getSintomasRequest.setShouldCache(false);
+            colaRequest.add(getSintomasRequest);
+        }
+    }
+
+    public void insertarYpostSintoma(int idSintoma, int cedula, String fechaString) {
+
+        insertarUnSintomaBD(idSintoma, cedula, fechaString);
+
+        postSintomas();
+    }
+
+    public void postSintomas(){
+        JsonObjectRequest postRequest=null;
+        List<List<Object>> sintomasBD;
+        List<Object> sintoma;
+
+        sintomasBD = dbHelper.obtenerSintomas();
+
+        if(sintomasBD!=null){
+            for (int i = 0; i < sintomasBD.size(); i++){
+                sintoma=sintomasBD.get(i);
+
+                Log.i("Sintoma de DB: ",sintoma.toString());
+
+                //Dato del Valor (fila 5), si es 0 no se a enviado
+                if(sintoma.get(4).toString().equals("0")) {
+
+                    final JSONObject caminataJson = new JSONObject();
+                    try {
+                        caminataJson.put("id", sintoma.get(0).toString());
+                        caminataJson.put("cedula", sintoma.get(1).toString());
+                        caminataJson.put("idSintoma", sintoma.get(2).toString());
+                        caminataJson.put("fecha", sintoma.get(3).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_SERVIDOR + "sintomas", caminataJson,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.i("Volley Sintoma: ", response.toString());
+                                    try {//La fecha es un identificador unico e igual tanto en el servido como en el app
+                                        dbHelper.actualizarEnviadoSintoma(response.getString("fecha"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            if(error.networkResponse != null && error.networkResponse.data != null){
+                                String errorString = new String(error.networkResponse.data);
+                                VolleyLog.d("Sintoma:", errorString);
+                            } else if(error.networkResponse != null) {
+                                VolleyLog.d("Sintoma Network: ", error.networkResponse.statusCode);
+                            }else{
+                                VolleyLog.d("Sintoma: ", error.getMessage());
+                            }
+                        }
+                    });
+                }
+                if(postRequest!=null) {
+                    postRequest.setShouldCache(false);
+                    colaRequest.add(postRequest);
+                }
+            }
         }
     }
 }

@@ -7,13 +7,26 @@
     android:layout_height="match_parent"
     tools:context="husi.recuperapp.fisiologicos.RegistrarFisiologicos">
 
+
+    <TextView
+        android:text="@string/reomendaciones_alimento"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/grisOscuro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/recomendacionesTexto"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
     <ListView
         android:id="@+id/listViewFisiologicos"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/recomendacionesTexto" />
 </android.support.constraint.ConstraintLayout>

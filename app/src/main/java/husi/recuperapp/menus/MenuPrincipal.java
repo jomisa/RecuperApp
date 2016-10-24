@@ -13,9 +13,10 @@ import java.util.List;
 import husi.recuperapp.R;
 import husi.recuperapp.citas.CitasMedicas;
 import husi.recuperapp.caminatas.Pedometer;
-import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
+import husi.recuperapp.fisiologicos.Liquidos;
 import husi.recuperapp.login.Login;
 import husi.recuperapp.medicamentos.Medicamentos;
+import husi.recuperapp.utils.Paciente;
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -27,26 +28,13 @@ public class MenuPrincipal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //Obtiene dato nombre usuario del intent
-        String usuario;
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                usuario= null;
-            } else {
-                usuario= extras.getString("usuario");
-            }
-        } else {
-            usuario= (String) savedInstanceState.getSerializable("usuario");
-        }
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu_principal);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+usuario);
+        getSupportActionBar().setTitle("  "+ Paciente.getInstance().getNombresApellidos());
 
         listView = (ListView) findViewById(R.id.listViewFunciones);
         crearListaFunciones();
@@ -66,8 +54,8 @@ public class MenuPrincipal extends AppCompatActivity {
 
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Actividad Física",
                 "Registrar caminata u oficios varios"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Plan de Alimentación",
-                "Consultar comidas recomendadas"));
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Alimentación",
+                "Consultar comidas a evitar y regstrar líquidos"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_content_content_paste, "Agenda de Tareas Diarias",
                 "Anotar actividades y definir cuales son primordiales"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Programar Cita Médica",
@@ -92,7 +80,7 @@ public class MenuPrincipal extends AppCompatActivity {
                 break;
 
             case 1:
-                iniciarActivity = new Intent(this, Login.class);
+                iniciarActivity = new Intent(this, Liquidos.class);
                 this.startActivity(iniciarActivity);
                 break;
             case 2:
@@ -109,7 +97,7 @@ public class MenuPrincipal extends AppCompatActivity {
                 this.startActivity(iniciarActivity);
                 break;
             case 5:
-                iniciarActivity = new Intent(this, RegistrarFisiologicos.class);
+                iniciarActivity = new Intent(this, MenuIngresarDatos.class);
                 this.startActivity(iniciarActivity);
                 break;
             case 6:

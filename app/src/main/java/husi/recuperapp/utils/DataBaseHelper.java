@@ -41,6 +41,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_5_FISIOLOGICOS = "VALOR";
     public static final String COL_6_FISIOLOGICOS = "ENVIADO";
 
+    public static final String TABLA_SINTOMAS = "tabla_sintomas";
+    public static final String COL_1_SINTOMAS = "ID";
+    public static final String COL_2_SINTOMAS = "CEDULA";
+    public static final String COL_3_SINTOMAS = "ID_SINTOMA";
+    public static final String COL_4_SINTOMAS = "FECHA";
+    public static final String COL_5_SINTOMAS = "ENVIADO";
+
     public static final String TABLA_CAMINATAS = "tabla_caminatas";
     public static final String COL_1_CAMINATAS = "ID";
     public static final String COL_2_CAMINATAS = "CEDULA";
@@ -68,6 +75,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
             " INTEGER," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " TEXT," +
             COL_5_FISIOLOGICOS + " REAL, "+ COL_6_FISIOLOGICOS +" INTEGER )";
+
+    public static final String CREAR_TABLA_SINTOMAS = "create table " + TABLA_SINTOMAS + " " +
+            "("+COL_1_SINTOMAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT,"
+            + COL_2_SINTOMAS + " INTEGER," + COL_3_SINTOMAS + " INTEGER," + COL_4_SINTOMAS +
+            " TEXT," + COL_5_SINTOMAS +" INTEGER )";
 
     public static final String CREAR_TABLA_CAMINATAS = "create table " + TABLA_CAMINATAS + " " +
             "("+COL_1_CAMINATAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CAMINATAS
@@ -99,6 +111,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREAR_TABLA_CAMINATAS);
         db.execSQL(CREAR_TABLA_CITAS);
         db.execSQL(CREAR_TABLA_LISTA_SINTOMAS);
+        db.execSQL(CREAR_TABLA_SINTOMAS);
     }
 
     @Override
@@ -109,6 +122,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_CAMINATAS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_CITAS);
         db.execSQL("DROP TABLE IF EXISTS " + CREAR_TABLA_LISTA_SINTOMAS);
+        db.execSQL("DROP TABLE IF EXISTS " + CREAR_TABLA_SINTOMAS);
         onCreate(db);
     }
 
@@ -441,9 +455,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    //Lista Sintomas
+    //Sintomas
 
-    public boolean insertarUnListaSintoma(String id, String sintoma) {
+    public boolean insertarUnSintoma(int cedula, int idSintoma, String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_SINTOMAS, cedula);
+        contentValues.put(COL_3_SINTOMAS, idSintoma);
+        contentValues.put(COL_4_SINTOMAS, fecha);
+        contentValues.put(COL_5_SINTOMAS, 0);
+        long result = db.insert(TABLA_SINTOMAS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public List<List<Object>> obtenerSintomas() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_SINTOMAS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        List<List<Object>> sintomas = new ArrayList<>();
+        ArrayList<Object> sintoma;
+
+        while (resultado.moveToNext()) {
+            sintoma = new ArrayList<>();
+            sintoma.add(resultado.getString(0));
+            sintoma.add(resultado.getString(1));
+            sintoma.add(resultado.getString(2));
+            sintoma.add(resultado.getString(3));
+            sintoma.add(resultado.getString(4));
+
+            sintomas.add(sintoma);
+        }
+
+        return sintomas;
+    }
+
+    public boolean actualizarEnviadoSintoma(String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_5_SINTOMAS, 1);
+        db.update(TABLA_SINTOMAS, contentValues, "FECHA = ?", new String[]{fecha});
+        return true;
+    }
+
+    //Lista Sintomas
+    public boolean buscarListaSintoma(String id){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_LISTA_SINTOMAS + " where "+
+                COL_1_LISTA_SINTOMAS+" = "+ id, null);
+        if(resultado.getCount() == 0) {
+            return false;
+        }else
+            return true;
+    }
+
+    public boolean insertarUnListaSintoma(Integer id, String sintoma) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1_LISTA_SINTOMAS, id);
@@ -455,7 +529,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
-    public List<List<String>> obtenerListaSintomas() {
+    public List<List<Object>> obtenerListaSintomas() {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor resultado = db.rawQuery("select * from " + TABLA_LISTA_SINTOMAS, null);
@@ -463,11 +537,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return null;
         }
 
-        List<List<String>> sintomas = new ArrayList<List<String>>();
-        ArrayList<String> sintoma;
+        List<List<Object>> sintomas = new ArrayList<>();
+        ArrayList<Object> sintoma;
 
         while (resultado.moveToNext()) {
-            sintoma = new ArrayList<String>();
+            sintoma = new ArrayList<>();
             sintoma.add(resultado.getString(0));
             sintoma.add(resultado.getString(1));
 
@@ -475,24 +549,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
         return sintomas;
-    }
-
-    public boolean actualizarUnListaSintoma(String id, String sintoma) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_LISTA_SINTOMAS, id);
-        contentValues.put(COL_2_LISTA_SINTOMAS, sintoma);
-        db.update(TABLA_LISTA_SINTOMAS, contentValues, "ID_SINTOMA = ?", new String[]{id});
-        return true;
-    }
-
-    public boolean borrarUnListaSintoma(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Integer filasBorradas = db.delete(TABLA_LISTA_SINTOMAS, "ID_SINTOMA = ?", new String[]{id});
-
-        if(filasBorradas > 0)
-            return true;
-        return false;
     }
 
     //Citas
