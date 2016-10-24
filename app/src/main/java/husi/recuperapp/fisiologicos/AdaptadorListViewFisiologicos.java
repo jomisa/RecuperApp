@@ -84,53 +84,42 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
             Log.i("Tag: ", "Es null");
         else {
             String medicion = viewHolder.medicion.getText().toString();
-            String unidades = viewHolder.unidades.getText().toString();
 
-            if(unidades.equals("")){
-                Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
-                Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
-
-                Paciente.getInstance().insertarYpostSintoma(Funciones.getNumerosString(medicion),
-                        Paciente.getInstance().getCedula(), Funciones.getFechaString());
-
-                Toast.makeText(contexto, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
-            }else {
-
-                //Se quitan las tíldes para evitar problemas en las tablas
-                if (medicion.equals("Líquidos")) {
-                    medicion = "Liquios";
-                }
-                if (medicion.equals("Número de glóbulos rojos")) {
-                    medicion = "Numero globulos rojos";
-                }
-                if (medicion.equals("Número de reticulocitos")) {
-                    medicion = "Numero de reticulocitos";
-                }
-                if (medicion.equals("Número Plaquetas")) {
-                    medicion = "Numero Plaquetas";
-                }
-                if (medicion.equals("Número Hemoglobina")) {
-                    medicion = "Numero Hemoglobina";
-                }
-                if (medicion.equals("Número Hematocrito")) {
-                    medicion = "Numero Hematocrito";
-                }
-
-                double valor = Double.parseDouble(viewHolder.dato.getText().toString());
-
-                Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
-                Log.i("Tag: ", valor + "");//obtener el editText del ViewHolder
-                Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
-
-                Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
-
-                Toast.makeText(contexto, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
-                viewHolder.dato.setText("");
-                viewHolder.dato.clearFocus();
-
-                //fisiologicos.remove(viewHolder.fisiologico);
-                //notifyDataSetChanged();
+            //Se quitan las tíldes para evitar problemas en las tablas
+            if (medicion.equals("Líquidos")) {
+                medicion = "Liquios";
             }
+            if (medicion.equals("Número de glóbulos rojos")) {
+                medicion = "Numero globulos rojos";
+            }
+            if (medicion.equals("Número de reticulocitos")) {
+                medicion = "Numero de reticulocitos";
+            }
+            if (medicion.equals("Número Plaquetas")) {
+                medicion = "Numero Plaquetas";
+            }
+            if (medicion.equals("Número Hemoglobina")) {
+                medicion = "Numero Hemoglobina";
+            }
+            if (medicion.equals("Número Hematocrito")) {
+                medicion = "Numero Hematocrito";
+            }
+
+            double valor = Double.parseDouble(viewHolder.dato.getText().toString());
+
+            Log.i("Tag: ", medicion);//obtener el editText del ViewHolder
+            Log.i("Tag: ", valor + "");//obtener el editText del ViewHolder
+            Log.i("Tag: ", Funciones.getFechaString());//obtener el editText del ViewHolder
+
+            Paciente.getInstance().insertarYpostFisiologicos(Funciones.getFechaString(), medicion, valor);
+
+            Toast.makeText(contexto, "Se ingresó el Dato", Toast.LENGTH_LONG).show();
+            viewHolder.dato.setText("");
+            viewHolder.dato.clearFocus();
+
+            //fisiologicos.remove(viewHolder.fisiologico);
+            //notifyDataSetChanged();
+
         }
     }
 
@@ -190,14 +179,6 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
             holder.imagenFisiologico.setColorFilter(Color.rgb(255, 255, 255), android.graphics.PorterDuff.Mode.MULTIPLY);
-        }
-
-        Log.i("Unidades sintomas: ",holder.unidades.getText().toString());
-
-        //Quiere decir que solo se debe indicar si presenta el síntoma
-        if(holder.unidades.equals("")) {
-            Log.i("Sintomas Holder ","Unidades vacias");
-            holder.dato.setVisibility(View.GONE);
         }
 
     }

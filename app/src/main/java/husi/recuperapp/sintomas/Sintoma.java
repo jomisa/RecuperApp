@@ -6,27 +6,21 @@ package husi.recuperapp.sintomas;
 
 public class Sintoma {
 
-    private int iconID;
-    private String medicion;
-    private String unidades;
+    private int idSintoma;
+    private String sintomaTitulo;
 
-    public Sintoma(int iconID, String medicion, String unidades) {
+    public Sintoma(int idSintoma, String sintomaTitulo) {
         super();
-        this.iconID = iconID;
-        this.medicion = medicion;
-        this.unidades = unidades;
+        this.idSintoma = idSintoma;
+        this.sintomaTitulo = sintomaTitulo;
     }
 
-    public int getIconID() {
-        return iconID;
+    public int getIDSintoma() {
+        return idSintoma;
     }
 
-    public String getMedicion() {
-        return medicion;
-    }
-
-    public String getUnidades() {
-        return unidades;
+    public String getSintomaTitulo() {
+        return sintomaTitulo;
     }
 }
 

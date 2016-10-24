@@ -90,5 +90,8 @@
     <string name="cita_medico_texto">Medico</string>
     <string name="error_campo_numerico">Debe ser un número</string>
     <string name="ajustes_caminata">Ajustes</string>
+    <string name="sintoma">Síntoma</string>
+    <string name="descripcion_sintoma">Descripción del Síntoma</string>
+    <string name="medicamentos_evitar">Recuerde que debe evitar los siguientes medicamentos, Ibuprofeno, Medicamentos con sodio, Aspirina</string>
 
 </resources>

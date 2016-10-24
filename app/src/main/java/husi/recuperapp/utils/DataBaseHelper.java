@@ -309,34 +309,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    /*
-    public boolean actualizarUnaCaminata(int id, int cedula, String fecha, int tiempo,
-                                         int distancia, int pasos, int idSintomaCaminata,
-                                         int enviado) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1_CAMINATAS, id);
-        contentValues.put(COL_2_CAMINATAS, cedula);
-        contentValues.put(COL_3_CAMINATAS, fecha);
-        contentValues.put(COL_4_CAMINATAS, tiempo);
-        contentValues.put(COL_5_CAMINATAS, distancia);
-        contentValues.put(COL_6_CAMINATAS, pasos);
-        contentValues.put(COL_7_CAMINATAS, idSintomaCaminata);
-        contentValues.put(COL_8_CAMINATAS, enviado);
-        db.update(TABLA_CAMINATAS, contentValues, "ID = ?", new String[]{id+""});
-        return true;
-    }
-
-    public boolean borrarUnaCaminata(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Integer filasBorradas = db.delete(TABLA_CAMINATAS, "ID = ?", new String[]{id+""});
-
-        if(filasBorradas > 0)
-            return true;
-        return false;
-    }
-    */
-
     //Medicamentos
 
     public boolean insertarUnMedicamento(String id, String medicamento, String dosis,

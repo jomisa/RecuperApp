@@ -25,7 +25,6 @@
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,7 +52,6 @@
             android:theme="@style/CustomActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -62,7 +60,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -70,12 +67,6 @@
             android:name=".citas.CitasMedicas"
             android:screenOrientation="portrait"
             android:theme="@style/CustomActionBarTheme" />
-
-        <receiver android:name=".medicamentos.AlarmaMedicamentoReceiver" />
-        <receiver android:name=".citas.AlarmaCitasReceiver" />
-
-        <service android:name=".caminatas.StepService" />
-
         <activity
             android:name=".menus.MenuIngresarDatos"
             android:theme="@style/CustomActionBarTheme" />
@@ -88,6 +79,12 @@
         <activity
             android:name=".sintomas.Sintomas"
             android:theme="@style/CustomActionBarTheme"></activity>
+
+        <receiver android:name=".medicamentos.AlarmaMedicamentoReceiver" />
+        <receiver android:name=".citas.AlarmaCitasReceiver" />
+        <receiver android:name=".caminatas.AlarmaCaminatasReceiver" />
+
+        <service android:name=".caminatas.StepService" />
     </application>
 
 </manifest>

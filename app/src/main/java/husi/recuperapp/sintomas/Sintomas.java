@@ -17,7 +17,7 @@ public class Sintomas extends AppCompatActivity {
 
     Paciente paciente;
 
-    private List<Fisiologico> sintomas;
+    private List<Sintoma> sintomas;
     private List<List<Object>> listaSintomasBD;
     private ListView listView;
 
@@ -37,7 +37,7 @@ public class Sintomas extends AppCompatActivity {
 
         crearListaSintomas();
 
-        this.listView.setAdapter(new AdaptadorListViewFisiologicos(this, sintomas));
+        this.listView.setAdapter(new AdapatadorListViewSintomas(this, sintomas));
 
     }
 
@@ -45,19 +45,12 @@ public class Sintomas extends AppCompatActivity {
 
         sintomas = new ArrayList<>();
 
-        List<String> sintomasString = new ArrayList<>();
-
         listaSintomasBD = Paciente.getInstance().obtenerListaSintomasBD();
 
         if(listaSintomasBD!=null) {
             for (List<Object> sinBd : listaSintomasBD) {
-                sintomasString.add(sinBd.get(0).toString()+sinBd.get(1).toString());
+                sintomas.add(new Sintoma(Integer.parseInt(sinBd.get(0).toString()),sinBd.get(1).toString()));
             }
-
-            for (String nombreSintoma : sintomasString) {
-                sintomas.add(new Fisiologico(R.drawable.ic_emoticon_dead, nombreSintoma,""));
-            }
-
         }
 
     }

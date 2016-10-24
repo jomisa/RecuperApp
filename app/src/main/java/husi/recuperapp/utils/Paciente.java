@@ -1,6 +1,9 @@
 package husi.recuperapp.utils;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -16,7 +19,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.List;
+
+import husi.recuperapp.caminatas.AlarmaCaminatasReceiver;
+import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 
 /**
  * Created by jmss1 on 22/09/2016.
@@ -30,6 +37,7 @@ public class Paciente extends Application{
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
     private RequestQueue colaRequest;
+    private AlarmManager alarmManager;
 
     public static Paciente getInstance(){
         return singleton;
@@ -41,8 +49,11 @@ public class Paciente extends Application{
 
         colaRequest = Volley.newRequestQueue(this);
         dbHelper = new DataBaseHelper(this);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         sincronizarBD();
+
+        noficicarCaminata(alarmManager);
 
         singleton = this;
     }
@@ -74,6 +85,27 @@ public class Paciente extends Application{
     public int getCedula(){
         return Integer.parseInt(dbHelper.obtenerPaciente().get(0));
     }
+
+    //Nofificaciones
+    private void noficicarCaminata(AlarmManager alarmManager){
+
+        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaCaminatasReceiver.class);
+        //Si ya hay una notificación creada la reemplaza
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2016);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 00);
+
+        Log.i("Notific Caminat T: ",calendar.getTimeInMillis()+"");
+
+        //Frecuencia de repetición cada 24H
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*60*60*1000, pendingIntent);
+    }
+
 
     //Sincroniza BD interna con BD servidor
     public void sincronizarBD(){
