@@ -88,6 +88,8 @@ public class CrearUsuario extends Activity {
                 setResult(Activity.RESULT_OK, activarLogin);
                 //ejecuta el metodo onDestry() de esta actividad
 
+                Paciente.getInstance().noficicarCaminata();
+
                 this.finish();
             }else
                 Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario, verifique los datos", Toast.LENGTH_LONG).show();

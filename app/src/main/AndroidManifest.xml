@@ -25,6 +25,7 @@
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,6 +53,7 @@
             android:theme="@style/CustomActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -60,6 +62,7 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -72,12 +75,18 @@
             android:theme="@style/CustomActionBarTheme" />
         <activity
             android:name=".fisiologicos.Liquidos"
-            android:theme="@style/CustomActionBarTheme" />
+            android:theme="@style/CustomActionBarTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".fisiologicos.Examenes"
-            android:theme="@style/CustomActionBarTheme" />
+            android:theme="@style/CustomActionBarTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".sintomas.Sintomas"
+            android:theme="@style/CustomActionBarTheme" />
+
+        <activity
+            android:name=".estadosDeAnimo.EstadosDeAnimo"
             android:theme="@style/CustomActionBarTheme"></activity>
 
         <receiver android:name=".medicamentos.AlarmaMedicamentoReceiver" />

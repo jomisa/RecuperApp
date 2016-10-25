@@ -74,7 +74,7 @@ public class AdapatadorListViewSintomas extends BaseAdapter {
 
     private void presionoBotonIngresarDato(View v){
         //El boton tiene guardado el viewholder en su Tag
-        AdapatadorListViewSintomas.ViewHolder viewHolder = (AdapatadorListViewSintomas.ViewHolder) v.getTag();
+        ViewHolder viewHolder = (ViewHolder) v.getTag();
         if(viewHolder==null)
             Log.i("Tag: ", "Es null");
         else {

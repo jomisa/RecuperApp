@@ -37,7 +37,6 @@ public class Paciente extends Application{
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
     private RequestQueue colaRequest;
-    private AlarmManager alarmManager;
 
     public static Paciente getInstance(){
         return singleton;
@@ -49,11 +48,8 @@ public class Paciente extends Application{
 
         colaRequest = Volley.newRequestQueue(this);
         dbHelper = new DataBaseHelper(this);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         sincronizarBD();
-
-        noficicarCaminata(alarmManager);
 
         singleton = this;
     }
@@ -87,7 +83,11 @@ public class Paciente extends Application{
     }
 
     //Nofificaciones
-    private void noficicarCaminata(AlarmManager alarmManager){
+    public void noficicarCaminata(){
+
+        AlarmManager alarmManager;
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaCaminatasReceiver.class);
         //Si ya hay una notificación creada la reemplaza
@@ -115,6 +115,7 @@ public class Paciente extends Application{
             postFisiologicos();
             postSintomas();
             postCaminatas();
+            postAnimos();
             //TODO llenar tablas de sintomas medicamentos y sintomas caminatas
         }
     }
@@ -248,6 +249,72 @@ public class Paciente extends Application{
                                 VolleyLog.d("Fisiologico Network: ", error.networkResponse.statusCode);
                             }else{
                                 VolleyLog.d("Fisiologico: ", error.getMessage());
+                            }
+                        }
+                    });
+                }
+                if(postRequest!=null) {
+                    postRequest.setShouldCache(false);
+                    colaRequest.add(postRequest);
+                }
+            }
+        }
+    }
+
+    public void insertarYpostAnimos(String fecha, float valor){
+
+        dbHelper.insertarUnAnimo(getCedula(), fecha, valor);
+
+        postAnimos();
+    }
+
+    public void postAnimos(){
+
+        JsonObjectRequest postRequest=null;
+        List<List<Object>> animosBD;
+        List<Object> animo;
+
+        animosBD = dbHelper.obtenerAnimos();
+
+        if(animosBD!=null){
+            for (int i = 0; i < animosBD.size(); i++){
+                animo=animosBD.get(i);
+
+                //Dato del Valor (fila 5), si es 0 no se a enviado
+                if(animo.get(4).toString().equals("0")) {
+
+                    final JSONObject animoJson = new JSONObject();
+                    try {
+                        animoJson.put("id", animo.get(0).toString());
+                        animoJson.put("cedula", animo.get(1).toString());
+                        animoJson.put("fecha", animo.get(2).toString());
+                        animoJson.put("valor", animo.get(3).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    postRequest = new JsonObjectRequest(Request.Method.POST, URL_SERVIDOR + "estadosAnimo", animoJson,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    Log.i("Volley estadosAnimo: ", response.toString());
+                                    try {//La fecha es un identificador unico e igual tanto en el servido como en el app
+                                        dbHelper.actualizarEnviadoAnimo(response.getString("fecha"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            if(error.networkResponse != null && error.networkResponse.data != null){
+                                String errorString = new String(error.networkResponse.data);
+                                VolleyLog.d("estadosAnimo:", errorString);
+                            } else if(error.networkResponse != null) {
+                                VolleyLog.d("estadosAnimo Network: ", error.networkResponse.statusCode);
+                            }else{
+                                VolleyLog.d("estadosAnimo: ", error.getMessage());
                             }
                         }
                     });

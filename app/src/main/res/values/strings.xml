@@ -93,5 +93,6 @@
     <string name="sintoma">Síntoma</string>
     <string name="descripcion_sintoma">Descripción del Síntoma</string>
     <string name="medicamentos_evitar">Recuerde que debe evitar los siguientes medicamentos, Ibuprofeno, Medicamentos con sodio, Aspirina</string>
+    <string name="animo">Ingresa tu estado de ánimo</string>
 
 </resources>

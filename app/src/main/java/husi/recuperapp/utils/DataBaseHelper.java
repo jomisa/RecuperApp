@@ -41,6 +41,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COL_5_FISIOLOGICOS = "VALOR";
     public static final String COL_6_FISIOLOGICOS = "ENVIADO";
 
+    public static final String TABLA_ANIMOS = "tabla_animos";
+    public static final String COL_1_ANIMOS = "ID";
+    public static final String COL_2_ANIMOS = "CEDULA";
+    public static final String COL_3_ANIMOS = "FECHA";
+    public static final String COL_4_ANIMOS = "VALOR";
+    public static final String COL_5_ANIMOS = "ENVIADO";
+
     public static final String TABLA_SINTOMAS = "tabla_sintomas";
     public static final String COL_1_SINTOMAS = "ID";
     public static final String COL_2_SINTOMAS = "CEDULA";
@@ -75,6 +82,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "("+COL_1_FISIOLOGICOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_FISIOLOGICOS +
             " INTEGER," + COL_3_FISIOLOGICOS + " TEXT," + COL_4_FISIOLOGICOS + " TEXT," +
             COL_5_FISIOLOGICOS + " REAL, "+ COL_6_FISIOLOGICOS +" INTEGER )";
+
+    public static final String CREAR_TABLA_ANIMOS = "create table " + TABLA_ANIMOS + " " +
+            "("+COL_1_ANIMOS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_ANIMOS +
+            " INTEGER," + COL_3_ANIMOS + " TEXT," + COL_4_ANIMOS + " REAL, "+ COL_5_ANIMOS +" INTEGER )";
 
     public static final String CREAR_TABLA_SINTOMAS = "create table " + TABLA_SINTOMAS + " " +
             "("+COL_1_SINTOMAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT,"
@@ -112,6 +123,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREAR_TABLA_CITAS);
         db.execSQL(CREAR_TABLA_LISTA_SINTOMAS);
         db.execSQL(CREAR_TABLA_SINTOMAS);
+        db.execSQL(CREAR_TABLA_ANIMOS);
     }
 
     @Override
@@ -123,6 +135,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_CITAS);
         db.execSQL("DROP TABLE IF EXISTS " + CREAR_TABLA_LISTA_SINTOMAS);
         db.execSQL("DROP TABLE IF EXISTS " + CREAR_TABLA_SINTOMAS);
+        db.execSQL("DROP TABLE IF EXISTS " + CREAR_TABLA_ANIMOS);
         onCreate(db);
     }
 
@@ -250,6 +263,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_6_FISIOLOGICOS, 1);
         db.update(TABLA_FISIOLOGICOS, contentValues, "FECHA = ?", new String[]{fecha});
+        return true;
+    }
+
+    //Animo
+    public boolean insertarUnAnimo(Integer cedula, String fecha, float valor) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_ANIMOS, cedula);
+        contentValues.put(COL_3_ANIMOS, fecha);
+        contentValues.put(COL_4_ANIMOS, valor);
+        contentValues.put(COL_5_ANIMOS, 0);
+        long result = db.insert(TABLA_ANIMOS, null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public List<List<Object>> obtenerAnimos() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor resultado = db.rawQuery("select * from " + TABLA_ANIMOS, null);
+        if(resultado.getCount() == 0) {
+            return null;
+        }
+
+        List<List<Object>> animos = new ArrayList<>();
+        List<Object> animo;
+
+        while (resultado.moveToNext()) {
+            animo = new ArrayList<>();
+            animo.add(resultado.getInt(0));
+            animo.add(resultado.getInt(1));
+            animo.add(resultado.getString(2));
+            animo.add(resultado.getFloat(3));
+            animo.add(resultado.getInt(4));
+
+            animos.add(animo);
+        }
+        return animos;
+    }
+
+    //TODO: cambia todos los datos, solo debe cambiar el dato con la fecha exacta
+    public boolean actualizarEnviadoAnimo(String fecha) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_5_ANIMOS, 1);
+        db.update(TABLA_ANIMOS, contentValues, "FECHA = ?", new String[]{fecha});
         return true;
     }
 

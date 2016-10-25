@@ -52,22 +52,24 @@ public class MenuPrincipal extends AppCompatActivity {
 
         funcionalidades = new ArrayList<>();
 
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Actividad Física",
-                "Registrar caminata u oficios varios"));
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Caminatas",
+                "Registra tus caminatas"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Alimentación",
                 "Consultar comidas a evitar y regstrar líquidos"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_content_content_paste, "Agenda de Tareas Diarias",
-                "Anotar actividades y definir cuales son primordiales"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Programar Cita Médica",
                 "Programar y Recordar mis citas médicas"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_action_alarm, "Medicamentos",
                 "Medicamentos, dosis y alarma de medicamentos"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_image_edit, "Ingresar Datos",
                 "Ingresar síntomas, mediciones y realizar encuesta"));
+
+        /*
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_content_content_paste, "Agenda de Tareas Diarias",
+                "Anotar actividades y definir cuales son primordiales"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_social_poll, "Consultar Datos Ingresados",
                 "Consultar Histórico de síntomas y mediciones"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_map, "Mapa del Hospital San Ignacio",
-                "Consultar mapa interno del hospital"));
+                "Consultar mapa interno del hospital"));*/
     }
 
     private void activarActivity(int posicion){
@@ -84,20 +86,20 @@ public class MenuPrincipal extends AppCompatActivity {
                 this.startActivity(iniciarActivity);
                 break;
             case 2:
-                iniciarActivity = new Intent(this, Login.class);
+                iniciarActivity = new Intent(this, CitasMedicas.class);
                 this.startActivity(iniciarActivity);
                 break;
 
             case 3:
-                iniciarActivity = new Intent(this, CitasMedicas.class);
-                this.startActivity(iniciarActivity);
-                break;
-            case 4:
                 iniciarActivity = new Intent(this, Medicamentos.class);
                 this.startActivity(iniciarActivity);
                 break;
-            case 5:
+            case 4:
                 iniciarActivity = new Intent(this, MenuIngresarDatos.class);
+                this.startActivity(iniciarActivity);
+                break;
+            case 5:
+                iniciarActivity = new Intent(this, Login.class);
                 this.startActivity(iniciarActivity);
                 break;
             case 6:

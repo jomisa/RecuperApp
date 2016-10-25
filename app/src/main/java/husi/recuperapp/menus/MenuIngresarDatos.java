@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import husi.recuperapp.R;
+import husi.recuperapp.estadosDeAnimo.EstadosDeAnimo;
 import husi.recuperapp.fisiologicos.Examenes;
 import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
 import husi.recuperapp.sintomas.Sintomas;
@@ -74,7 +75,7 @@ public class MenuIngresarDatos extends AppCompatActivity {
                 this.startActivity(iniciarActivity);
                 break;
             case 2:
-                iniciarActivity = new Intent(this, MenuPrincipal.class);
+                iniciarActivity = new Intent(this, EstadosDeAnimo.class);
                 this.startActivity(iniciarActivity);
                 break;
 

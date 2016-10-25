@@ -139,7 +139,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password"
             app:layout_constraintBottom_toTopOf="@+id/crear_usuario_button"
-            android:layout_height="35dp" />
+            android:layout_height="48dp" />
 
         <ImageView
             android:id="@+id/usuario_image"
@@ -153,13 +153,13 @@
 
         <ImageView
             android:id="@+id/candado_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:background="@drawable/ic_action_lock_outline"
-            app:layout_constraintBottom_toBottomOf="@+id/password" />
+            app:layout_constraintBottom_toBottomOf="@+id/password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <android.support.constraint.Guideline
             android:layout_width="wrap_content"

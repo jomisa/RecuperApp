@@ -1,7 +1,9 @@
-package husi.recuperapp.sintomas;
+package husi.recuperapp.estadosDeAnimo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -10,19 +12,18 @@ import java.util.List;
 import husi.recuperapp.R;
 import husi.recuperapp.utils.Paciente;
 
-public class Sintomas extends AppCompatActivity {
+public class EstadosDeAnimo extends AppCompatActivity {
 
     Paciente paciente;
 
-    private List<Sintoma> sintomas;
-    private List<List<Object>> listaSintomasBD;
+    private List<Animo> animos;
     private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        paciente = (Paciente)getApplicationContext();
+        paciente=(Paciente)getApplicationContext();
 
         setContentView(R.layout.activity_registrar_fisiologicos);
 
@@ -32,23 +33,14 @@ public class Sintomas extends AppCompatActivity {
 
         this.listView = (ListView) findViewById(R.id.listViewFisiologicos);
 
-        crearListaSintomas();
+        crearListaAnimos();
 
-        this.listView.setAdapter(new AdapatadorListViewSintomas(this, sintomas));
+        this.listView.setAdapter(new AdaptadorListViewAnimos(this, animos));
 
     }
 
-    private void crearListaSintomas() {
-
-        sintomas = new ArrayList<>();
-
-        listaSintomasBD = Paciente.getInstance().obtenerListaSintomasBD();
-
-        if(listaSintomasBD!=null) {
-            for (List<Object> sinBd : listaSintomasBD) {
-                sintomas.add(new Sintoma(Integer.parseInt(sinBd.get(0).toString()),sinBd.get(1).toString()));
-            }
-        }
-
+    private void crearListaAnimos() {
+        animos = new ArrayList<>();
+        animos.add(new Animo("Ingresa tu estado de ánimo"));
     }
 }
