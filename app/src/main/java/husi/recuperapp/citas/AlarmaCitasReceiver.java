@@ -11,8 +11,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import java.util.List;
 
 import husi.recuperapp.R;
-import husi.recuperapp.medicamentos.Medicamentos;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

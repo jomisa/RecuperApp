@@ -1,4 +1,4 @@
-package husi.recuperapp.utils;
+package husi.recuperapp.accesoDatos;
 
 import android.content.ContentValues;
 import android.content.Context;

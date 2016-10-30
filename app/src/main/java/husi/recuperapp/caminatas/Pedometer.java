@@ -34,8 +34,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import husi.recuperapp.utils.Funciones;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Funciones;
+import husi.recuperapp.accesoDatos.Paciente;
 import husi.recuperapp.R;
 
 public class Pedometer extends Activity {

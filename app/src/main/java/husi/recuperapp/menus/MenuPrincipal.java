@@ -16,7 +16,7 @@ import husi.recuperapp.caminatas.Pedometer;
 import husi.recuperapp.fisiologicos.Liquidos;
 import husi.recuperapp.login.Login;
 import husi.recuperapp.medicamentos.Medicamentos;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 
 public class MenuPrincipal extends AppCompatActivity {
 
@@ -56,12 +56,12 @@ public class MenuPrincipal extends AppCompatActivity {
                 "Registra tus caminatas"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Alimentación",
                 "Consultar comidas a evitar y regstrar líquidos"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Programar Cita Médica",
-                "Programar y Recordar mis citas médicas"));
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Recordar Cita Médica",
+                "Recordar mis citas médicas 1 día antes de la cita"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_action_alarm, "Medicamentos",
-                "Medicamentos, dosis y alarma de medicamentos"));
+                "Consultar medicamentos, dosis y ajustar alarmas de medicamentos"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_image_edit, "Ingresar Datos",
-                "Ingresar síntomas, mediciones y realizar encuesta"));
+                "Ingresar síntomas, mediciones, exámenes médicos y temperamento"));
 
         /*
         funcionalidades.add(new Funcionalidad(R.drawable.ic_content_content_paste, "Agenda de Tareas Diarias",

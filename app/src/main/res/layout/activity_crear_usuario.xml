@@ -197,7 +197,7 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="43dp"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:hint="@string/prompt_usuario"
             android:ems="10"
             android:id="@+id/usuario_crear_texto"

@@ -8,9 +8,21 @@
     tools:context="husi.recuperapp.citas.CitasMedicas">
 
     <TextView
+        android:text="Ingresa tus futuras cítas médicas para recordartelas con 1 día de anticipación"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewRecordatorio"
+        app:layout_constraintLeft_toLeftOf="@+id/crear_cita_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:text="@string/citas_fecha_titulo_texto"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/rojoOscuro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/fecha_titulo_cita"
@@ -23,6 +35,7 @@
         android:text="@string/citas_medico_titulo_texto"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/rojoOscuro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/medico_titulo_cita"
@@ -35,10 +48,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/crear_cita_button"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRecordatorio" />
 
     <ListView
         android:id="@+id/listViewCitas"
@@ -54,17 +67,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline16"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="59dp"
+        tools:layout_editor_absoluteY="121dp"
         tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintGuide_percent="0.11545988" />
+        app:layout_constraintGuide_percent="0.23679061" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline17"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20156556"
-        tools:layout_editor_absoluteY="103dp"
+        app:layout_constraintGuide_percent="0.30136988"
+        tools:layout_editor_absoluteY="154dp"
         tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.Guideline

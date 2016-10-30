@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 import husi.recuperapp.R;
 
 public class Medicamentos extends AppCompatActivity {

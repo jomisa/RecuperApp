@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import husi.recuperapp.R;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 
 public class Sintomas extends AppCompatActivity {
 

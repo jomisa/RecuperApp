@@ -16,8 +16,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import husi.recuperapp.R;
-import husi.recuperapp.utils.Funciones;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Funciones;
+import husi.recuperapp.accesoDatos.Paciente;
 
 /**
  * Created by jmss1 on 25/09/2016.
@@ -87,7 +87,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             //Se quitan las tíldes para evitar problemas en las tablas
             if (medicion.equals("Líquidos")) {
-                medicion = "Liquios";
+                medicion = "Liquidos";
             }
             if (medicion.equals("Número de glóbulos rojos")) {
                 medicion = "Numero globulos rojos";

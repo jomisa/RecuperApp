@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 import husi.recuperapp.R;
 
 public class CrearUsuario extends Activity {

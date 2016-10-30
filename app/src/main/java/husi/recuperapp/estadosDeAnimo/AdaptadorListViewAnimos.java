@@ -15,8 +15,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import husi.recuperapp.R;
-import husi.recuperapp.utils.Funciones;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Funciones;
+import husi.recuperapp.accesoDatos.Paciente;
 
 /**
  * Created by jmss1 on 24/10/2016.

@@ -15,7 +15,7 @@ import husi.recuperapp.estadosDeAnimo.EstadosDeAnimo;
 import husi.recuperapp.fisiologicos.Examenes;
 import husi.recuperapp.fisiologicos.RegistrarFisiologicos;
 import husi.recuperapp.sintomas.Sintomas;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 
 public class MenuIngresarDatos extends AppCompatActivity {
 

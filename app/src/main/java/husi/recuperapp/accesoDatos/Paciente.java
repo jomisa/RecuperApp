@@ -1,4 +1,4 @@
-package husi.recuperapp.utils;
+package husi.recuperapp.accesoDatos;
 
 import android.app.AlarmManager;
 import android.app.Application;
@@ -23,7 +23,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import husi.recuperapp.caminatas.AlarmaCaminatasReceiver;
-import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 
 /**
  * Created by jmss1 on 22/09/2016.
@@ -31,8 +30,8 @@ import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 
 public class Paciente extends Application{
 
-    private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    //private final String URL_SERVIDOR = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
+    //private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
+    private final String URL_SERVIDOR = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;

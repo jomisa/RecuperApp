@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import husi.recuperapp.menus.MenuPrincipal;
-import husi.recuperapp.utils.Paciente;
+import husi.recuperapp.accesoDatos.Paciente;
 import husi.recuperapp.R;
 
 /**
