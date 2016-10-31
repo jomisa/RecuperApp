@@ -109,8 +109,11 @@ public class Medicamentos extends AppCompatActivity {
 
         Log.i("hora: ",calendar.getTimeInMillis()+"");
 
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        if (android.os.Build.VERSION.SDK_INT >= 19) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
@@ -178,7 +181,12 @@ public class Medicamentos extends AppCompatActivity {
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
                 calendar.set(Calendar.SECOND,00);
                 //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                if (android.os.Build.VERSION.SDK_INT >= 19) {
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                } else {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                }
 
                 Long t=calendar.getTimeInMillis();
                 Log.i("Hora: ", ""+t);
