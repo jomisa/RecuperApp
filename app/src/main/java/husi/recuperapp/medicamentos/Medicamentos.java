@@ -60,7 +60,7 @@ public class Medicamentos extends AppCompatActivity {
         intentAlarma = getIntent();
         Bundle idAlarma = intentAlarma.getExtras();
         if (idAlarma != null) {
-            manejarAlarma(idAlarma.getString("id_medicamento"));
+            manejarAlarma(idAlarma.getString("id_medicamento"), idAlarma.getInt("frecuencia"));
         }
 
         //Para cuadrar la alarma de un medicamento
@@ -90,8 +90,27 @@ public class Medicamentos extends AppCompatActivity {
     }
 
     //Este metodo se ejecta al recibir un intent de una alarma agendada
-    private void manejarAlarma(String idAlarma){
+    private void manejarAlarma(String idAlarma, int frecuencia){
+
+        //Se vuelve a agendar una alarma
+        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+
         Log.i("id: ",idAlarma);
+        Log.i("frecuencia: ",frecuencia+"");
+
+        intentInfoAlarma.putExtra("id_medicamento",idAlarma);
+        intentInfoAlarma.putExtra("frecuencia",frecuencia);
+
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(idAlarma), intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis()+frecuencia);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Log.i("hora: ",calendar.getTimeInMillis()+"");
+
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
@@ -104,7 +123,6 @@ public class Medicamentos extends AppCompatActivity {
         final Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
         v.vibrate(500);
-
 
         AlertDialog.Builder dialogAlarma = new AlertDialog.Builder(this);
         dialogAlarma.setTitle("Hora De Tomar El Medicamento");
@@ -145,15 +163,22 @@ public class Medicamentos extends AppCompatActivity {
                 Log.i("idMedicamento de pos: ",idMedicamento+"");
 
                 Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+
+                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
+                frecuencia=frecuencia*60*60*1000;
+                Log.i("Frecuenca Inicial: ",frecuencia+"");
+
                 intentInfoAlarma.putExtra("id_medicamento",idMedicamento+"");
+                intentInfoAlarma.putExtra("frecuencia",frecuencia);
 
                 pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
 
-                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
+                calendar.set(Calendar.SECOND,00);
+                //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
                 Long t=calendar.getTimeInMillis();
                 Log.i("Hora: ", ""+t);
