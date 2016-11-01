@@ -120,6 +120,11 @@ public class Medicamentos extends AppCompatActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
+        Paciente.getInstance().actualizarMedicamentoBD(idAlarma+"", calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE),"true");
+        crearListaMedicamentos();
+
+        adaptadorListViewMedicamentos.notifyDataSetChanged();
+
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
