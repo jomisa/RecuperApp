@@ -101,7 +101,7 @@ public class Medicamentos extends AppCompatActivity {
         intentInfoAlarma.putExtra("id_medicamento",idAlarma);
         intentInfoAlarma.putExtra("frecuencia",frecuencia);
 
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(idAlarma), intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(idAlarma), intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis()+frecuencia);
@@ -179,7 +179,7 @@ public class Medicamentos extends AppCompatActivity {
                 intentInfoAlarma.putExtra("id_medicamento",idMedicamento+"");
                 intentInfoAlarma.putExtra("frecuencia",frecuencia);
 
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
@@ -219,7 +219,7 @@ public class Medicamentos extends AppCompatActivity {
 
         int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
         Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
         pendingIntent.cancel();
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);

@@ -172,7 +172,7 @@ public class CitasMedicas extends AppCompatActivity {
             Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
             intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
 
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_CANCEL_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Calendar cal = Calendar.getInstance();
             cal.set(Calendar.MONTH, mMes-1);
@@ -208,7 +208,7 @@ public class CitasMedicas extends AppCompatActivity {
 
             Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
             intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_CANCEL_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             pendingIntent.cancel();
