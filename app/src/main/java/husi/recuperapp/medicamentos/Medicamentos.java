@@ -109,9 +109,14 @@ public class Medicamentos extends AppCompatActivity {
 
         Log.i("hora: ",calendar.getTimeInMillis()+"");
 
-        if (android.os.Build.VERSION.SDK_INT >= 19) {
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Log.i("SDK >= ","21");
+            alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent), pendingIntent);
+        }else if (android.os.Build.VERSION.SDK_INT >= 19) {
+            Log.i("SDK >= ","19");
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         } else {
+            Log.i("SDK <","19");
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
@@ -182,9 +187,15 @@ public class Medicamentos extends AppCompatActivity {
                 calendar.set(Calendar.SECOND,00);
                 //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
 
-                if (android.os.Build.VERSION.SDK_INT >= 19) {
+                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                    Log.i("SDK >= ","21");
+                    alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent), pendingIntent);
+                }
+                else if (android.os.Build.VERSION.SDK_INT >= 19) {
+                    Log.i("SDK >= ","19");
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 } else {
+                    Log.i("SDK menor a: ","19");
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 }
 

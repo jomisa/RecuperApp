@@ -186,7 +186,10 @@ public class CitasMedicas extends AppCompatActivity {
             Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-            if (android.os.Build.VERSION.SDK_INT >= 19) {
+            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                Log.i("SDK >= ","21");
+                alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), pendingIntent), pendingIntent);
+            }else if (android.os.Build.VERSION.SDK_INT >= 19) {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() ,pendingIntent);
             } else {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() ,pendingIntent);
