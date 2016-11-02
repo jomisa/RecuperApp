@@ -87,10 +87,9 @@
         <TextView
             android:id="@+id/login"
             android:textSize="20sp"
-            android:text="@string/login_label"
+            android:text="Crear Usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/login_label"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
