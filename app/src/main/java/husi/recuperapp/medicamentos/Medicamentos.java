@@ -84,7 +84,8 @@ public class Medicamentos extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int opcion) {
                         if(opcion==0)
                             cuadrarAlarmaMedicamento(posicion);
-                        eliminarAlarmaMedicamento(posicion);
+                        else
+                            eliminarAlarmaMedicamento(posicion);
                     }
                 });
                 dialogOpcionAlarma.create();
@@ -204,9 +205,10 @@ public class Medicamentos extends AppCompatActivity {
 
         Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", calendar.get(Calendar.HOUR) +
                 ":" + calendar.get(Calendar.MINUTE),"true");
-        crearListaMedicamentos();
 
-        adaptadorListViewMedicamentos.notifyDataSetChanged();
+        crearListaMedicamentos();
+        listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
+
     }
 
     private void eliminarAlarmaMedicamento(final int posicion){
@@ -221,9 +223,10 @@ public class Medicamentos extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Se eliminó la Alarma",Toast.LENGTH_LONG).show();
 
         Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", "Sin Asignar","false");
-        crearListaMedicamentos();
 
-        adaptadorListViewMedicamentos.notifyDataSetChanged();
+        crearListaMedicamentos();
+        listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
+
     }
 
     private void crearListaMedicamentos() {

@@ -112,12 +112,22 @@ public class CitasMedicas extends AppCompatActivity {
             alarmManager.cancel(pendingIntent);
 
             crearListaCitas();
-            adaptadorListViewCitas.notifyDataSetChanged();
+            listViewCitas.setAdapter(adaptadorListViewCitas);
 
             Toast.makeText(getApplicationContext(), "Se eliminó la Cita", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(getApplicationContext(), "Hubo un problema eliminando la cita",
                     Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent respuesta){
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                crearListaCitas();
+                listViewCitas.setAdapter(adaptadorListViewCitas);
+            }
         }
     }
 
