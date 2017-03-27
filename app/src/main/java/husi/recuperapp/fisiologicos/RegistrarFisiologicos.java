@@ -39,15 +39,15 @@ public class RegistrarFisiologicos extends AppCompatActivity {
 
         fisiologicos = new ArrayList<>();
 
-        fisiologicos.add(new Fisiologico(R.drawable.ic_balanza, "Peso",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_scale_bathroom, "Peso",
                 "Kg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_corazon, "Frecuencia Cardíaca",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_heart_pulse, "Frecuencia Cardíaca",
                 "bpm"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_presion, "Presión Sanguínea SYS",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_blood_pressure, "Presión Sanguínea SYS",
                 "mmHg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_presion, "Presión Sanguínea DIA",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_blood_pressure, "Presión Sanguínea DIA",
                 "mmHg"));
-        fisiologicos.add(new Fisiologico(R.drawable.ic_glucosa, "Niveles de Glucosa",
+        fisiologicos.add(new Fisiologico(R.drawable.ic_glucose_monitor, "Niveles de Glucosa",
                 "mg"));
 
     }

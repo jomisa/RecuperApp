@@ -39,11 +39,11 @@ public class Examenes extends AppCompatActivity {
 
         examenes = new ArrayList<>();
 
-        examenes.add(new Fisiologico(R.drawable.ic_examenes, "Número de glóbulos rojos","."));
-        examenes.add(new Fisiologico(R.drawable.ic_examenes, "Número de reticulocitos","."));
-        examenes.add(new Fisiologico(R.drawable.ic_examenes, "Número Plaquetas","."));
-        examenes.add(new Fisiologico(R.drawable.ic_examenes, "Número Hemoglobina","."));
-        examenes.add(new Fisiologico(R.drawable.ic_examenes, "Número Hematocrito","."));
+        examenes.add(new Fisiologico(R.drawable.ic_google_drive_file, "Número de glóbulos rojos","."));
+        examenes.add(new Fisiologico(R.drawable.ic_google_drive_file, "Número de reticulocitos","."));
+        examenes.add(new Fisiologico(R.drawable.ic_google_drive_file, "Número Plaquetas","."));
+        examenes.add(new Fisiologico(R.drawable.ic_google_drive_file, "Número Hemoglobina","."));
+        examenes.add(new Fisiologico(R.drawable.ic_google_drive_file, "Número Hematocrito","."));
 
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +21,7 @@ import husi.recuperapp.R;
 /**
  * Login
  */
-public class Login extends Activity{
+public class Login extends AppCompatActivity{
 
     //Intenst para activar actividades crear usuario y menu
     Intent activarCrearUsuario;
@@ -38,6 +39,7 @@ public class Login extends Activity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         //Asigna fuente personalizada al logo de RecuperApp(está en la carpeta assets)
         TextView mRecuperappText = (TextView) findViewById(R.id.recuperapp);

@@ -31,8 +31,8 @@ import husi.recuperapp.caminatas.AlarmaCaminatasReceiver;
 public class Paciente extends Application{
 
 
-    //private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    private final String URL_SERVIDOR = "http://192.168.0.20:8080/RecuperAppServer/WebServices/";
+    private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
+    //private final String URL_SERVIDOR = "http://192.168.0.20:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;

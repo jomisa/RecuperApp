@@ -125,17 +125,17 @@
         app:layout_constraintGuide_percent="0.5029354" />
 
     <ImageView
+        android:id="@+id/reloj_imagen"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:id="@+id/reloj_imagen"
-        app:layout_constraintTop_toTopOf="@+id/guideline13"
-        app:layout_constraintRight_toLeftOf="@+id/guideline15"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline14"
-        android:background="@drawable/ic_action_alarm"
+        android:layout_marginTop="8dp"
         app:layout_constraintHorizontal_bias="0.503"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline14"
+        app:layout_constraintRight_toLeftOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/guideline13"
+        app:srcCompat="@drawable/ic_set_alarm" />
 
     <ImageView
         android:layout_width="25dp"
@@ -147,7 +147,8 @@
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/ic_corazon"
+        app:srcCompat="@drawable/ic_heart_pulse"
+        android:tint="@color/blanco"
         app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintTop_toTopOf="@+id/guideline12"
         android:layout_marginTop="32dp" />
@@ -161,7 +162,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        android:background="@drawable/ic_maps_directions_walk"
+        app:srcCompat="@drawable/ic_man_walking_directions_button"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.352"
         android:layout_marginTop="32dp" />

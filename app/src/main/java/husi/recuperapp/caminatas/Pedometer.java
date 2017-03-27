@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +39,7 @@ import husi.recuperapp.accesoDatos.Funciones;
 import husi.recuperapp.accesoDatos.Paciente;
 import husi.recuperapp.R;
 
-public class Pedometer extends Activity {
+public class Pedometer extends AppCompatActivity {
 	private static final String TAG = "Pedometer";
 
     private SharedPreferences mSettings;
@@ -78,6 +79,7 @@ public class Pedometer extends Activity {
         valorPaso = 0;
 
         setContentView(R.layout.activity_pedometer);
+        getSupportActionBar().hide();
     }
 
     @Override

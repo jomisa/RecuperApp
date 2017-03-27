@@ -45,7 +45,7 @@ public class Liquidos extends AppCompatActivity {
 
         liquidos = new ArrayList<>();
 
-        liquidos.add(new Fisiologico(R.drawable.ic_tasa, "Líquidos","mL"));
+        liquidos.add(new Fisiologico(R.drawable.ic_free_breakfast, "Líquidos","mL"));
 
     }
 }

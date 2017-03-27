@@ -32,7 +32,7 @@ public class AlarmaCaminatasReceiver extends WakefulBroadcastReceiver {
         Notification n  = new Notification.Builder(context)
                 .setContentTitle(tituloNotifiacion)
                 .setContentText(mensajeNotificacion)
-                .setSmallIcon(R.drawable.ic_maps_directions_walk)
+                .setSmallIcon(R.drawable.ic_man_walking_directions_button)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setLights(Color.RED, 3000, 3000)
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })

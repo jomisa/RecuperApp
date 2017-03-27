@@ -36,7 +36,7 @@ public class MenuIngresarDatos extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principal);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
+        getSupportActionBar().setIcon(R.drawable.ic_framed_portrait);
         getSupportActionBar().setTitle("  "+ Paciente.getInstance().getNombresApellidos());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -61,13 +61,13 @@ public class MenuIngresarDatos extends AppCompatActivity {
 
         funcionalidades = new ArrayList<>();
 
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_balanza, "Datos Fisiológicos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_scale_bathroom, "Datos Fisiológicos",
                 "Ingresa datos como peso, frecuencia, nieveles de glucosa, entre otros"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_stethoscope, "Síntomas",
                 "Ingresa algún síntoma presentado, como ahogo, nauseas, entre otros"));
         funcionalidades.add(new Funcionalidad(R.drawable.ic_emoticon_with_happy_face, "Estado de ánimo",
                 "Ingresa tu estado de ánimo de hoy"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_examenes, "Exámenes Médicos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_google_drive_file, "Exámenes Médicos",
                 "Ingresa los resultados de tus exámenes médicos"));
     }
 

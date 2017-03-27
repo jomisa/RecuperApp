@@ -28,7 +28,7 @@
         android:tint="@color/blanco"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:srcCompat="@drawable/clock_with_white_face" />
+        app:srcCompat="@drawable/ic_clock_with_white_face" />
 
     <ImageView
         android:id="@+id/fecha_cita_imagen"
@@ -39,7 +39,8 @@
         android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:srcCompat="@drawable/ic_editor_insert_invitation" />
+        app:srcCompat="@drawable/ic_power_connection_indicator"
+        android:tint="@color/blanco"/>
 
     <EditText
         android:id="@+id/medico_cita_editText"

@@ -37,7 +37,7 @@ public class MenuPrincipal extends AppCompatActivity {
         setContentView(R.layout.activity_menu_principal);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
+        getSupportActionBar().setIcon(R.drawable.ic_framed_portrait);
         getSupportActionBar().setTitle("  "+ Paciente.getInstance().getNombresApellidos());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -62,15 +62,15 @@ public class MenuPrincipal extends AppCompatActivity {
 
         funcionalidades = new ArrayList<>();
 
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_directions_walk, "Realizar Caminatas",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_man_walking_directions_button, "Realizar Caminatas",
                 "Registra tus caminatas"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_maps_local_restaurant, "Alimentación",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_restaurant_menu_black, "Alimentación",
                 "Consultar comidas a evitar y regstrar líquidos"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_editor_insert_invitation, "Recordar Cita Médica",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_power_connection_indicator, "Recordar Cita Médica",
                 "Recordar mis citas médicas 1 día antes de la cita"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_action_alarm, "Medicamentos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_set_alarm, "Medicamentos",
                 "Consultar medicamentos, dosis y ajustar alarmas de medicamentos"));
-        funcionalidades.add(new Funcionalidad(R.drawable.ic_image_edit, "Ingresar Datos",
+        funcionalidades.add(new Funcionalidad(R.drawable.ic_create_new_pencil_button, "Ingresar Datos",
                 "Ingresar síntomas, mediciones, exámenes médicos y temperamento"));
 
         /*
