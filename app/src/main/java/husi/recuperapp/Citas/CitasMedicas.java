@@ -1,5 +1,6 @@
 package husi.recuperapp.citas;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -29,6 +30,10 @@ import husi.recuperapp.R;
 
 public class CitasMedicas extends AppCompatActivity {
 
+    private Intent nuevaCitaIntent;
+
+    static private final int REQUEST_CODE = 1;
+
     private List<Cita> citas;
     private List<List<String>> citasBD;
     private ListView listViewCitas;
@@ -39,26 +44,11 @@ public class CitasMedicas extends AppCompatActivity {
 
     private Button mAgendarCitaView;
 
-    //Variables para guardar resultado del Date Picker
-    private int mAno;
-    private int mMes;
-    private int mDia;
-
-    //Variables para guardar resultado del Time Picker
-    private int mHora;
-    private int mMinuto;
-
-    //Variables para guardar resultado Dialog
-    private String mNombreMedico;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citas_medicas);
-
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+Paciente.getInstance().getNombresApellidos());
+        getSupportActionBar().hide();
 
         citas = new ArrayList<>();
         citasBD = new ArrayList<>();
@@ -100,102 +90,8 @@ public class CitasMedicas extends AppCompatActivity {
     }
 
     private void presionoBotonAgendarCita(){
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ingrese el nombre del medico");
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mNombreMedico = input.getText().toString();
-                Log.i("Medico: ",mNombreMedico);
-
-                guardarcitaBDyAgendarNotificacion();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
-
-        Calendar calendario = Calendar.getInstance();
-        TimePickerDialog mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
-                mHora = selectedHour;
-                mMinuto = selectedMinute;
-
-                Log.i("Hora: ","Hora "+mHora+" minuto "+mMinuto);
-            }
-        }, calendario.get(Calendar.HOUR), calendario.get(Calendar.MINUTE), false);//true, hora militar
-        mTimePicker.setTitle("Seleccione la hora");
-        mTimePicker.show();
-
-        DatePickerDialog datePicker = new DatePickerDialog(this,new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-                mAno = selectedYear;
-                mMes = selectedMonth+1;
-                mDia = selectedDay;
-
-                Log.i("Fecha: ","Año "+mAno+" Mes "+mMes+" Dia "+mDia);
-            }
-        },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
-        datePicker.setTitle("Seleccione la fecha de la cita");
-        datePicker.show();
-    }
-
-    private void guardarcitaBDyAgendarNotificacion(){
-
-        String fecha=mAno+"/"+mMes+"/"+mDia+"-"+mHora+":"+mMinuto;
-
-        //Guarda la cita en la BD
-        Paciente.getInstance().insertarCitaBD(fecha,mNombreMedico);
-        //Actualiza el listview
-        crearListaCitas();
-        adaptadorListViewCitas.notifyDataSetChanged();
-
-        //Se agenda Notificacion
-        List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha,mNombreMedico);
-        if(citaAgendada != null) {
-            int idCita=Integer.parseInt(citaAgendada.get(0).toString());
-
-            Log.i("nueva cita con id: ",idCita+"");
-            Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
-            intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
-
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.MONTH, mMes-1);
-            cal.set(Calendar.YEAR, mAno);
-            cal.set(Calendar.DAY_OF_MONTH, mDia);
-
-            cal.set(Calendar.HOUR_OF_DAY, mHora);
-            cal.set(Calendar.MINUTE, mMinuto);
-            cal.set(Calendar.SECOND, 00);
-            cal.setTimeInMillis(cal.getTimeInMillis()-86400000);
-            Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
-            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            if (android.os.Build.VERSION.SDK_INT >= 21) {
-                Log.i("SDK >= ","21");
-                alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(cal.getTimeInMillis(), pendingIntent), pendingIntent);
-            }else if (android.os.Build.VERSION.SDK_INT >= 19) {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() ,pendingIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() ,pendingIntent);
-            }
-        }
-
+        nuevaCitaIntent = new Intent(this, NuevaCita.class);
+        startActivityForResult(nuevaCitaIntent,REQUEST_CODE);
     }
 
     private void eliminarAlarmaCita(final int posicion){
@@ -208,7 +104,8 @@ public class CitasMedicas extends AppCompatActivity {
 
             Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
             intentInfoAlarmaNotificacion.putExtra("id_cita", idCita + "");
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita, intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita,
+                    intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             pendingIntent.cancel();
@@ -219,7 +116,8 @@ public class CitasMedicas extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "Se eliminó la Cita", Toast.LENGTH_LONG).show();
         }else{
-            Toast.makeText(getApplicationContext(), "Hubo un problema eliminando la cita", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Hubo un problema eliminando la cita",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -231,7 +129,7 @@ public class CitasMedicas extends AppCompatActivity {
             //Obtiene las citas de la BD y llena la lista de citas
             int i=0;
             for (List<String> citaBD: citasBD){
-                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2)));
+                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2), citaBD.get(i + 3)));
             }
         }
     }

@@ -32,7 +32,7 @@ public class Paciente extends Application{
 
 
     //private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    private final String URL_SERVIDOR = "http://192.168.2.2:8080/RecuperAppServer/WebServices/";
+    private final String URL_SERVIDOR = "http://192.168.0.20:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
@@ -91,7 +91,8 @@ public class Paciente extends Application{
 
         Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaCaminatasReceiver.class);
         //Si ya hay una notificación creada la reemplaza
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
+                1, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2016);
@@ -101,9 +102,10 @@ public class Paciente extends Application{
         calendar.set(Calendar.MINUTE, 00);
 
         Log.i("Notific Caminat T: ",calendar.getTimeInMillis()+"");
-
+        
         //Frecuencia de repetición cada 24H
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*60*60*1000, pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+                24 * 60 * 60 * 1000, pendingIntent);
     }
 
 
@@ -137,17 +139,17 @@ public class Paciente extends Application{
         dbHelper.actualizarHoraConsumoMedicamento( id, hora, asignado);
     }
 
-    public void insertarCitaBD(String fecha, String medico) {
-        Log.i("Paciente, insertar Cita",fecha+" "+" "+medico);
-        dbHelper.insertarUnaCita(fecha ,medico);
+    public void insertarCitaBD(String fecha, String hora, String medico) {
+        Log.i("Paciente, insertar Cita",fecha+"-"+hora+" "+medico);
+        dbHelper.insertarUnaCita(fecha , hora, medico);
     }
 
     public List<List<String>> obtenerCitasBD() {
         return dbHelper.obtenerCitas();
     }
 
-    public List<Object> buscarCitaBD(String fecha, String medico ){
-        return dbHelper.buscarCita(fecha, medico);
+    public List<Object> buscarCitaBD(String fecha, String hora, String medico ){
+        return dbHelper.buscarCita(fecha, hora, medico);
     }
 
     public List<Object> buscarCitaIdBD(int idCita) {
@@ -169,10 +171,8 @@ public class Paciente extends Application{
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.i("Volley findPaciente ", response.toString());
                         if(response != null && dbHelper.obtenerPaciente() == null){
-
                             try {
                                 dbHelper.insertarUnPaciente(response.getInt("cedula"),
                                         response.getString("contrasena"), response.getString("nombres"),
@@ -188,10 +188,15 @@ public class Paciente extends Application{
                 VolleyLog.d("getVerificarPacienteRequest: ", error.getMessage());
             }
         });
+
         if(getVerificarPacienteRequest!=null) {
             getVerificarPacienteRequest.setShouldCache(false);
             colaRequest.add(getVerificarPacienteRequest);
+
+            sincronizarBD();
+            noficicarCaminata();
         }
+
     }
 
     public void insertarYpostFisiologicos(String fecha,String medicion,double valor){

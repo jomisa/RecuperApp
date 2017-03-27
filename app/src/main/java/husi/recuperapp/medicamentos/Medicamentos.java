@@ -5,15 +5,19 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TimePicker;
@@ -44,9 +48,12 @@ public class Medicamentos extends AppCompatActivity {
 
         setContentView(R.layout.activity_medicamentos);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+Paciente.getInstance().getNombresApellidos());
+        getSupportActionBar().hide();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.RED);
+        }
 
         medicamentos = new ArrayList<>();
         medicamentosBD = new ArrayList<>();
@@ -56,12 +63,12 @@ public class Medicamentos extends AppCompatActivity {
         adaptadorListViewMedicamentos = new AdaptadorListViewMedicamentos(this, medicamentos);
         listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
 
-        //Si el activity se activo por una alarma, se extrae el id de la alarma
+        //Si el activity se activó por una alarma, se extrae el id de la alarma
         intentAlarma = getIntent();
-        Bundle idAlarma = intentAlarma.getExtras();
-        if (idAlarma != null) {
-            manejarAlarma(idAlarma.getString("id_medicamento"), idAlarma.getInt("frecuencia"));
-        }
+        Bundle extras = intentAlarma.getExtras();
+        if (extras != null)
+            manejarAlarma(extras.getInt("id_medicamento"), extras.getLong("frecuencia")
+                    , extras.getLong("horaAlarma"));
 
         //Para cuadrar la alarma de un medicamento
         this.listViewMedicamentos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -90,40 +97,16 @@ public class Medicamentos extends AppCompatActivity {
     }
 
     //Este metodo se ejecta al recibir un intent de una alarma agendada
-    private void manejarAlarma(String idAlarma, int frecuencia){
+    private void manejarAlarma(int idMedicamento, long frecuencia, long horaAlarma){
 
-        //Se vuelve a agendar una alarma
-        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-
-        Log.i("id: ",idAlarma);
+        Log.i("idMedicamento: ",idMedicamento+"");
         Log.i("frecuencia: ",frecuencia+"");
-
-        intentInfoAlarma.putExtra("id_medicamento",idAlarma);
-        intentInfoAlarma.putExtra("frecuencia",frecuencia);
-
-        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(idAlarma), intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
-
+        horaAlarma=horaAlarma+frecuencia;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis()+frecuencia);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        calendar.setTimeInMillis(horaAlarma);
+        Log.i("horaAlarma: ",calendar.getTimeInMillis()+"");
 
-        Log.i("hora: ",calendar.getTimeInMillis()+"");
-
-        if (android.os.Build.VERSION.SDK_INT >= 21) {
-            Log.i("SDK >= ","21");
-            alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent), pendingIntent);
-        }else if (android.os.Build.VERSION.SDK_INT >= 19) {
-            Log.i("SDK >= ","19");
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        } else {
-            Log.i("SDK <","19");
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        }
-
-        Paciente.getInstance().actualizarMedicamentoBD(idAlarma+"", calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE),"true");
-        crearListaMedicamentos();
-
-        adaptadorListViewMedicamentos.notifyDataSetChanged();
+        crearAlarma(idMedicamento, frecuencia, calendar);
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
@@ -140,8 +123,8 @@ public class Medicamentos extends AppCompatActivity {
         AlertDialog.Builder dialogAlarma = new AlertDialog.Builder(this);
         dialogAlarma.setTitle("Hora De Tomar El Medicamento");
 
-        String mensajeDialog = Paciente.getInstance().buscarMedicamento(Integer.parseInt(idAlarma)).get(1).toString() + //1 Es la col Medicamento
-                " "+ Paciente.getInstance().buscarMedicamento(Integer.parseInt(idAlarma)).get(2).toString(); //2 es la col dosis
+        String mensajeDialog = Paciente.getInstance().buscarMedicamento(idMedicamento).get(1).toString() + //1 Es la col Medicamento
+                " "+ Paciente.getInstance().buscarMedicamento(idMedicamento).get(2).toString(); //2 es la col dosis
 
         dialogAlarma.setMessage(mensajeDialog);
         dialogAlarma.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -158,66 +141,72 @@ public class Medicamentos extends AppCompatActivity {
 
     private void cuadrarAlarmaMedicamento(final int posicion){
 
-        //adaptadorListViewMedicamentos.notifyDataSetChanged();
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
         Calendar mcurrentTime = Calendar.getInstance();
         int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         int minute = mcurrentTime.get(Calendar.MINUTE);
 
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        TimePickerDialog mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 
                 int idMedicamento = Integer.parseInt(medicamentos.get(posicion).getId());
+                Log.i("posicion lista: ", posicion + "");
+                Log.i("idMedicamento de pos: ", idMedicamento + "");
 
-                Log.i("posicion lista: ",posicion+"");
-                Log.i("idMedicamento de pos: ",idMedicamento+"");
-
-                Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
-
-                int frecuencia= Integer.parseInt(medicamentos.get(posicion).getFrecuencia());
-                frecuencia=frecuencia*60*60*1000;
-                Log.i("Frecuenca Inicial: ",frecuencia+"");
-
-                intentInfoAlarma.putExtra("id_medicamento",idMedicamento+"");
-                intentInfoAlarma.putExtra("frecuencia",frecuencia);
-
-                pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento, intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
+                long frecuencia = Long.parseLong(medicamentos.get(posicion).getFrecuencia());
+                frecuencia = frecuencia * 60 * 60 * 1000;
+                Log.i("Frecuenca Inicial: ", frecuencia + "");
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-                calendar.set(Calendar.SECOND,00);
-                //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), frecuencia*60*60*1000, pendingIntent);
+                calendar.set(Calendar.SECOND, 00);
 
-                if (android.os.Build.VERSION.SDK_INT >= 21) {
-                    Log.i("SDK >= ","21");
-                    alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent), pendingIntent);
-                }
-                else if (android.os.Build.VERSION.SDK_INT >= 19) {
-                    Log.i("SDK >= ","19");
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                } else {
-                    Log.i("SDK menor a: ","19");
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
+                Log.i("horaAlarma: ", calendar.getTimeInMillis() + "");
 
-                Long t=calendar.getTimeInMillis();
-                Log.i("Hora: ", ""+t);
+                crearAlarma(idMedicamento, frecuencia, calendar);
 
-                Toast.makeText(getApplicationContext(), "Seleccionó: " + selectedHour + ":" + selectedMinute,Toast.LENGTH_LONG).show();
 
-                Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", selectedHour + ":" + selectedMinute,"true");
-                crearListaMedicamentos();
-
-                adaptadorListViewMedicamentos.notifyDataSetChanged();
-
+                Toast.makeText(getApplicationContext(), "Seleccionó: " + selectedHour + ":" +
+                        selectedMinute,Toast.LENGTH_LONG).show();
             }
         }, hour, minute, false);//true hora militar
         mTimePicker.setTitle("Seleccione la hora");
         mTimePicker.show();
+    }
+
+    private void crearAlarma(int idMedicamento, long frecuencia, Calendar calendar){
+
+        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaMedicamentoReceiver.class);
+
+        Bundle extras = new Bundle();
+        extras.putInt("id_medicamento", idMedicamento);
+        extras.putLong("frecuencia", frecuencia);
+        extras.putLong("horaAlarma", calendar.getTimeInMillis());
+        intentInfoAlarma.putExtras(extras);
+
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idMedicamento,
+                intentInfoAlarma, PendingIntent.FLAG_UPDATE_CURRENT );
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Log.i("SDK >= ","21");
+            alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(calendar.getTimeInMillis(), pendingIntent),
+                    pendingIntent);
+        }
+        else if (android.os.Build.VERSION.SDK_INT >= 19) {
+            Log.i("SDK >= ","19");
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            Log.i("SDK menor a: ","19");
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+
+        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", calendar.get(Calendar.HOUR) +
+                ":" + calendar.get(Calendar.MINUTE),"true");
+        crearListaMedicamentos();
+
+        adaptadorListViewMedicamentos.notifyDataSetChanged();
     }
 
     private void eliminarAlarmaMedicamento(final int posicion){

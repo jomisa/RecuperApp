@@ -84,15 +84,23 @@
     <string name="citas_nueva_cita_boton">Agendar Cita</string>
     <string name="citas_fecha_titulo_texto">Fecha</string>
     <string name="citas_medico_titulo_texto">Cita con</string>
+    <string name="citas_intrsucciones">Ingresa tus futuras cítas médicas para recordartelas
+        con 1 día de anticipación</string>
 
     <!-- Cita item -->
     <string name="cita_fecha_texto">Fecha</string>
     <string name="cita_medico_texto">Medico</string>
+    <string name="cita_hora_texto">Hora</string>
     <string name="error_campo_numerico">Debe ser un número</string>
     <string name="ajustes_caminata">Ajustes</string>
     <string name="sintoma">Síntoma</string>
     <string name="descripcion_sintoma">Descripción del Síntoma</string>
-    <string name="medicamentos_evitar">Recuerde que debe evitar los siguientes medicamentos, Ibuprofeno, Medicamentos con sodio, Aspirina</string>
     <string name="animo">Ingresa tu estado de ánimo</string>
+
+    <!-- Medicamentos -->
+    <string name="medicamentos_evitar">Recuerde que debe evitar los siguientes medicamentos:\n-Ibuprofeno
+        \n-Aspirina \n-Medicamentos con sodio</string>
+    <string name="medicamento_intrucciones">Asigna alarmas a cada medicamento para recordarte
+        cuando tomarlos (presionalos sostenidamente)</string>
 
 </resources>

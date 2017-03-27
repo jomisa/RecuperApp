@@ -71,28 +71,11 @@ public class CrearUsuario extends Activity {
 
             Paciente.getInstance().verificarYcrearPaciente(Integer.parseInt(cedula), contrasena1);
 
-            //Verificar si en efecto se creo el usuario despues de esperar un tiempo
-            if(Paciente.getInstance().existePaciente()==true) {
-                Toast.makeText(this, "Se creó el usuario: " + Paciente.getInstance().getNombresApellidos(),
-                        Toast.LENGTH_LONG).show();
-
-                //Actualiza los datos del paciente
-                Paciente.getInstance().sincronizarBD();
-
-                //Crea un intent
-                activarLogin = new Intent(this, Login.class);
-                //retorna al objeto paciente en el intent a la actividad LoginUI
-                activarLogin.putExtra("usuario", Paciente.getInstance().getCedula());
-
-                //Retorna un resultado de afirmación en caso de haber un objeto paciente creado
-                setResult(Activity.RESULT_OK, activarLogin);
-                //ejecuta el metodo onDestry() de esta actividad
-
-                Paciente.getInstance().noficicarCaminata();
-
-                this.finish();
-            }else
-                Toast.makeText(this, "Hubo un problema, vuelva a crear el usuario, verifique los datos", Toast.LENGTH_LONG).show();
+            //Crea un intent
+            activarLogin = new Intent(this, Login.class);
+            setResult(Activity.RESULT_OK, activarLogin);
+            //ejecuta el metodo onDestry() de esta actividad
+            this.finish();
         }
     }
 

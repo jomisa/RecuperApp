@@ -28,9 +28,7 @@ public class Liquidos extends AppCompatActivity {
 
         setContentView(R.layout.activity_registrar_fisiologicos);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
+        getSupportActionBar().hide();
 
         this.mAlimentosRecomendadosTextView = (TextView) findViewById(R.id.recomendacionesTexto);
         mAlimentosRecomendadosTextView.setVisibility(View.VISIBLE);

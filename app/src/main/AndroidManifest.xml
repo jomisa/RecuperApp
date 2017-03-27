@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="husi.recuperapp">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -76,21 +72,39 @@
         <activity
             android:name=".fisiologicos.Liquidos"
             android:theme="@style/CustomActionBarTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".fisiologicos.Examenes"
             android:theme="@style/CustomActionBarTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".sintomas.Sintomas"
             android:theme="@style/CustomActionBarTheme" />
-
         <activity
             android:name=".estadosDeAnimo.EstadosDeAnimo"
-            android:theme="@style/CustomActionBarTheme"></activity>
+            android:theme="@style/CustomActionBarTheme" />
 
-        <receiver android:name=".medicamentos.AlarmaMedicamentoReceiver" />
-        <receiver android:name=".citas.AlarmaCitasReceiver" />
+        <activity android:name=".citas.NuevaCita"
+            android:theme="@style/CustomActionBarTheme"/>
+
+        <receiver
+            android:name=".medicamentos.AlarmaMedicamentoReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".citas.AlarmaCitasReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <receiver android:name=".caminatas.AlarmaCaminatasReceiver" />
 
         <service android:name=".caminatas.StepService" />

@@ -38,6 +38,7 @@ public class AdaptadorListViewCitas extends BaseAdapter {
             vistaFila = inflater.inflate(R.layout.item_cita, parent, false);
 
             holder.fecha = (TextView) vistaFila.findViewById(R.id.fecha_cita_texto);
+            holder.hora = (TextView) vistaFila.findViewById(R.id.medico_hora_texto);
             holder.medico = (TextView) vistaFila.findViewById(R.id.medico_cita_texto);
             holder.cita = citas.get(posicion);
 
@@ -53,6 +54,7 @@ public class AdaptadorListViewCitas extends BaseAdapter {
 
     private void llenarDatosHolder(AdaptadorListViewCitas.ViewHolder holder) {
         holder.fecha.setText(holder.cita.getFecha());
+        holder.hora.setText(holder.cita.getHora());
         holder.medico.setText(holder.cita.getMedico());
     }
 
@@ -86,6 +88,7 @@ public class AdaptadorListViewCitas extends BaseAdapter {
 
     private static class ViewHolder {
         TextView fecha;
+        TextView hora;
         TextView medico;
         Cita cita;
     }

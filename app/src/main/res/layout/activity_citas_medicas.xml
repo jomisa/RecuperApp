@@ -5,80 +5,55 @@
     android:id="@+id/activity_citas_medicas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="husi.recuperapp.citas.CitasMedicas">
+    tools:context="husi.recuperapp.citas.CitasMedicas"
+    android:background="@color/blanco">
 
     <TextView
-        android:text="Ingresa tus futuras cítas médicas para recordartelas con 1 día de anticipación"
+        android:text="@string/citas_intrsucciones"
         android:textSize="20sp"
+        android:gravity="center"
+        android:background="@color/grisOscuro"
+        android:textColor="@color/blanco"
         android:textStyle="bold"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/textViewRecordatorio"
-        app:layout_constraintLeft_toLeftOf="@+id/crear_cita_button"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:text="@string/citas_fecha_titulo_texto"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/rojoOscuro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fecha_titulo_cita"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline16"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintRight_toLeftOf="@+id/guideline18" />
-
-    <TextView
-        android:text="@string/citas_medico_titulo_texto"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/rojoOscuro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/medico_titulo_cita"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fecha_titulo_cita"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline18" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline16"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:text="@string/citas_nueva_cita_boton"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/blanco"
+        android:background="@drawable/estilo_boton_rojo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/crear_cita_button"
-        app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRecordatorio" />
-
-    <ListView
-        android:id="@+id/listViewCitas"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/guideline21"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline17" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginRight="8dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline16"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteY="121dp"
-        tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintGuide_percent="0.23679061" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline17"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30136988"
-        tools:layout_editor_absoluteY="154dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintGuide_percent="0.21" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -88,4 +63,24 @@
         app:layout_constraintGuide_percent="0.5"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="180dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.87" />
+
+    <ListView
+        android:id="@+id/listViewCitas"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

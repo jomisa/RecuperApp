@@ -28,7 +28,6 @@ public class Login extends Activity{
     static private final int REQUEST_CODE = 1;
 
     // Referencias de UI.
-    private EditText mRecuperappText;
     private EditText mUsuarioView;
     private EditText mContrasenaView;
     private Button mCrearUsuarioView;
@@ -125,8 +124,10 @@ public class Login extends Activity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent respuesta){
         if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK)
-                mUsuarioView.setText(respuesta.getStringExtra("usuario"));
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Ingrese los datos del usuario creado",
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 

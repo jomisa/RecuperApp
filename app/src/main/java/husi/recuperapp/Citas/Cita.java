@@ -8,12 +8,14 @@ public class Cita {
 
     private String id;
     private String fecha;
+    private String hora;
     private String medico;
 
-    public Cita(String id, String fecha, String medico) {
+    public Cita(String id, String fecha, String hora,String medico) {
         super();
         this.id = id;
         this.fecha = fecha;
+        this.hora = hora;
         this.medico = medico;
     }
 
@@ -23,6 +25,10 @@ public class Cita {
 
     public String getFecha() {
         return fecha;
+    }
+
+    public String getHora() {
+        return hora;
     }
 
     public String getMedico() {

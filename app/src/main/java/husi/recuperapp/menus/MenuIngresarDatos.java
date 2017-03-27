@@ -1,9 +1,13 @@
 package husi.recuperapp.menus;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -34,6 +38,12 @@ public class MenuIngresarDatos extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
         getSupportActionBar().setTitle("  "+ Paciente.getInstance().getNombresApellidos());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.RED);
+        }
 
         listView = (ListView) findViewById(R.id.listViewFunciones);
         crearListaFunciones();

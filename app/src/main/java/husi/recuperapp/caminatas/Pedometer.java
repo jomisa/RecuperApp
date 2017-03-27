@@ -224,7 +224,7 @@ public class Pedometer extends Activity {
 
     protected void onRestart() {
         Log.i(TAG, "[ACTIVITY] onRestart");
-        super.onDestroy();
+        super.onRestart();
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {

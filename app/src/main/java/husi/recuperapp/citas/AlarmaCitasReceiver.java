@@ -23,16 +23,18 @@ public class AlarmaCitasReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intentInfoAlarma) {
-        int idCita =Integer.parseInt(intentInfoAlarma.getStringExtra("id_cita"));
+        int idCita =intentInfoAlarma.getExtras().getInt("id_cita");
         List<Object> cita = Paciente.getInstance().buscarCitaIdBD(idCita);
 
-        String tituloNotifiacion = "Cita hostpital con: "+cita.get(2).toString();
-        String mensajeNotificacion = "Está agendada el día: "+cita.get(1).toString();
+        String tituloNotifiacion = "Cita hostpital con: "+cita.get(3).toString();
+        String mensajeNotificacion = "Está agendada el día: "+cita.get(1).toString()+
+                " a las "+cita.get(2).toString();
 
         Intent abrirCitas = new Intent(context, CitasMedicas.class);
         abrirCitas.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,idCita,abrirCitas,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,idCita,abrirCitas,
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
         Notification n  = new Notification.Builder(context)
                 .setContentTitle(tituloNotifiacion)
@@ -45,7 +47,8 @@ public class AlarmaCitasReceiver extends WakefulBroadcastReceiver {
                 .setAutoCancel(true)
                 .build();
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0, n);
     }
 }

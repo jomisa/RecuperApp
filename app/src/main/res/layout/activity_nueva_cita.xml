@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="husi.recuperapp.citas.NuevaCita"
+    android:background="@color/grisOscuro">
+
+    <ImageView
+        android:id="@+id/medico_cita_imagen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_stethoscope" />
+
+    <ImageView
+        android:id="@+id/reloj_cita_imagen"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:tint="@color/blanco"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:srcCompat="@drawable/clock_with_white_face" />
+
+    <ImageView
+        android:id="@+id/fecha_cita_imagen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:srcCompat="@drawable/ic_editor_insert_invitation" />
+
+    <EditText
+        android:id="@+id/medico_cita_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Nombre del médico"
+        android:backgroundTint="@color/rojoClaro"
+        android:inputType="textPersonName"
+        android:textColor="@color/grisMedio"
+        android:textColorHint="@color/grisMedio"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/medico_cita_imagen"
+        app:layout_constraintLeft_toRightOf="@+id/medico_cita_imagen"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/medico_cita_imagen"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <TextView
+        android:id="@+id/hora_cita_texto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Ingrese la Hora"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/grisMedio"
+        app:layout_constraintLeft_toRightOf="@+id/reloj_cita_imagen"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/reloj_cita_imagen"
+        app:layout_constraintBottom_toBottomOf="@+id/reloj_cita_imagen"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/fecha_cita_texto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Ingrese la Fecha"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:textColor="@color/grisMedio"
+        app:layout_constraintLeft_toRightOf="@+id/fecha_cita_imagen"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fecha_cita_imagen"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/fecha_cita_imagen"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <Button
+        android:id="@+id/nueva_cita_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Recordar Cita"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="@color/blanco"
+        android:background="@drawable/estilo_boton_rojo"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/rojoClaro"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/view"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/medico_cita_imagen"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/rojoClaro"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/reloj_cita_imagen"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
+
+</android.support.constraint.ConstraintLayout>

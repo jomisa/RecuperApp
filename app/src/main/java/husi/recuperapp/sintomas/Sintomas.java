@@ -26,9 +26,7 @@ public class Sintomas extends AppCompatActivity {
 
         setContentView(R.layout.activity_registrar_fisiologicos);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_image_portrait);
-        getSupportActionBar().setTitle("  "+paciente.getNombresApellidos());
+        getSupportActionBar().hide();
 
         this.listView = (ListView) findViewById(R.id.listViewFisiologicos);
 
