@@ -36,11 +36,12 @@
         android:textSize="15sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintLeft_toRightOf="@+id/hora_alarma_imagen"
         android:layout_marginLeft="8dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/dosis_medicamento_texto"
@@ -51,12 +52,13 @@
         android:textColor="@color/grisOscuro"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintLeft_toRightOf="@+id/dosis_alarma_imagen"
         app:layout_constraintVertical_bias="0.0"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp" />
 
     <TextView
         android:id="@+id/frecuencia_medicamento_texto"
@@ -67,12 +69,13 @@
         android:textColor="@color/grisOscuro"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintLeft_toRightOf="@+id/frecuencia_alarma_imagen"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintVertical_bias="0.0"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp" />
 
     <ImageView
         android:id="@+id/pildora_alarma_imagen"
@@ -92,12 +95,13 @@
         android:layout_height="40dp"
         android:tint="@color/grisMedio"
         app:srcCompat="@drawable/clock_with_white_face"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        app:layout_constraintVertical_bias="0.625"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline17"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        android:layout_marginTop="0dp" />
 
     <ImageView
         android:id="@+id/frecuencia_alarma_imagen"
@@ -105,11 +109,13 @@
         android:layout_height="40dp"
         app:srcCompat="@drawable/history_clock_button"
         android:tint="@color/grisMedio"
-        app:layout_constraintTop_toTopOf="@+id/guideline23"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline22"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline23"
+        android:layout_marginTop="0dp" />
 
     <ImageView
         android:id="@+id/dosis_alarma_imagen"
@@ -118,10 +124,12 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:tint="@color/grisMedio"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/dosis"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
-        app:srcCompat="@drawable/dosis" />
+        android:layout_marginTop="0dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -149,28 +157,32 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="4dp"
-        app:layout_constraintTop_toTopOf="@+id/guideline26" />
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
         android:id="@+id/separador1"
         android:layout_width="2dp"
         android:layout_height="0dp"
         android:background="@color/grisMedio"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline24"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline17" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline17"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <View
         android:id="@+id/separador2"
         android:layout_width="2dp"
         android:layout_height="0dp"
         android:background="@color/grisMedio"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline24"
         app:layout_constraintRight_toLeftOf="@+id/guideline22"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="8dp" />
 
     <TextView
         android:id="@+id/dos"
@@ -224,27 +236,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline23"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.24"
-        tools:layout_editor_absoluteY="60dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintGuide_percent="0.52" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline24"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16"
-        tools:layout_editor_absoluteY="40dp"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline26"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.44"
-        tools:layout_editor_absoluteY="110dp"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintGuide_percent="0.37" />
 
     <TextView
         android:id="@+id/textView"
@@ -255,11 +254,12 @@
         android:textStyle="bold"
         android:textColor="@color/grisMedio"
         android:gravity="center_vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/guideline23"
         app:layout_constraintLeft_toRightOf="@+id/frecuencia_medicamento_texto"
         android:layout_marginLeft="8dp"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp" />
 
 </android.support.constraint.ConstraintLayout>
