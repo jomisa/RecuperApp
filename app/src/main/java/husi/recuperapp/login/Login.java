@@ -1,6 +1,5 @@
 package husi.recuperapp.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 
