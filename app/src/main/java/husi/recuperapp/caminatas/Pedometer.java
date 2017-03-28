@@ -18,7 +18,6 @@
 
 package husi.recuperapp.caminatas;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -63,7 +62,6 @@ public class Pedometer extends AppCompatActivity {
     private Button mBotonEmpezar;
     private Button mBotonTerminar;
     private Button mBotonFinalizar;
-    private Button mBotonSettings;
 
     /**
      * True, when service is running.
@@ -102,7 +100,6 @@ public class Pedometer extends AppCompatActivity {
         mBotonEmpezar = (Button) findViewById(R.id.empezar_caminata_button);
         mBotonTerminar = (Button) findViewById(R.id.terminar_caminata_button);
         mBotonFinalizar = (Button) findViewById(R.id.finalizar_caminata_button);
-        mBotonSettings = (Button) findViewById(R.id.ajustes_caminata_button);
 
         mValorPasoView     = (TextView) findViewById(R.id.pasos_dato_texto);
         mValorDistanciaView = (TextView) findViewById(R.id.distancia_dato_texto);
@@ -114,7 +111,6 @@ public class Pedometer extends AppCompatActivity {
         }else{//en caso de abrir caminata por primera vez
             mBotonTerminar.setVisibility(View.GONE);
             mBotonFinalizar.setVisibility(View.GONE);
-            mBotonSettings.setVisibility(View.VISIBLE);
             mValorTiempoView.setText("0");
         }
 
@@ -185,13 +181,6 @@ public class Pedometer extends AppCompatActivity {
             public void onClick(View v) {
                 resetValues(true);
                 finish();
-            }
-        });
-
-        mBotonSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent settingsActivity = new Intent(getApplicationContext(), Settings.class);
-                startActivity(settingsActivity);
             }
         });
 

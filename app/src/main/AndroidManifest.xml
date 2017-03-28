@@ -32,7 +32,7 @@
             android:theme="@style/CustomActionBarTheme" />
         <activity
             android:name=".menus.MenuPrincipal"
-            android:theme="@style/CustomActionBarTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".fisiologicos.RegistrarFisiologicos"
             android:theme="@style/CustomActionBarTheme"
@@ -55,7 +55,8 @@
         </activity>
         <activity
             android:name=".caminatas.Settings"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/PreferenceScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +69,7 @@
             android:theme="@style/CustomActionBarTheme" />
         <activity
             android:name=".menus.MenuIngresarDatos"
-            android:theme="@style/CustomActionBarTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".fisiologicos.Liquidos"
             android:theme="@style/CustomActionBarTheme"

@@ -5,16 +5,21 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import husi.recuperapp.R;
+import husi.recuperapp.caminatas.Settings;
 import husi.recuperapp.citas.CitasMedicas;
 import husi.recuperapp.caminatas.Pedometer;
 import husi.recuperapp.fisiologicos.Liquidos;
@@ -36,9 +41,11 @@ public class MenuPrincipal extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu_principal);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_framed_portrait);
-        getSupportActionBar().setTitle("  "+ Paciente.getInstance().getNombresApellidos());
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMenuPrincipal);
+        setSupportActionBar(myToolbar);
+        TextView usuario = (TextView) findViewById(R.id.toolbarUserTextView);
+        usuario.setText(Paciente.getInstance().getNombresApellidos());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -56,6 +63,19 @@ public class MenuPrincipal extends AppCompatActivity {
                 activarActivity(posicion);
             }
         });
+
+        findViewById(R.id.toolbarSettingsImageview).setOnClickListener(abrirAjustes());
+        findViewById(R.id.toolbarSettingsTextView).setOnClickListener(abrirAjustes());
+    }
+
+    private View.OnClickListener abrirAjustes(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingsActivity = new Intent(getApplicationContext(), Settings.class);
+                startActivity(settingsActivity);
+            }
+        };
     }
 
     private void crearListaFunciones() {

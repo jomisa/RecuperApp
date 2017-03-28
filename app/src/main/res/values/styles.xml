@@ -8,13 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background"  tools:ignore="NewApi">@color/rojoClaro</item>
-        <item name="background">@color/rojoClaro</item>
-    </style>
-
+    <!-- ActionBar -->
     <style name="CustomActionBarTheme" parent="@style/Theme.AppCompat.Light">
         <item name="android:actionBarStyle"   tools:ignore="NewApi">@style/MyActionBar</item>
         <item name="actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <!-- ActionBar Background -->
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background"  tools:ignore="NewApi">@color/rojoClaro</item>
+        <item name="background">@color/rojoClaro</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <!-- ActionBar title text -->
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/blanco</item>
+    </style>
+
+    <style name="PreferenceScreen" parent="@style/Theme.AppCompat.Light">
+        <item name="android:textColor">@color/grisMedio</item>
     </style>
 </resources>
