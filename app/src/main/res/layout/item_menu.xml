@@ -27,6 +27,7 @@
         android:id="@+id/funcionalidad_texto"
         android:layout_width="0dp"
         android:text="@string/funcionalidad"
+        android:gravity="center_vertical"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@color/rojoClaro"

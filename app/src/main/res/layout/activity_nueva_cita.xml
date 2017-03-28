@@ -20,7 +20,7 @@
 
     <ImageView
         android:id="@+id/reloj_cita_imagen"
-        android:layout_width="50dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
@@ -47,22 +47,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="13dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginRight="50dp"
         android:ems="10"
         android:hint="Nombre del médico"
-        android:backgroundTint="@color/rojoClaro"
+        android:backgroundTint="@color/blanco"
         android:inputType="textPersonName"
-        android:textColor="@color/grisMedio"
+        android:textColor="@color/blanco"
         android:textColorHint="@color/grisMedio"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/medico_cita_imagen"
         app:layout_constraintLeft_toRightOf="@+id/medico_cita_imagen"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toTopOf="@+id/medico_cita_imagen"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintVertical_bias="0.521" />
 
     <TextView
         android:id="@+id/hora_cita_texto"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="@+id/reloj_cita_imagen"
         app:layout_constraintBottom_toBottomOf="@+id/reloj_cita_imagen"
         app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
 
