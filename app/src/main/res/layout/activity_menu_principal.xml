@@ -9,12 +9,8 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarMenuPrincipal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/rojoClaro"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -30,7 +26,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/guideline11"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.18"
+        tools:layout_editor_absoluteY="102dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
         android:id="@+id/toolbarUserImageview"
@@ -40,7 +38,8 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline11"
+        android:layout_marginStart="8dp" />
 
     <ImageView
         android:id="@+id/toolbarSettingsImageview"
@@ -50,13 +49,13 @@
         android:layout_marginTop="4dp"
         app:layout_constraintRight_toRightOf="@+id/toolbarMenuPrincipal"
         app:layout_constraintTop_toTopOf="@+id/toolbarMenuPrincipal"
-        app:srcCompat="@drawable/ic_settings_cogwheel_button" />
+        app:srcCompat="@drawable/ic_settings_cogwheel_button"
+        android:layout_marginEnd="4dp" />
 
     <TextView
         android:id="@+id/toolbarUserTextView"
         android:layout_width="0dp"
         android:layout_height="27dp"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Nombre y Apellidos"
@@ -65,7 +64,9 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbarUserImageview"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/toolbarUserImageview"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/toolbarSettingsTextView"
@@ -77,9 +78,8 @@
         app:layout_constraintRight_toLeftOf="@+id/toolbarSettingsImageview"
         android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarSettingsImageview"
-        android:layout_marginBottom="0dp"
         app:layout_constraintTop_toTopOf="@+id/toolbarSettingsImageview"
-        android:layout_marginTop="0dp" />
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/toolbarUsuarioTextView"
@@ -91,14 +91,15 @@
         app:layout_constraintLeft_toRightOf="@+id/toolbarUserImageview"
         android:layout_marginLeft="8dp"
         app:layout_constraintTop_toTopOf="@+id/toolbarUserImageview"
-        android:layout_marginTop="0dp" />
+        android:layout_marginStart="8dp" />
 
     <ListView
         android:id="@+id/listViewFunciones"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="0dp"
         android:descendantFocusability="beforeDescendants"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:windowSoftInputMode="adjustPan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

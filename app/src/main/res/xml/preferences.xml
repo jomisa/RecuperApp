@@ -33,5 +33,35 @@
                 android:defaultValue="20" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="RecuperApp">
+
+        <Preference
+            android:key="prefenceApp"
+            android:selectable="false"
+            android:title="Versión"
+            android:summary="Alpha 2.0"/>
+
+        <Preference
+            android:key="prefenceLicencia"
+            android:selectable="false"
+            android:title="Licencia"
+            android:summary="Apache 2.0"/>
+
+        <Preference
+            android:key="prefenceCreador"
+            android:selectable="false"
+            android:title="Creada por"
+            android:summary="José Miguel Sánchez Sanabria, Colombia \n Email: jmss10@hotmail.com"/>
+
+        <Preference
+            android:key="prefenceColaboradores"
+            android:selectable="false"
+            android:title="Colaboradores"
+            android:summary="Agradecimientos a Levente Bagi por proveer el código fuente de android-pedometer
+ por medio del licenciamiento GNU General Public License"/>
+
+    </PreferenceCategory>
     
 </PreferenceScreen>
