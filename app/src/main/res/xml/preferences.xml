@@ -50,10 +50,10 @@
             android:summary="Apache 2.0"/>
 
         <Preference
-            android:key="prefenceCreador"
+            android:key="prefenceAutor"
             android:selectable="false"
-            android:title="Creada por"
-            android:summary="José Miguel Sánchez Sanabria, Colombia \n Email: jmss10@hotmail.com"/>
+            android:title="Autor"
+            android:summary=" José Miguel Sánchez Sanabria \n Cali, Colombia \n Email: jmss10@hotmail.com"/>
 
         <Preference
             android:key="prefenceColaboradores"

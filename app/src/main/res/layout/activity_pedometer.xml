@@ -7,6 +7,76 @@
     android:background="@color/grisOscuro">
 
     <TextView
+        android:id="@+id/instruccPodoTituloTexto"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="bottom"
+        android:background="@color/rojoClaro"
+        android:paddingLeft="4dp"
+        android:text="Intrucciones"
+        android:textColor="@color/blanco"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:id="@+id/textViewPodo"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="@color/rojoClaro"
+        android:padding="10dp"
+        android:text="Pulsa el botón redondo para empezar a registrar tu caminata, al finalizar presiona nuevamente el botón"
+        android:textColor="@color/negro"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/instruccPodoTituloTexto"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/instruccionesPodoTituloTexto"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="bottom"
+        android:background="@color/grisMedio"
+        android:paddingLeft="4dp"
+        android:text="Recoemndaciones"
+        android:textColor="@color/blanco"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPodo"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/instruccionesPodoTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="0dp"
+        android:background="@color/grisMedio"
+        android:padding="10dp"
+        android:text="Recuerda realizar tu prueba semanal de 5 minutos"
+        android:textColor="@color/negro"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/instruccionesPodoTituloTexto"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="0dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
         android:text="@string/pasos"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -114,8 +184,8 @@
 
     <ImageView
         android:id="@+id/reloj_imagen"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -126,39 +196,39 @@
         app:srcCompat="@drawable/ic_set_alarm" />
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
         android:id="@+id/pasos_imagen"
-        app:layout_constraintRight_toLeftOf="@+id/guideline14"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        app:srcCompat="@drawable/ic_heart_pulse"
+        android:layout_marginTop="32dp"
         android:tint="@color/blanco"
         app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline14"
         app:layout_constraintTop_toTopOf="@+id/guideline12"
-        android:layout_marginTop="32dp" />
+        app:srcCompat="@drawable/ic_heart_pulse" />
 
     <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
         android:id="@+id/metros_imagen"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline15"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_man_walking_directions_button"
         android:layout_marginLeft="8dp"
-        app:layout_constraintHorizontal_bias="0.352"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline15"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:srcCompat="@drawable/ic_man_walking_directions_button" />
 
     <TextView
         android:id="@+id/tiempo_dato_texto"
-        android:layout_width="35dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="8dp"
@@ -171,7 +241,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline14"
         app:layout_constraintRight_toLeftOf="@+id/tiempo_texto"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="0dp" />
 
     <TextView
         android:text="0"
@@ -258,13 +329,28 @@
         tools:layout_editor_absoluteX="270dp" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/imageView10"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline10"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline14"
-        app:layout_constraintRight_toLeftOf="@+id/guideline15"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_man_walking_directions_button" />
+        android:layout_height="15dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/degradado"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/instruccionesPodoTituloTexto"
+        android:layout_marginTop="0dp" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/degradado"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instruccionesPodoTexto" />
 
 </android.support.constraint.ConstraintLayout>

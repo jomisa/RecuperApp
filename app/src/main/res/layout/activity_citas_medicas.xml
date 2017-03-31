@@ -9,24 +9,36 @@
     android:background="@color/blanco">
 
     <TextView
-        android:text="@string/citas_intrsucciones"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:background="@color/grisOscuro"
-        android:textColor="@color/blanco"
-        android:textStyle="bold"
+        android:id="@+id/citas_instrucciones_titulo"
+        android:text="Instrucciones"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="bottom"
+        android:paddingLeft="4dp"
+        android:background="@color/rojoClaro"
+        android:textColor="@color/blanco"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <TextView
         android:id="@+id/textViewRecordatorio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/rojoClaro"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        android:text="@string/citas_intrsucciones"
+        android:textColor="@color/negro"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="0dp"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline16"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/citas_instrucciones_titulo" />
 
     <Button
         android:text="@string/citas_nueva_cita_boton"
@@ -46,41 +58,37 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginRight="8dp" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline16"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.21" />
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline18"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="180dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.87" />
+        app:layout_constraintGuide_percent="0.87"
+        tools:layout_editor_absoluteY="445dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ListView
         android:id="@+id/listViewCitas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline21"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline16"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRecordatorio" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/degradado"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/listViewCitas" />
 </android.support.constraint.ConstraintLayout>

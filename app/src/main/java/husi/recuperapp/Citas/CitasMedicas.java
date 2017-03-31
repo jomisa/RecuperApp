@@ -4,11 +4,15 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -41,6 +45,12 @@ public class CitasMedicas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citas_medicas);
         getSupportActionBar().hide();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.RED);
+        }
 
         citas = new ArrayList<>();
         citasBD = new ArrayList<>();

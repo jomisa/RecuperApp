@@ -26,8 +26,8 @@
     <string name="medicion">Medición</string>
     <string name="unidades">Unidades</string>
     <string name="ingresar">Ingresar</string>
-    <string name="reomendaciones_alimento">Evite alimentos con altos contenidos en sal cómo:
-        Atún, Sardinas y papas fritas</string>
+    <string name="reomendaciones_alimento">Evite alimentos con altos contenidos en sal cómo: \n - Atún
+        \n - Sardinas \n - papas fritas</string>
 
     <!-- Caminata -->
     <string name="caminata">Caminar</string>
@@ -81,11 +81,11 @@
     <string name="actionbar_usuario">Nombre</string>
 
     <!-- Citas -->
-    <string name="citas_nueva_cita_boton">Agendar Cita</string>
+    <string name="citas_nueva_cita_boton">Recordar Cita</string>
     <string name="citas_fecha_titulo_texto">Fecha</string>
     <string name="citas_medico_titulo_texto">Cita con</string>
     <string name="citas_intrsucciones">Ingresa tus futuras cítas médicas para recordartelas
-        con 1 día de anticipación</string>
+        con 1 día de anticipación, presiona el botón recordar cita si tienes alguna pendiente</string>
 
     <!-- Cita item -->
     <string name="cita_fecha_texto">Fecha</string>
