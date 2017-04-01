@@ -40,7 +40,7 @@ public class Medicamentos extends AppCompatActivity {
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
 
-    Intent intentAlarma;
+    private Intent intentAlarma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,8 +203,7 @@ public class Medicamentos extends AppCompatActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
-        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", calendar.get(Calendar.HOUR) +
-                ":" + calendar.get(Calendar.MINUTE),"true");
+        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", calendar.getTimeInMillis(),"true");
 
         crearListaMedicamentos();
         listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
@@ -222,7 +221,7 @@ public class Medicamentos extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Se eliminó la Alarma",Toast.LENGTH_LONG).show();
 
-        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", "Sin Asignar","false");
+        Paciente.getInstance().actualizarMedicamentoBD(idMedicamento+"", 0 ,"false");
 
         crearListaMedicamentos();
         listViewMedicamentos.setAdapter(adaptadorListViewMedicamentos);
@@ -231,6 +230,8 @@ public class Medicamentos extends AppCompatActivity {
 
     private void crearListaMedicamentos() {
 
+        Calendar hora = Calendar.getInstance();
+
         medicamentosBD = Paciente.getInstance().obtenerMedicamentosBD();
         Log.i("obtener medicamentosBD ","");
 
@@ -238,10 +239,20 @@ public class Medicamentos extends AppCompatActivity {
             Log.i("medicamentosBD ","");
             medicamentos.clear();
             //Obtiene los medicamentos de la BD y Llena la lista de medicamentos
-            int i = 0;
+            String horaS="Sin Asignar";
+            int hour;
+            int minute;
             for (List<String> medicamentoBD: medicamentosBD) {
-                medicamentos.add(new Medicamento(medicamentoBD.get(i), medicamentoBD.get(i + 1), medicamentoBD.get(i + 2)
-                        , medicamentoBD.get(i + 3), medicamentoBD.get(i + 4), medicamentoBD.get(i + 6)));
+                if(medicamentoBD.get(4)!="0"){
+                    Log.i("Medicamentos alarma BD ",Long.valueOf(medicamentoBD.get(4))+"");
+                    hora.setTimeInMillis(Long.valueOf(medicamentoBD.get(4)));
+                    Log.i("Medicamentos alarma ",hora.getTimeInMillis()+"");
+                    hour = hora.get(Calendar.HOUR_OF_DAY);
+                    minute = hora.get(Calendar.MINUTE);
+                    horaS=hour+":"+minute;
+                }
+                medicamentos.add(new Medicamento(medicamentoBD.get(0), medicamentoBD.get(1),
+                        medicamentoBD.get(2), medicamentoBD.get(3), horaS, medicamentoBD.get(6)));
             }
         }
     }

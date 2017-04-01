@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import husi.recuperapp.R;
 import husi.recuperapp.accesoDatos.Paciente;
@@ -124,46 +125,41 @@ public class NuevaCita extends AppCompatActivity {
             return;
         }
 
-        String fecha=mAno+"/"+mMes+"/"+mDia;
-        String hora=mHora+":"+mMinuto;
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, mMes-1);
+        cal.set(Calendar.YEAR, mAno);
+        cal.set(Calendar.DAY_OF_MONTH, mDia);
+
+        cal.set(Calendar.HOUR_OF_DAY, mHora);
+        cal.set(Calendar.MINUTE, mMinuto);
+        cal.set(Calendar.SECOND, 00);
+        cal.setTimeInMillis(cal.getTimeInMillis()-86400000);
+        Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
 
         //Guarda la cita en la BD
-        Paciente.getInstance().insertarCitaBD(fecha, hora, mNombreMedico);
+        Paciente.getInstance().insertarCitaBD(cal.getTimeInMillis(), mNombreMedico);
 
         //Se agenda Notificacion
-        List<Object> citaAgendada = Paciente.getInstance().buscarCitaBD(fecha, hora, mNombreMedico);
-        if(citaAgendada != null) {
-            int idCita=Integer.parseInt(citaAgendada.get(0).toString());
+        int idCita= Integer.parseInt( Paciente.getInstance().buscarCitaBD(cal.getTimeInMillis(),
+                mNombreMedico).get(0));
 
-            Log.i("nueva cita con id: ",idCita+"");
-            Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
-            Bundle extras = new Bundle();
-            extras.putInt("id_cita", idCita);
-            intentInfoAlarmaNotificacion.putExtras(extras);
+        Log.i("nueva cita con id: ",idCita+"");
+        Intent intentInfoAlarmaNotificacion = new Intent(getApplicationContext(), AlarmaCitasReceiver.class);
+        Bundle extras = new Bundle();
+        extras.putInt("id_cita", idCita);
+        intentInfoAlarmaNotificacion.putExtras(extras);
 
-            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita,
-                    intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), idCita,
+                intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.MONTH, mMes-1);
-            cal.set(Calendar.YEAR, mAno);
-            cal.set(Calendar.DAY_OF_MONTH, mDia);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis() ,pendingIntent);
 
-            cal.set(Calendar.HOUR_OF_DAY, mHora);
-            cal.set(Calendar.MINUTE, mMinuto);
-            cal.set(Calendar.SECOND, 00);
-            cal.setTimeInMillis(cal.getTimeInMillis()-86400000);
-            Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
-
-            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis() ,pendingIntent);
-
-            //Crea un intent
-            activarCitasMedicas = new Intent(this, CitasMedicas.class);
-            setResult(Activity.RESULT_OK, activarCitasMedicas);
-            //ejecuta el metodo onDestry() de esta actividad
-            this.finish();
-        }
+        //Crea un intent
+        activarCitasMedicas = new Intent(this, CitasMedicas.class);
+        setResult(Activity.RESULT_OK, activarCitasMedicas);
+        //ejecuta el metodo onDestry() de esta actividad
+        this.finish();
 
     }
 }

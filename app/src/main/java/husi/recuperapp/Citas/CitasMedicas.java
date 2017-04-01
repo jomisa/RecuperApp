@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import husi.recuperapp.accesoDatos.Paciente;
@@ -135,13 +136,27 @@ public class CitasMedicas extends AppCompatActivity {
 
     private void crearListaCitas() {
         citasBD = Paciente.getInstance().obtenerCitasBD();
+        Calendar fecha = Calendar.getInstance();
+        int dia;
+        int mes;
+        int ano;
+        int hora;
+        int minuto;
 
         if(citasBD!=null){
             citas.clear();
             //Obtiene las citas de la BD y llena la lista de citas
-            int i=0;
             for (List<String> citaBD: citasBD){
-                citas.add(new Cita(citaBD.get(i), citaBD.get(i + 1), citaBD.get(i + 2), citaBD.get(i + 3)));
+                fecha.setTimeInMillis(Long.valueOf(citaBD.get(1)));
+                dia = fecha.get(Calendar.DAY_OF_MONTH);
+                dia=dia+1;
+                mes = fecha.get(Calendar.MONTH);
+                mes=mes+1;
+                ano = fecha.get(Calendar.YEAR);
+                hora = fecha.get(Calendar.HOUR_OF_DAY);
+                minuto = fecha.get(Calendar.MINUTE);
+
+                citas.add(new Cita(citaBD.get(0), dia+"/"+mes+"/"+ano, hora+":"+minuto , citaBD.get(2)));
             }
         }
     }

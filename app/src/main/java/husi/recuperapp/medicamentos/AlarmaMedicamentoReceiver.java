@@ -1,10 +1,17 @@
 package husi.recuperapp.medicamentos;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+
+import java.util.Calendar;
+import java.util.List;
+
+import husi.recuperapp.accesoDatos.Paciente;
 
 /**
  * Created by jmss1 on 4/10/2016.
@@ -16,7 +23,7 @@ public class AlarmaMedicamentoReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(final Context contexto, Intent intentInfoAlarma) {
-
+        Log.i("AlarmaMedicReceiver: ", "onReceive");
         Log.i("Receiver ","id_medicamento: "+intentInfoAlarma.getExtras().getInt("id_medicamento"));
         Log.i("Receiver ","frecuencia: "+intentInfoAlarma.getExtras().getLong("frecuencia"));
         Log.i("Receiver ","horaAlarma: "+intentInfoAlarma.getExtras().getLong("horaAlarma"));

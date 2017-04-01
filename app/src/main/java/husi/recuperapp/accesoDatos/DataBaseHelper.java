@@ -72,8 +72,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String TABLA_CITAS = "tabla_citas";
     public static final String COL_1_CITAS = "ID";
     public static final String COL_2_CITAS = "FECHA";
-    public static final String COL_3_CITAS = "HORA";
-    public static final String COL_4_CITAS = "MEDICO";
+    public static final String COL_3_CITAS = "MEDICO";
 
     public static final String CREAR_TABLA_PACIENTE = "create table " + TABLA_PACIENTE + " " +
             "(" + COL_1_PACIENTE + " INTEGER PRIMARY KEY, " + COL_2_PACIENTE + " TEXT," +
@@ -102,14 +101,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String CREAR_TABLA_MEDICAMENTOS = "create table " + TABLA_MEDICAMENTOS + " " +
             "("+COL_1_MEDICAMENTOS+" INTEGER PRIMARY KEY, " + COL_2_MEDICAMENTOS +
             " TEXT," + COL_3_MEDICAMENTOS + " TEXT," + COL_4_MEDICAMENTOS + " TEXT," + COL_5_MEDICAMENTOS
-            + " TEXT," + COL_6_MEDICAMENTOS + " TEXT," + COL_7_MEDICAMENTOS +" TEXT)";
+            + " INTEGER," + COL_6_MEDICAMENTOS + " TEXT," + COL_7_MEDICAMENTOS +" TEXT)";
 
     public static final String CREAR_TABLA_LISTA_SINTOMAS = "create table " + TABLA_LISTA_SINTOMAS + " " +
             "("+COL_1_LISTA_SINTOMAS+" INTEGER PRIMARY KEY, " + COL_2_LISTA_SINTOMAS + " TEXT )";
 
     public static final String CREAR_TABLA_CITAS = "create table " + TABLA_CITAS + " " +
             "("+COL_1_CITAS+" INTEGER PRIMARY KEY " + "AUTOINCREMENT," + COL_2_CITAS +
-            " TEXT," + COL_3_CITAS + " TEXT," + COL_4_CITAS + " TEXT)";
+            " INTEGER," + COL_3_CITAS + " TEXT)";
 
     public DataBaseHelper(Context context) {
         super(context, NOMBRE_BD, null, 1);
@@ -374,7 +373,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //Medicamentos
 
     public boolean insertarUnMedicamento(String id, String medicamento, String dosis,
-                                         String frecuencia, String hora,String sintoma,
+                                         String frecuencia, long hora,String sintoma,
                                          String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -404,12 +403,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         ArrayList<String> medicamento;
 
         while (resultado.moveToNext()) {
-            medicamento = new ArrayList<String>();
+            medicamento = new ArrayList<>();
             medicamento.add(resultado.getString(0));
             medicamento.add(resultado.getString(1));
             medicamento.add(resultado.getString(2));
             medicamento.add(resultado.getString(3));
-            medicamento.add(resultado.getString(4));
+            medicamento.add(String.valueOf(resultado.getLong(4)));
             medicamento.add(resultado.getString(5));
             medicamento.add(resultado.getString(6));
 
@@ -431,7 +430,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean actualizarUnMedicamento(String id, String medicamento, String dosis,
-                                           String frecuencia, String hora, String sintoma,
+                                           String frecuencia, int hora, String sintoma,
                                            String asignado) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -445,7 +444,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean actualizarHoraConsumoMedicamento(String id, String hora, String asignado){
+    public boolean actualizarHoraConsumoMedicamento(String id, long hora, String asignado){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_5_MEDICAMENTOS, hora);
@@ -472,7 +471,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 medicamento.add(resultado.getString(1));
                 medicamento.add(resultado.getString(2));
                 medicamento.add(resultado.getString(3));
-                medicamento.add(resultado.getString(4));
+                medicamento.add(String.valueOf(resultado.getInt(4)));
                 medicamento.add(resultado.getString(5));
                 medicamento.add(resultado.getString(6));
             }
@@ -587,12 +586,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     //Citas
 
-    public boolean insertarUnaCita(String fecha, String hora, String medico) {
+    public boolean insertarUnaCita(long fecha, String medico) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2_CITAS, fecha);
-        contentValues.put(COL_3_CITAS, hora);
-        contentValues.put(COL_4_CITAS, medico);
+        contentValues.put(COL_3_CITAS, medico);
         long result = db.insert(TABLA_CITAS, null, contentValues);
         if (result == -1)
             return false;
@@ -608,15 +606,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return null;
         }
 
-        List<List<String>> citas = new ArrayList<List<String>>();
+        List<List<String>> citas = new ArrayList<>();
         ArrayList<String> cita;
 
         while (resultado.moveToNext()) {
-            cita = new ArrayList<String>();
+            cita = new ArrayList<>();
             cita.add(resultado.getString(0));
-            cita.add(resultado.getString(1));
+            cita.add(String.valueOf(resultado.getLong(1)));
             cita.add(resultado.getString(2));
-            cita.add(resultado.getString(3));
 
             citas.add(cita);
         }
@@ -624,14 +621,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return citas;
     }
 
-    public List<Object> buscarCita(String fecha, String hora, String medico){
-        List<Object> cita= new ArrayList<>();
+    public List<String> buscarCita(long fecha, String medico){
+        List<String> cita= new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor resultado = db.rawQuery("select * from " + TABLA_CITAS + " where "+
-                COL_2_CITAS + " = " + "'"+fecha+"'" + " and " + COL_3_CITAS + " = " + "'"+hora+"'" +
-                " and "+ COL_4_CITAS + " = " + "'"+medico+"'", null);
+                COL_2_CITAS + " = " +fecha + " and "+ COL_3_CITAS + " = " +"'"+medico+"'", null);
         if(resultado.getCount() == 0) {
             Log.i("BD: ","No existe la cita ");
             return null;
@@ -639,16 +635,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             while (resultado.moveToNext()) {
                 cita = new ArrayList<>();
                 cita.add(resultado.getString(0));
-                cita.add(resultado.getString(1));
+                cita.add(String.valueOf(resultado.getLong(1)));
                 cita.add(resultado.getString(2));
-                cita.add(resultado.getString(3));
             }
             return cita;
         }
     }
 
-    public List<Object> buscarCitaId(int idCita) {
-        List<Object> cita = new ArrayList<>();
+    public List<String> buscarCitaId(int idCita) {
+        List<String> cita = new ArrayList<>();
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -663,7 +658,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 cita.add(resultado.getString(0));
                 cita.add(resultado.getString(1));
                 cita.add(resultado.getString(2));
-                cita.add(resultado.getString(3));
             }
             return cita;
         }

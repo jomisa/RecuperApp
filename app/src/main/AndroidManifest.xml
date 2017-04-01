@@ -3,6 +3,7 @@
     package="husi.recuperapp">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -84,29 +85,22 @@
         <activity
             android:name=".estadosDeAnimo.EstadosDeAnimo"
             android:theme="@style/CustomActionBarTheme" />
+        <activity
+            android:name=".citas.NuevaCita"
+            android:theme="@style/CustomActionBarTheme" />
 
-        <activity android:name=".citas.NuevaCita"
-            android:theme="@style/CustomActionBarTheme"/>
-
-        <receiver
-            android:name=".medicamentos.AlarmaMedicamentoReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".citas.AlarmaCitasReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".medicamentos.AlarmaMedicamentoReceiver"/>
+        <receiver android:name=".citas.AlarmaCitasReceiver"/>
         <receiver android:name=".caminatas.AlarmaCaminatasReceiver" />
+        <receiver
+            android:name=".accesoDatos.RestaurarAlarmasReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service android:name=".caminatas.StepService" />
     </application>

@@ -32,7 +32,7 @@ public class Paciente extends Application{
 
 
     private final String URL_SERVIDOR = "http://10.0.2.2:8080/RecuperAppServer/WebServices/";
-    //private final String URL_SERVIDOR = "http://192.168.0.20:8080/RecuperAppServer/WebServices/";
+    //private final String URL_SERVIDOR = "http://192.168.0.7:8080/RecuperAppServer/WebServices/";
 
     private static Paciente singleton;
     static DataBaseHelper dbHelper;
@@ -135,24 +135,23 @@ public class Paciente extends Application{
         return dbHelper.obtenerUnMedicamento(idMedicamento);
     }
 
-    public void actualizarMedicamentoBD(String id, String hora, String asignado){
+    public void actualizarMedicamentoBD(String id, long hora, String asignado){
         dbHelper.actualizarHoraConsumoMedicamento( id, hora, asignado);
     }
 
-    public void insertarCitaBD(String fecha, String hora, String medico) {
-        Log.i("Paciente, insertar Cita",fecha+"-"+hora+" "+medico);
-        dbHelper.insertarUnaCita(fecha , hora, medico);
+    public void insertarCitaBD(long fecha, String medico) {
+        dbHelper.insertarUnaCita(fecha, medico);
     }
 
     public List<List<String>> obtenerCitasBD() {
         return dbHelper.obtenerCitas();
     }
 
-    public List<Object> buscarCitaBD(String fecha, String hora, String medico ){
-        return dbHelper.buscarCita(fecha, hora, medico);
+    public List<String> buscarCitaBD(long fecha, String medico ){
+        return dbHelper.buscarCita(fecha, medico);
     }
 
-    public List<Object> buscarCitaIdBD(int idCita) {
+    public List<String> buscarCitaIdBD(int idCita) {
         return dbHelper.buscarCitaId(idCita);
     }
 
@@ -427,7 +426,7 @@ public class Paciente extends Application{
                                 //no son autonumerados, el id es el mismo de la tabla del servidor
                                 //esto para evitar agregar medicamentos existentes a la tabla (evitar repetidos)
                                 if(dbHelper.buscarMedicamento(id+"")==false)
-                                    dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", "Sin Asignar", sintoma,asignado+"");
+                                    dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", 0, sintoma,asignado+"");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
