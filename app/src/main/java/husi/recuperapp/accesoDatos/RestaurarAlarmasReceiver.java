@@ -84,27 +84,33 @@ public class RestaurarAlarmasReceiver extends WakefulBroadcastReceiver {
                     //Restaurando citas medicas
 
                     List<List<String>> citasBD = Paciente.getInstance().obtenerCitasBD();
+                    Calendar cal = Calendar.getInstance();
+                    Calendar calActual=Calendar.getInstance();
+
+                    Log.i("RestAlar Hora actual: ", calActual.getTimeInMillis()+"");
 
                     if (citasBD != null) {
                         for (List<String> cita : citasBD) {
-                            Calendar cal = Calendar.getInstance();
                             cal.setTimeInMillis(Long.valueOf(cita.get(1)));
-                            Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
 
-                            //Se agenda Notificacion
-                            int idCita= Integer.parseInt(cita.get(0));
+                            if(cal.getTimeInMillis()>calActual.getTimeInMillis()) {
+                                Log.i("Hora notif Cita: ", cal.getTimeInMillis()+"");
 
-                            Log.i("nueva cita con id: ",idCita+"");
-                            Intent intentInfoAlarmaNotificacion = new Intent(contexto, AlarmaCitasReceiver.class);
-                            Bundle extras = new Bundle();
-                            extras.putInt("id_cita", idCita);
-                            intentInfoAlarmaNotificacion.putExtras(extras);
+                                //Se agenda Notificacion
+                                int idCita = Integer.parseInt(cita.get(0));
 
-                            pendingIntent = PendingIntent.getBroadcast(contexto, idCita,
-                                    intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+                                Log.i("nueva cita con id: ", idCita + "");
+                                Intent intentInfoAlarmaNotificacion = new Intent(contexto, AlarmaCitasReceiver.class);
+                                Bundle extras = new Bundle();
+                                extras.putInt("id_cita", idCita);
+                                intentInfoAlarmaNotificacion.putExtras(extras);
 
-                            alarmManager = (AlarmManager) contexto.getSystemService(contexto.ALARM_SERVICE);
-                            alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis() ,pendingIntent);
+                                pendingIntent = PendingIntent.getBroadcast(contexto, idCita,
+                                        intentInfoAlarmaNotificacion, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                alarmManager = (AlarmManager) contexto.getSystemService(contexto.ALARM_SERVICE);
+                                alarmManager.set(AlarmManager.RTC, cal.getTimeInMillis(), pendingIntent);
+                            }
                         }
                     }
 
