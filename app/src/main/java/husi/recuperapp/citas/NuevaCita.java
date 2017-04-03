@@ -92,8 +92,8 @@ public class NuevaCita extends AppCompatActivity {
                 mHora = selectedHour;
                 mMinuto = selectedMinute;
 
-                Log.i("Hora: ","Hora "+mHora+" minuto "+mMinuto);
-                mHoraView.setText(mHora+":"+mMinuto);
+                Log.i("Hora: ",String.format("%02d:%02d", selectedHour, selectedMinute));
+                mHoraView.setText(String.format("%02d:%02d", selectedHour, selectedMinute));
             }
         }, calendario.get(Calendar.HOUR), calendario.get(Calendar.MINUTE), false);//true, hora militar
         mTimePicker.setTitle("Seleccione la hora");
@@ -107,8 +107,8 @@ public class NuevaCita extends AppCompatActivity {
                 mMes = selectedMonth+1;
                 mDia = selectedDay;
 
-                Log.i("Fecha: ","Año "+mAno+" Mes "+mMes+" Dia "+mDia);
-                mFechaView.setText(mDia+"/"+mMes+"/"+mAno);
+                Log.i("Fecha: ",String.format("%02d/%02d/%04d", mDia, mMes, mAno));
+                mFechaView.setText(String.format("%02d/%02d/%04d", mDia, mMes, mAno));
             }
         },calendario.get(Calendar.YEAR),calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH));
         datePicker.setTitle("Seleccione la fecha de la cita");

@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.List;
 
+import husi.recuperapp.caminatas.AlarmaCaminatasReceiver;
 import husi.recuperapp.citas.AlarmaCitasReceiver;
 import husi.recuperapp.medicamentos.AlarmaMedicamentoReceiver;
 
@@ -32,6 +33,10 @@ public class RestaurarAlarmasReceiver extends WakefulBroadcastReceiver {
             if (action != null) {
                 if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
                     Log.i("Receiver ", "Reseteando alarmas");
+
+                    alarmManager = (AlarmManager) contexto.getSystemService(contexto.ALARM_SERVICE);
+
+                    noficicarCaminata(contexto);
 
                     //Restaurando alarmas de medicamentos
 
@@ -61,8 +66,6 @@ public class RestaurarAlarmasReceiver extends WakefulBroadcastReceiver {
 
                                 pendingIntent = PendingIntent.getBroadcast(contexto, id, intentAlarma,
                                         PendingIntent.FLAG_UPDATE_CURRENT);
-
-                                alarmManager = (AlarmManager) contexto.getSystemService(contexto.ALARM_SERVICE);
 
                                 if (android.os.Build.VERSION.SDK_INT >= 21) {
                                     Log.i("SDK >= ", "21");
@@ -118,5 +121,26 @@ public class RestaurarAlarmasReceiver extends WakefulBroadcastReceiver {
                 }
             }
         }
+    }
+
+    public void noficicarCaminata(Context contexto){
+
+        Intent intentInfoAlarma = new Intent(contexto, AlarmaCaminatasReceiver.class);
+        //Si ya hay una notificación creada la reemplaza
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(contexto,
+                1, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2016);
+        calendar.set(Calendar.MONTH, 1);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 00);
+
+        Log.i("Notific Caminat T: ",calendar.getTimeInMillis()+"");
+
+        //Frecuencia de repetición cada 24H
+        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+                24 * 60 * 60 * 1000, pendingIntent);
     }
 }

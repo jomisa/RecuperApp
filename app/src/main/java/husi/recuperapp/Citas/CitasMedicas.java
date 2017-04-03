@@ -156,7 +156,8 @@ public class CitasMedicas extends AppCompatActivity {
                 hora = fecha.get(Calendar.HOUR_OF_DAY);
                 minuto = fecha.get(Calendar.MINUTE);
 
-                citas.add(new Cita(citaBD.get(0), dia+"/"+mes+"/"+ano, hora+":"+minuto , citaBD.get(2)));
+                citas.add(new Cita(citaBD.get(0), String.format("%02d/%02d/%04d", dia, mes, ano)
+                        , String.format("%02d:%02d", hora, minuto) , citaBD.get(2)));
             }
         }
     }

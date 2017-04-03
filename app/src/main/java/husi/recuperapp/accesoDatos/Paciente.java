@@ -82,32 +82,6 @@ public class Paciente extends Application{
         return Integer.parseInt(dbHelper.obtenerPaciente().get(0));
     }
 
-    //Nofificaciones
-    public void noficicarCaminata(){
-
-        AlarmManager alarmManager;
-
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        Intent intentInfoAlarma = new Intent(getApplicationContext(), AlarmaCaminatasReceiver.class);
-        //Si ya hay una notificación creada la reemplaza
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
-                1, intentInfoAlarma, PendingIntent.FLAG_CANCEL_CURRENT );
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2016);
-        calendar.set(Calendar.MONTH, 1);
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 00);
-
-        Log.i("Notific Caminat T: ",calendar.getTimeInMillis()+"");
-        
-        //Frecuencia de repetición cada 24H
-        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
-                24 * 60 * 60 * 1000, pendingIntent);
-    }
-
 
     //Sincroniza BD interna con BD servidor
     public void sincronizarBD(){
@@ -193,7 +167,6 @@ public class Paciente extends Application{
             colaRequest.add(getVerificarPacienteRequest);
 
             sincronizarBD();
-            noficicarCaminata();
         }
 
     }

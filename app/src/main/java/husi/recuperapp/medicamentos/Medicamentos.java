@@ -239,17 +239,18 @@ public class Medicamentos extends AppCompatActivity {
             Log.i("medicamentosBD ","");
             medicamentos.clear();
             //Obtiene los medicamentos de la BD y Llena la lista de medicamentos
-            String horaS="Sin Asignar";
+            String horaS;
             int hour;
             int minute;
             for (List<String> medicamentoBD: medicamentosBD) {
+                horaS="Sin Asignar";
                 if(medicamentoBD.get(4)!="0"){
                     Log.i("Medicamentos alarma BD ",Long.valueOf(medicamentoBD.get(4))+"");
                     hora.setTimeInMillis(Long.valueOf(medicamentoBD.get(4)));
                     Log.i("Medicamentos alarma ",hora.getTimeInMillis()+"");
                     hour = hora.get(Calendar.HOUR_OF_DAY);
                     minute = hora.get(Calendar.MINUTE);
-                    horaS=hour+":"+minute;
+                    horaS=String.format("%02d:%02d", hour, minute);
                 }
                 medicamentos.add(new Medicamento(medicamentoBD.get(0), medicamentoBD.get(1),
                         medicamentoBD.get(2), medicamentoBD.get(3), horaS, medicamentoBD.get(6)));
