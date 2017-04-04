@@ -399,7 +399,7 @@ public class Paciente extends Application{
                                 //no son autonumerados, el id es el mismo de la tabla del servidor
                                 //esto para evitar agregar medicamentos existentes a la tabla (evitar repetidos)
                                 if(dbHelper.buscarMedicamento(id+"")==false)
-                                    dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", -9, sintoma,asignado+"");
+                                    dbHelper.insertarUnMedicamento(id+"", medicamento, dosis, frecuencia+"", 0, sintoma,asignado+"");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
