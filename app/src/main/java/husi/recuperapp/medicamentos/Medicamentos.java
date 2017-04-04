@@ -244,7 +244,7 @@ public class Medicamentos extends AppCompatActivity {
             int minute;
             for (List<String> medicamentoBD: medicamentosBD) {
                 horaS="Sin Asignar";
-                if(medicamentoBD.get(4)!="0"){
+                if(!medicamentoBD.get(4).equals("0")){
                     Log.i("Medicamentos alarma BD ",Long.valueOf(medicamentoBD.get(4))+"");
                     hora.setTimeInMillis(Long.valueOf(medicamentoBD.get(4)));
                     Log.i("Medicamentos alarma ",hora.getTimeInMillis()+"");

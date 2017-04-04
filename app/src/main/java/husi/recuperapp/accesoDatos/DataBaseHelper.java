@@ -399,7 +399,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return null;
         }
 
-        List<List<String>> medicamentos = new ArrayList<List<String>>();
+        List<List<String>> medicamentos = new ArrayList<>();
         ArrayList<String> medicamento;
 
         while (resultado.moveToNext()) {
