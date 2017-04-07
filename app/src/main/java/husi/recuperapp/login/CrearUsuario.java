@@ -1,13 +1,20 @@
 package husi.recuperapp.login;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +38,17 @@ public class CrearUsuario extends AppCompatActivity {
 
         setContentView(R.layout.activity_crear_usuario);
         getSupportActionBar().hide();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.GRAY);
+            window.setNavigationBarColor(Color.RED);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(
+                    getString(R.string.app_name), bm, Color.RED);
+            setTaskDescription(taskDesc);
+        }
 
         //Asigna fuente personalizada al logo de RecuperApp(está en la carpeta assets)
         TextView mRecuperappText = (TextView) findViewById(R.id.recuperapp);

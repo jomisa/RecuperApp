@@ -1,5 +1,8 @@
 package husi.recuperapp.fisiologicos;
 
+import android.app.ActivityManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +38,11 @@ public class RegistrarFisiologicos extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.RED);
+            window.setNavigationBarColor(Color.RED);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(
+                    getString(R.string.app_name), bm, Color.RED);
+            setTaskDescription(taskDesc);
         }
 
         this.listView = (ListView) findViewById(R.id.listViewFisiologicos);

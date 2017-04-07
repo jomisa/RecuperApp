@@ -1,10 +1,13 @@
 package husi.recuperapp.medicamentos;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -53,6 +56,11 @@ public class Medicamentos extends AppCompatActivity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.RED);
+            window.setNavigationBarColor(Color.RED);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+            ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(
+                    getString(R.string.app_name), bm, Color.RED);
+            setTaskDescription(taskDesc);
         }
 
         medicamentos = new ArrayList<>();

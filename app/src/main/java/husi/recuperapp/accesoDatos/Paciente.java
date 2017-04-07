@@ -18,8 +18,6 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import husi.recuperapp.caminatas.AlarmaCaminatasReceiver;
-
 /**
  * Created by jmss1 on 22/09/2016.
  */
