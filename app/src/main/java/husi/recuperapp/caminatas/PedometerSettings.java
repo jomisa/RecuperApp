@@ -19,7 +19,6 @@
 package husi.recuperapp.caminatas;
 
 import android.content.SharedPreferences;
-
 import husi.recuperapp.accesoDatos.Funciones;
 
 /**

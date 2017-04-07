@@ -1,17 +1,10 @@
 package husi.recuperapp.medicamentos;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
-
-import java.util.Calendar;
-import java.util.List;
-
-import husi.recuperapp.accesoDatos.Paciente;
 
 /**
  * Created by jmss1 on 4/10/2016.

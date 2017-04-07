@@ -20,7 +20,6 @@ package husi.recuperapp.caminatas;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-
 import husi.recuperapp.R;
 
 /**

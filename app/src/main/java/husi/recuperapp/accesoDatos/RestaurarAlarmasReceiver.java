@@ -50,7 +50,7 @@ public class RestaurarAlarmasReceiver extends WakefulBroadcastReceiver {
 
                     if (medicamentosBD != null) {
                         for (List<String> medicamentoBD : medicamentosBD) {
-                            if (medicamentoBD.get(4) != "0") { //Verifica que la alarma esté asignada
+                            if (!medicamentoBD.get(4).equals("0")) { //Verifica que la alarma esté asignada
                                 id = Integer.parseInt(medicamentoBD.get(0));
                                 hora.setTimeInMillis(Long.valueOf(medicamentoBD.get(4)));
                                 frecuencia = Long.valueOf(medicamentoBD.get(3));

@@ -18,8 +18,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.StringTokenizer;
 
 import husi.recuperapp.R;
 import husi.recuperapp.accesoDatos.Paciente;
