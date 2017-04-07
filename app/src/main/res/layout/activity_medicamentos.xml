@@ -47,7 +47,7 @@
         android:gravity="bottom"
         android:background="@color/grisMedio"
         android:paddingLeft="4dp"
-        android:text="Recoemndaciones"
+        android:text="Recomendaciones"
         android:textColor="@color/blanco"
         app:layout_constraintTop_toBottomOf="@+id/textViewMedicamentos"
         app:layout_constraintRight_toRightOf="parent"

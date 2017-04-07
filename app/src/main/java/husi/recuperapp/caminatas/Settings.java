@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -50,7 +51,7 @@ public class Settings extends PreferenceActivity {
             window.setNavigationBarColor(Color.GRAY);
             Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
             ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(
-                    getString(R.string.app_name), bm, Color.RED);
+                    getString(R.string.app_name), bm, ResourcesCompat.getColor(getResources(), R.color.rojoOscuro, null));
             setTaskDescription(taskDesc);
         }
     }
