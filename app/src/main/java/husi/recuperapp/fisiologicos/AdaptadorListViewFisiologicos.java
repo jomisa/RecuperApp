@@ -152,6 +152,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             //cambia el color del dato de la medida
             holder.dato.setTextColor(Color.parseColor("#9e9e9e"));
+            holder.dato.setHintTextColor(Color.parseColor("#9e9e9e"));
 
             //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
             holder.imagenFisiologico.setColorFilter(Color.rgb(0, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -167,6 +168,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             //cambia el color del dato de la medida
             holder.dato.setTextColor(Color.parseColor("#f44336"));
+            holder.dato.setHintTextColor(Color.parseColor("#f44336"));
 
             //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
             holder.imagenFisiologico.setColorFilter(Color.rgb(160, 0, 0), android.graphics.PorterDuff.Mode.MULTIPLY);
@@ -182,6 +184,7 @@ public class AdaptadorListViewFisiologicos extends BaseAdapter{
 
             //cambia el color del dato de la medida
             holder.dato.setTextColor(Color.parseColor("#9e9e9e"));
+            holder.dato.setHintTextColor(Color.parseColor("#9e9e9e"));
 
             //cambia el color de la imagen (todas las imagenes deben ser PNG para tener transparencia de fondo y de color blanco)
             holder.imagenFisiologico.setColorFilter(Color.rgb(255, 255, 255), android.graphics.PorterDuff.Mode.MULTIPLY);

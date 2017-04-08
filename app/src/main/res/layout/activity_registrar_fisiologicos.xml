@@ -37,7 +37,7 @@
         android:layout_marginTop="0dp"
         android:background="@color/rojoClaro"
         android:padding="4dp"
-        android:text="Por favor llene el campo a llenar y seguidamente presione el botón ingresar"
+        android:text="Por favor llene el campo Dato (en caso de haber alguno) y seguidamente presione el botón ingresar"
         android:textColor="@color/negro"
         android:textSize="17sp"
         android:textStyle="bold"

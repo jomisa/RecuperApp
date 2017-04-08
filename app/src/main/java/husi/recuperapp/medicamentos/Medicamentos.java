@@ -172,13 +172,18 @@ public class Medicamentos extends AppCompatActivity {
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
                 calendar.set(Calendar.SECOND, 00);
 
+                Calendar calActual = Calendar.getInstance();
+
+                if(calendar.getTimeInMillis() < calActual.getTimeInMillis())
+                    calendar.setTimeInMillis(calendar.getTimeInMillis()+(24*60*60*1000));
+
                 Log.i("horaAlarma: ", calendar.getTimeInMillis() + "");
 
                 crearAlarma(idMedicamento, frecuencia, calendar);
 
-
-                Toast.makeText(getApplicationContext(), "Seleccionó: " + selectedHour + ":" +
-                        selectedMinute,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Alarma en "+
+                        ((calendar.getTimeInMillis()-calActual.getTimeInMillis())/(3600000)+1)
+                        +" horas",Toast.LENGTH_LONG).show();
             }
         }, hour, minute, false);//true hora militar
         mTimePicker.setTitle("Seleccione la hora");
